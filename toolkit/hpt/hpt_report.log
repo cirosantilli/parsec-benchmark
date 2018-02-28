@@ -1,0 +1,150 @@
+=================================================================
+=========================    HPT   ==============================
+=================================================================
+
+[Date] 2013年 07月 20日 星期六 14:09:01 CST
+
+===========[Parameter Info Checklist]==========
+HaveCompareGroup: 1
+Machine1: computerA
+Machine2: computerB
+DataLog1: run_1_native_2013-06-18_05:51:08.log
+run_1_native_2013-06-19_17:19:56.log
+run_1_native_2013-06-19_23:22:15.log
+run_1_native_2013-06-20_05:06:31.log
+run_1_native_2013-06-20_10:52:12.log
+run_1_simlarge_2013-06-18_03:30:34.log
+run_1_simlarge_2013-06-18_03:53:02.log
+run_1_simlarge_2013-06-18_04:07:24.log
+run_1_simlarge_2013-06-18_04:22:17.log
+run_1_simlarge_2013-06-18_05:30:52.log
+run_2_native_2013-06-18_08:31:43.log
+run_2_native_2013-06-19_20:03:59.log
+run_2_native_2013-06-20_02:02:08.log
+run_2_native_2013-06-20_07:46:06.log
+run_2_native_2013-06-20_13:31:38.log
+run_2_simlarge_2013-06-18_03:36:16.log
+run_2_simlarge_2013-06-18_03:44:44.log
+run_2_simlarge_2013-06-18_03:58:43.log
+run_2_simlarge_2013-06-18_04:13:52.log
+run_2_simlarge_2013-06-18_04:27:55.log
+run_4_native_2013-06-18_10:03:28.log
+run_4_native_2013-06-19_21:47:01.log
+run_4_native_2013-06-20_03:31:04.log
+run_4_native_2013-06-20_09:17:00.log
+run_4_native_2013-06-20_15:02:49.log
+run_4_simlarge_2013-06-18_03:39:50.log
+run_4_simlarge_2013-06-18_03:48:19.log
+run_4_simlarge_2013-06-18_04:02:18.log
+run_4_simlarge_2013-06-18_04:17:29.log
+run_4_simlarge_2013-06-18_04:31:35.log
+run_8_native_2013-06-18_11:02:31.log
+run_8_native_2013-06-19_22:42:08.log
+run_8_native_2013-06-20_04:26:13.log
+run_8_native_2013-06-20_10:12:00.log
+run_8_native_2013-06-20_15:58:22.log
+run_8_simlarge_2013-06-18_03:42:31.log
+run_8_simlarge_2013-06-18_03:50:53.log
+run_8_simlarge_2013-06-18_04:05:11.log
+run_8_simlarge_2013-06-18_04:20:01.log
+run_8_simlarge_2013-06-18_04:34:09.log
+
+DataLog2: run_1_native_2013-06-18_05:51:08.log
+run_1_native_2013-06-19_17:19:56.log
+run_1_native_2013-06-19_23:22:15.log
+run_1_native_2013-06-20_05:06:31.log
+run_1_native_2013-06-20_10:52:12.log
+run_1_simlarge_2013-06-18_03:30:34.log
+run_1_simlarge_2013-06-18_03:53:02.log
+run_1_simlarge_2013-06-18_04:07:24.log
+run_1_simlarge_2013-06-18_04:22:17.log
+run_1_simlarge_2013-06-18_05:30:52.log
+run_2_native_2013-06-18_08:31:43.log
+run_2_native_2013-06-19_20:03:59.log
+run_2_native_2013-06-20_02:02:08.log
+run_2_native_2013-06-20_07:46:06.log
+run_2_native_2013-06-20_13:31:38.log
+run_2_simlarge_2013-06-18_03:36:16.log
+run_2_simlarge_2013-06-18_03:44:44.log
+run_2_simlarge_2013-06-18_03:58:43.log
+run_2_simlarge_2013-06-18_04:13:52.log
+run_2_simlarge_2013-06-18_04:27:55.log
+run_4_native_2013-06-18_10:03:28.log
+run_4_native_2013-06-19_21:47:01.log
+run_4_native_2013-06-20_03:31:04.log
+run_4_native_2013-06-20_09:17:00.log
+run_4_native_2013-06-20_15:02:49.log
+run_4_simlarge_2013-06-18_03:39:50.log
+run_4_simlarge_2013-06-18_03:48:19.log
+run_4_simlarge_2013-06-18_04:02:18.log
+run_4_simlarge_2013-06-18_04:17:29.log
+run_4_simlarge_2013-06-18_04:31:35.log
+run_8_native_2013-06-18_11:02:31.log
+run_8_native_2013-06-19_22:42:08.log
+run_8_native_2013-06-20_04:26:13.log
+run_8_native_2013-06-20_10:12:00.log
+run_8_native_2013-06-20_15:58:22.log
+run_8_simlarge_2013-06-18_03:42:31.log
+run_8_simlarge_2013-06-18_03:50:53.log
+run_8_simlarge_2013-06-18_04:05:11.log
+run_8_simlarge_2013-06-18_04:20:01.log
+run_8_simlarge_2013-06-18_04:34:09.log
+Outputfile: ./hpt_report.log
+repeat: 3
+alpha: 0.1
+Speedup(3):1.5 1.9 2
+Reliability(4):0.6 0.7 0.8 0.9
+Benchmark-Inputsize-Nthread(8 in total):
+parsec.blackscholes-native-1 parsec.blackscholes-native-2 parsec.blackscholes-native-4 parsec.blackscholes-native-8 parsec.blackscholes-simlarge-1 parsec.blackscholes-simlarge-2 parsec.blackscholes-simlarge-4 parsec.blackscholes-simlarge-8
+================[Checklist End]================
+
+
+========================================
+Data matrix(computerA):
+     490.413      489.690      495.383 
+     261.126      260.366      264.068 
+     146.087      146.904      151.929 
+      88.499       89.421       92.234 
+       3.228        3.224        3.251 
+       1.715        1.722        1.720 
+       0.966        0.961        0.961 
+       0.590        0.585        0.583 
+
+========================================
+Data matrix(computerB):
+     912.168      930.411     1065.073 
+     514.418      427.000      723.546 
+     306.782      356.976      233.970 
+     199.122      217.293      175.244 
+       6.811        6.834        5.851 
+       3.224        3.340        4.093 
+       1.787        1.950        1.278 
+       1.121        0.725        1.206 
+
+[Comparison][original]
+machine_A(computerA) is better than machine_B(computerB) with reliability 0.9980.
+
+[Comparison][speedup=1.5000]
+The reliability of that machine_A(computerA) outperforms machine_B(computerB) with speedup 1.5000 is 0.9922.
+
+[Comparison][speedup=1.9000]
+The reliability of that machine_A(computerA) outperforms machine_B(computerB) with speedup 1.9000 is 0.6797.
+
+[Comparison][speedup=2.0000]
+The reliability of that machine_A(computerA) outperforms machine_B(computerB) with speedup 2.0000 is 0.4727.
+
+[Comparison][reliability=0.6000]
+The maximum speedup of machine_A(computerA) over machine_B(computerB) is 1.96 with the given reliability 0.6000.
+
+[Comparison][reliability=0.7000]
+The maximum speedup of machine_A(computerA) over machine_B(computerB) is 1.87 with the given reliability 0.7000.
+
+[Comparison][reliability=0.8000]
+The maximum speedup of machine_A(computerA) over machine_B(computerB) is 1.87 with the given reliability 0.8000.
+
+[Comparison][reliability=0.9000]
+The maximum speedup of machine_A(computerA) over machine_B(computerB) is 1.86 with the given reliability 0.9000.
+
+
+
+[HPT COMPLETED] 2013年 07月 20日 星期六 14:12:30 CST

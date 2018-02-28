@@ -1,0 +1,9 @@
+*.tar
+*~
+/log
+/pkgs/libs/gsl/src/doc/gsl-ref.info*
+/pkgs/tools/libtool/src/doc/libtool.info*
+autom4te.cache
+inst
+obj
+run
