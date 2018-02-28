@@ -1,0 +1,6 @@
+*.tar
+*~
+/log
+inst
+obj
+run
