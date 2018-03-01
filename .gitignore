@@ -1,6 +1,7 @@
 *.tar
 *~
 /log
+autom4te.cache
 inst
 obj
 run
