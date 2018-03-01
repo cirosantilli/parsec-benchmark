@@ -7,3 +7,11 @@ autom4te.cache
 inst
 obj
 run
+
+# info
+/pkgs/libs/gsl/src/doc/gsl-ref.info*
+/pkgs/tools/libtool/src/doc/libtool.info*
+
+# libtool doc timestap
+/pkgs/tools/libtool/src/doc/stamp-vti
+/pkgs/tools/libtool/src/doc/version.texi
