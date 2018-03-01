@@ -25,7 +25,7 @@
 
 namespace threads {
 
-Barrier::Barrier(int _n) throw(BarrierException) {
+Barrier::Barrier(int _n) {
 #if defined(HAVE_LIBPTHREAD)
   int rv;
 
@@ -66,7 +66,7 @@ Barrier::Barrier(int _n) throw(BarrierException) {
 #endif //HAVE_LIBPTHREAD
 }
 
-Barrier::~Barrier() throw(BarrierException) {
+Barrier::~Barrier() {
 #if defined(HAVE_LIBPTHREAD)
   int rv;
 
@@ -97,7 +97,7 @@ Barrier::~Barrier() throw(BarrierException) {
 }
 
 //Wait at a barrier
-bool Barrier::Wait() throw(BarrierException) {
+bool Barrier::Wait() {
 #if defined(HAVE_LIBPTHREAD)
   int rv;
 

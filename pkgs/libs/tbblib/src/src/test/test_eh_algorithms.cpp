@@ -1204,13 +1204,13 @@ public:
     static int m_refCount;
 
     MyCapturedException () : tbb::captured_exception("MyCapturedException", "test") { ++m_refCount; }
-    ~MyCapturedException () throw() { --m_refCount; }
+    ~MyCapturedException () noexcept { --m_refCount; }
 
-    MyCapturedException* move () throw() {
+    MyCapturedException* move () noexcept {
         MyCapturedException* movee = (MyCapturedException*)malloc(sizeof(MyCapturedException));
         return ::new (movee) MyCapturedException;
     }
-    void destroy () throw() {
+    void destroy () noexcept {
         this->~MyCapturedException();
         free(this);
     }

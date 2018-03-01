@@ -133,9 +133,9 @@ public:
     ///// non-static fields of helper for exception-safe iteration across segments
     segment_t *table;// TODO: review all segment_index_t as just short type
     size_type first_block, k, sz, start, finish, element_size;
-    helper(segment_t *segments, size_type fb, size_type esize, size_type index, size_type s, size_type f) throw()
+    helper(segment_t *segments, size_type fb, size_type esize, size_type index, size_type s, size_type f) noexcept
         : table(segments), first_block(fb), k(index), sz(0), start(s), finish(f), element_size(esize) {}
-    inline void first_segment() throw() {
+    inline void first_segment() noexcept {
         __TBB_ASSERT( start <= finish, NULL );
         __TBB_ASSERT( first_block || !finish, NULL );
         if( k < first_block ) k = 0; // process solid segment at a time
@@ -144,7 +144,7 @@ public:
         finish -= base; start -= base; // rebase as offsets from segment k
         sz = k ? base : segment_size( first_block ); // sz==base for k>0
     }
-    inline void next_segment() throw() {
+    inline void next_segment() noexcept {
         finish -= sz; start = 0; // offsets from next segment
         if( !k ) k = first_block;
         else { ++k; sz <<= 1; }

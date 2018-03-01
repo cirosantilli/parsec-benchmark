@@ -45,7 +45,7 @@ class Stoppable {
 //Exception which gets thrown if thread creation fails
 class ThreadCreationException: public std::exception {
   public:
-    virtual const char *what() const throw() {return "Error creating thread";}
+    virtual const char *what() const noexcept {return "Error creating thread";}
 };
 
 //A thread
@@ -59,7 +59,7 @@ class Thread {
     unsigned int t_id;
 #endif //HAVE_LIBPTHREAD
   public:
-    Thread(Runnable &) throw(ThreadCreationException);
+    Thread(Runnable &);
 
     //Wait until Thread object has finished
     void Join();

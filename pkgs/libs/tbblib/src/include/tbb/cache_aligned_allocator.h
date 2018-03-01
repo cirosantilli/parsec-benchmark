@@ -75,9 +75,9 @@ public:
         typedef cache_aligned_allocator<U> other;
     };
 
-    cache_aligned_allocator() throw() {}
-    cache_aligned_allocator( const cache_aligned_allocator& ) throw() {}
-    template<typename U> cache_aligned_allocator(const cache_aligned_allocator<U>&) throw() {}
+    cache_aligned_allocator() noexcept {}
+    cache_aligned_allocator( const cache_aligned_allocator& ) noexcept {}
+    template<typename U> cache_aligned_allocator(const cache_aligned_allocator<U>&) noexcept {}
 
     pointer address(reference x) const {return &x;}
     const_pointer address(const_reference x) const {return &x;}
@@ -94,7 +94,7 @@ public:
     }
 
     //! Largest value for which method allocate might succeed.
-    size_type max_size() const throw() {
+    size_type max_size() const noexcept {
         return (~size_t(0)-internal::NFS_MaxLineSize)/sizeof(value_type);
     }
 

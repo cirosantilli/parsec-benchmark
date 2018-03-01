@@ -93,13 +93,13 @@ public:
     static count_t frees;
     static bool verbose, throwing;
 
-    static_counting_allocator() throw() { }
+    static_counting_allocator() noexcept { }
 
-    static_counting_allocator(const static_counting_allocator& src) throw() 
+    static_counting_allocator(const static_counting_allocator& src) noexcept 
     : base_alloc_t(src) { }
 
     template<typename U, typename C>
-    static_counting_allocator(const static_counting_allocator<U, C>& src) throw()
+    static_counting_allocator(const static_counting_allocator<U, C>& src) noexcept
     : base_alloc_t(src) { }
 
     bool operator==(const static_counting_allocator &a) const
@@ -182,7 +182,7 @@ public:
     count_t frees;
     size_t max_items;
 
-    local_counting_allocator() throw() {
+    local_counting_allocator() noexcept {
         items_allocated = 0;
         items_freed = 0;
         allocations = 0;
@@ -190,7 +190,7 @@ public:
         max_items = 0;
     }
 
-    local_counting_allocator(const local_counting_allocator &a) throw()
+    local_counting_allocator(const local_counting_allocator &a) noexcept
         : base_alloc_t(a)
 		, items_allocated(a.items_allocated)
         , items_freed(a.items_freed)
@@ -200,7 +200,7 @@ public:
     { }
 
     template<typename U, typename C>
-    local_counting_allocator(const static_counting_allocator<U,C> &) throw() {
+    local_counting_allocator(const static_counting_allocator<U,C> &) noexcept {
         items_allocated = static_counting_allocator<U,C>::items_allocated;
         items_freed = static_counting_allocator<U,C>::items_freed;
         allocations = static_counting_allocator<U,C>::allocations;
@@ -209,7 +209,7 @@ public:
     }
 
     template<typename U, typename C>
-    local_counting_allocator(const local_counting_allocator<U,C> &a) throw()
+    local_counting_allocator(const local_counting_allocator<U,C> &a) noexcept
         : items_allocated(a.items_allocated)
         , items_freed(a.items_freed)
         , allocations(a.allocations)
@@ -260,10 +260,10 @@ public:
         typedef debug_allocator<U, Allocator> other;
     };
 
-    debug_allocator() throw() { }
-    debug_allocator(const debug_allocator &a) throw() : base_allocator_type( a ) { }
+    debug_allocator() noexcept { }
+    debug_allocator(const debug_allocator &a) noexcept : base_allocator_type( a ) { }
     template<typename U>
-    debug_allocator(const debug_allocator<U> &a) throw() : base_allocator_type( Allocator<U>( a ) ) { }
+    debug_allocator(const debug_allocator<U> &a) noexcept : base_allocator_type( Allocator<U>( a ) ) { }
 
     pointer allocate(const size_type n, const void *hint = 0 ) {
         pointer ptr = base_allocator_type::allocate( n, hint );

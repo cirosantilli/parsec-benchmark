@@ -94,9 +94,9 @@ public:
         standard
     };
 
-    tbb_allocator() throw() {}
-    tbb_allocator( const tbb_allocator& ) throw() {}
-    template<typename U> tbb_allocator(const tbb_allocator<U>&) throw() {}
+    tbb_allocator() noexcept {}
+    tbb_allocator( const tbb_allocator& ) noexcept {}
+    template<typename U> tbb_allocator(const tbb_allocator<U>&) noexcept {}
 
     pointer address(reference x) const {return &x;}
     const_pointer address(const_reference x) const {return &x;}
@@ -112,7 +112,7 @@ public:
     }
 
     //! Largest value for which method allocate might succeed.
-    size_type max_size() const throw() {
+    size_type max_size() const noexcept {
         size_type max = static_cast<size_type>(-1) / sizeof (value_type);
         return (max > 0 ? max : 1);
     }
@@ -174,7 +174,7 @@ public:
         typedef zero_allocator<U, Allocator> other;
     };
 
-    zero_allocator() throw() { }
+    zero_allocator() noexcept { }
     zero_allocator(const zero_allocator &a) { }
     template<typename U>
     zero_allocator(const zero_allocator<U> &a) { }

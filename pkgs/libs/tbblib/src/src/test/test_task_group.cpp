@@ -507,7 +507,7 @@ class test_exception : public std::exception
 public:
     test_exception ( const char* descr ) : m_strDescription(descr) {}
 
-    const char* what() const throw() { return m_strDescription; }
+    const char* what() const noexcept { return m_strDescription; }
 };
 
 #if TBB_USE_CAPTURED_EXCEPTION

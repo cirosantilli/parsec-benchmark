@@ -92,8 +92,8 @@ tbb::concurrent_hash_map<std::pair<std::pair<int,std::string>,const char*>,int> 
 
 class MyException : public std::bad_alloc {
 public:
-    virtual const char *what() const throw() { return "out of items limit"; }
-    virtual ~MyException() throw() {}
+    virtual const char *what() const noexcept { return "out of items limit"; }
+    virtual ~MyException() noexcept {}
 };
 
 /** Has tightly controlled interface so that we can verify

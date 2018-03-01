@@ -52,28 +52,28 @@ namespace tbb {
 //! Exception for concurrent containers
 class bad_last_alloc : public std::bad_alloc {
 public:
-    /*override*/ const char* what() const throw();
+    /*override*/ const char* what() const noexcept;
 #if __TBB_DEFAULT_DTOR_THROW_SPEC_BROKEN
-    /*override*/ ~bad_last_alloc() throw() {}
+    /*override*/ ~bad_last_alloc() noexcept {}
 #endif
 };
 
 //! Exception for PPL locks
 class improper_lock : public std::exception {
 public:
-    /*override*/ const char* what() const throw();
+    /*override*/ const char* what() const noexcept;
 };
 
 //! Exception for missing wait on structured_task_group
 class missing_wait : public std::exception {
 public:
-    /*override*/ const char* what() const throw();
+    /*override*/ const char* what() const noexcept;
 };
 
 //! Exception for repeated scheduling of the same task_handle 
 class invalid_multiple_scheduling : public std::exception {
 public:
-    /*override*/ const char* what() const throw();
+    /*override*/ const char* what() const noexcept;
 };
 
 namespace internal {
@@ -154,12 +154,12 @@ class tbb_exception : public std::exception
 public:
     //! Creates and returns pointer to the deep copy of this exception object. 
     /** Move semantics is allowed. **/
-    virtual tbb_exception* move () throw() = 0;
+    virtual tbb_exception* move () noexcept = 0;
     
     //! Destroys objects created by the move() method.
     /** Frees memory and calls destructor for this exception object. 
         Can and must be used only on objects created by the move method. **/
-    virtual void destroy () throw() = 0;
+    virtual void destroy () noexcept = 0;
 
     //! Throws this exception object.
     /** Make sure that if you have several levels of derivation from this interface
@@ -169,10 +169,10 @@ public:
     virtual void throw_self () = 0;
 
     //! Returns RTTI name of the originally intercepted exception
-    virtual const char* name() const throw() = 0;
+    virtual const char* name() const noexcept = 0;
 
     //! Returns the result of originally intercepted exception's what() method.
-    virtual const char* what() const throw() = 0;
+    virtual const char* what() const noexcept = 0;
 
     /** Operator delete is provided only to allow using existing smart pointers
         with TBB exception objects obtained as the result of applying move()
@@ -205,7 +205,7 @@ public:
         set(name_, info);
     }
 
-    __TBB_EXPORTED_METHOD ~captured_exception () throw() {
+    __TBB_EXPORTED_METHOD ~captured_exception () noexcept {
         clear();
     }
 
@@ -218,22 +218,22 @@ public:
     }
 
     /*override*/ 
-    captured_exception* __TBB_EXPORTED_METHOD move () throw();
+    captured_exception* __TBB_EXPORTED_METHOD move () noexcept;
 
     /*override*/ 
-    void __TBB_EXPORTED_METHOD destroy () throw();
+    void __TBB_EXPORTED_METHOD destroy () noexcept;
 
     /*override*/ 
     void throw_self () { __TBB_THROW(*this); }
 
     /*override*/ 
-    const char* __TBB_EXPORTED_METHOD name() const throw();
+    const char* __TBB_EXPORTED_METHOD name() const noexcept;
 
     /*override*/ 
-    const char* __TBB_EXPORTED_METHOD what() const throw();
+    const char* __TBB_EXPORTED_METHOD what() const noexcept;
 
-    void __TBB_EXPORTED_METHOD set ( const char* name, const char* info ) throw();
-    void __TBB_EXPORTED_METHOD clear () throw();
+    void __TBB_EXPORTED_METHOD set ( const char* name, const char* info ) noexcept;
+    void __TBB_EXPORTED_METHOD clear () noexcept;
 
 private:
     //! Used only by method clone().  
@@ -277,7 +277,7 @@ public:
         , my_exception_name(src.my_exception_name)
     {}
 
-    ~movable_exception () throw() {}
+    ~movable_exception () noexcept {}
 
     const movable_exception& operator= ( const movable_exception& src ) {
         if ( this != &src ) {
@@ -287,16 +287,16 @@ public:
         return *this;
     }
 
-    ExceptionData& data () throw() { return my_exception_data; }
+    ExceptionData& data () noexcept { return my_exception_data; }
 
-    const ExceptionData& data () const throw() { return my_exception_data; }
+    const ExceptionData& data () const noexcept { return my_exception_data; }
 
-    /*override*/ const char* name () const throw() { return my_exception_name; }
+    /*override*/ const char* name () const noexcept { return my_exception_name; }
 
-    /*override*/ const char* what () const throw() { return "tbb::movable_exception"; }
+    /*override*/ const char* what () const noexcept { return "tbb::movable_exception"; }
 
     /*override*/ 
-    movable_exception* move () throw() {
+    movable_exception* move () noexcept {
         void* e = internal::allocate_via_handler_v3(sizeof(movable_exception));
         if ( e ) {
             ::new (e) movable_exception(*this);
@@ -305,7 +305,7 @@ public:
         return (movable_exception*)e;
     }
     /*override*/ 
-    void destroy () throw() {
+    void destroy () noexcept {
         __TBB_ASSERT ( my_dynamic, "Method destroy can be called only on dynamically allocated movable_exceptions" );
         if ( my_dynamic ) {
             this->~movable_exception();
@@ -345,7 +345,7 @@ public:
     
     //! Destroys this objects
     /** Note that objects of this type can be created only by the allocate() method. **/
-    void destroy () throw();
+    void destroy () noexcept;
 
     //! Throws the contained exception .
     void throw_self () { std::rethrow_exception(my_ptr); }
