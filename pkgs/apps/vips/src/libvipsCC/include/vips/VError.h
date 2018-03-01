@@ -54,7 +54,7 @@ class VError : public std::exception {
 public:
 	VError( std::string what ) : _what( what ) {}
 	VError() {}
-	virtual ~VError() throw() {}
+	virtual ~VError() noexcept {}
 
 	// Print message and exit
 	void perror( const char * );
@@ -65,7 +65,7 @@ public:
 	VError &app( const int i );
 
 	// Extract string
-	virtual const char *what() const throw() { return _what.c_str(); }
+	virtual const char *what() const noexcept { return _what.c_str(); }
 	void ostream_print( std::ostream & ) const;
 };
 
@@ -75,7 +75,7 @@ inline std::ostream &operator<<( std::ostream &file, const VError &err )
 	return( file );
 }
 
-void verror( std::string str = "" ) throw( VError );
+void verror( std::string str = "" );
 
 VIPS_NAMESPACE_END
 

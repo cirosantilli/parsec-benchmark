@@ -34,43 +34,43 @@ namespace threads {
 //General mutex exception
 class MutexException: public std::exception {
   public:
-    virtual const char *what() const throw() {return "Unspecified mutex error";}
+    virtual const char *what() const noexcept {return "Unspecified mutex error";}
 };
 
 //Mutex initialization error
 class MutexInitException: public MutexException {
   public:
-    virtual const char *what() const throw() {return "Unspecified error while initializing mutex";}
+    virtual const char *what() const noexcept {return "Unspecified error while initializing mutex";}
 };
 
 //Mutex destruction error
 class MutexDestroyException: public MutexException {
   public:
-    virtual const char *what() const throw() {return "Unspecified error while destroying mutex";}
+    virtual const char *what() const noexcept {return "Unspecified error while destroying mutex";}
 };
 
 //Resources exhausted
 class MutexResourceException: public MutexException {
   public:
-    virtual const char *what() const throw() {return "Insufficient resources";}
+    virtual const char *what() const noexcept {return "Insufficient resources";}
 };
 
 //General locking error
 class MutexLockingException: public MutexException {
   public:
-    virtual const char *what() const throw() {return "Unspecified locking error";}
+    virtual const char *what() const noexcept {return "Unspecified locking error";}
 };
 
 //Deadlock detected
 class MutexDeadlockException: public MutexLockingException {
   public:
-    virtual const char *what() const throw() {return "Deadlock detected";}
+    virtual const char *what() const noexcept {return "Deadlock detected";}
 };
 
 //Unknown error
 class MutexUnknownException: public MutexException {
   public:
-    virtual const char *what() const throw() {return "Unknown error";}
+    virtual const char *what() const noexcept {return "Unknown error";}
 };
 
 //Condition class requires access to mutex, forward declaration for friendship
@@ -82,15 +82,15 @@ class Mutex: public LockType {
   friend class Condition;
 
   public:
-    Mutex() throw(MutexException);
-    ~Mutex() throw(MutexException);
+    Mutex();
+    ~Mutex();
 
     //Enter a critical region
-    void Lock() throw(MutexException);
+    void Lock();
     //Leave a critical region
-    void Unlock() throw(MutexException);
+    void Unlock();
     //Try to acquire the lock, return true if successful
-    bool TryLock() throw(MutexException);
+    bool TryLock();
 
   private:
 #if defined(HAVE_LIBPTHREAD)

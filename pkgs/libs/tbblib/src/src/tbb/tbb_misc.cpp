@@ -53,10 +53,10 @@ using namespace std;
 
 namespace tbb {
 
-const char* bad_last_alloc::what() const throw() { return "bad allocation in previous or concurrent attempt"; }
-const char* improper_lock::what() const throw() { return "attempted recursive lock on critical section or non-recursive mutex"; }
-const char* invalid_multiple_scheduling::what() const throw() { return "The same task_handle object cannot be executed more than once"; }
-const char* missing_wait::what() const throw() { return "wait() was not called on the structured_task_group"; }
+const char* bad_last_alloc::what() const noexcept { return "bad allocation in previous or concurrent attempt"; }
+const char* improper_lock::what() const noexcept { return "attempted recursive lock on critical section or non-recursive mutex"; }
+const char* invalid_multiple_scheduling::what() const noexcept { return "The same task_handle object cannot be executed more than once"; }
+const char* missing_wait::what() const noexcept { return "wait() was not called on the structured_task_group"; }
 
 namespace internal {
 

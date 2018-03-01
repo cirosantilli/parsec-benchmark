@@ -77,8 +77,8 @@ static const int N = 50000;     // # of bytes
 //! Exception for concurrent_queue
 class Foo_exception : public std::bad_alloc {
 public:
-    virtual const char *what() const throw() { return "out of Foo limit"; }
-    virtual ~Foo_exception() throw() {}
+    virtual const char *what() const noexcept { return "out of Foo limit"; }
+    virtual ~Foo_exception() noexcept {}
 };
 
 static tbb::atomic<long> FooExConstructed;
@@ -343,8 +343,8 @@ bool operator!=(const BarIterator& bia, const BarIterator& bib) {
 #if TBB_USE_EXCEPTIONS
 class Bar_exception : public std::bad_alloc {
 public:
-    virtual const char *what() const throw() { return "making the entry invalid"; }
-    virtual ~Bar_exception() throw() {}
+    virtual const char *what() const noexcept { return "making the entry invalid"; }
+    virtual ~Bar_exception() noexcept {}
 };
 
 class BarEx {

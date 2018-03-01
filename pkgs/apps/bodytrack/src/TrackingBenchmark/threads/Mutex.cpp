@@ -24,7 +24,7 @@
 
 namespace threads {
 
-Mutex::Mutex() throw(MutexException) {
+Mutex::Mutex() {
 #if defined(HAVE_LIBPTHREAD)
   int rv;
 
@@ -60,7 +60,7 @@ Mutex::Mutex() throw(MutexException) {
 #endif //HAVE_LIBPTHREAD
 }
 
-Mutex::~Mutex() throw(MutexException) {
+Mutex::~Mutex() {
 #if defined(HAVE_LIBPTHREAD)
   int rv;
 
@@ -89,7 +89,7 @@ Mutex::~Mutex() throw(MutexException) {
 }
 
 //Enter a critical region
-void Mutex::Lock() throw(MutexException) {
+void Mutex::Lock() {
 #if defined(HAVE_LIBPTHREAD)
   int rv;
 
@@ -125,7 +125,7 @@ void Mutex::Lock() throw(MutexException) {
 }
 
 //Try to acquire the lock, return true if successful
-bool Mutex::TryLock() throw(MutexException) {
+bool Mutex::TryLock() {
 #if defined(HAVE_LIBPTHREAD)
   int rv;
 
@@ -161,7 +161,7 @@ bool Mutex::TryLock() throw(MutexException) {
 }
 
 //Leave a critical region
-void Mutex::Unlock() throw(MutexException) {
+void Mutex::Unlock() {
 #if defined(HAVE_LIBPTHREAD)
   int rv;
 

@@ -75,7 +75,7 @@ class test_exception : public std::exception {
 public:
     test_exception ( const char* description ) : my_description(description) {}
 
-    const char* what() const throw() { return my_description; }
+    const char* what() const noexcept { return my_description; }
 };
 
 class solitary_test_exception : public test_exception {

@@ -31,19 +31,19 @@ typedef unsigned int thread_rank_t;
 //General group exception
 class WorkerGroupException: public std::exception {
   public:
-    virtual const char *what() const throw() {return "Unspecified worker group exception";}
+    virtual const char *what() const noexcept {return "Unspecified worker group exception";}
 };
 
 //General group exception
 class WorkerGroupCommandException: public WorkerGroupException {
   public:
-    virtual const char *what() const throw() {return "Illegal command exception";}
+    virtual const char *what() const noexcept {return "Illegal command exception";}
 };
 
 //General group exception
 class WorkerGroupCommandRangeException: public WorkerGroupCommandException {
   public:
-    virtual const char *what() const throw() {return "Command out of range";}
+    virtual const char *what() const noexcept {return "Command out of range";}
 };
 
 class Threadable {

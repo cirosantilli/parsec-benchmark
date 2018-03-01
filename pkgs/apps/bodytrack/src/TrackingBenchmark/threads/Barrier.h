@@ -30,41 +30,41 @@ namespace threads {
 //General barrier exception
 class BarrierException: public std::exception {
   public:
-    virtual const char *what() const throw() {return "Unspecified barrier error";}
+    virtual const char *what() const noexcept {return "Unspecified barrier error";}
 };
 
 //Barrier initialization error
 class BarrierInitException: public BarrierException {
   public:
-    virtual const char *what() const throw() {return "Unspecified error while initializing barrier";}
+    virtual const char *what() const noexcept {return "Unspecified error while initializing barrier";}
 };
 
 //Barrier destruction error
 class BarrierDestroyException: public BarrierException {
   public:
-    virtual const char *what() const throw() {return "Unspecified error while destroying barrier";}
+    virtual const char *what() const noexcept {return "Unspecified error while destroying barrier";}
 };
 
 //Resources exhausted
 class BarrierResourceException: public BarrierException {
   public:
-    virtual const char *what() const throw() {return "Insufficient resources";}
+    virtual const char *what() const noexcept {return "Insufficient resources";}
 };
 
 //Unknown error
 class BarrierUnknownException: public BarrierException {
   public:
-    virtual const char *what() const throw() {return "Unknown error";}
+    virtual const char *what() const noexcept {return "Unknown error";}
 };
 
 //A standard barrier
 class Barrier {
   public:
-    Barrier(int) throw(BarrierException);
-    ~Barrier() throw(BarrierException);
+    Barrier(int);
+    ~Barrier();
 
     //Wait at a barrier, will return true for exactly one thread, false for all other threads
-    bool Wait() throw(BarrierException);
+    bool Wait();
     //Get number of threads required to enter the barrier
     const int nThreads() const;
 

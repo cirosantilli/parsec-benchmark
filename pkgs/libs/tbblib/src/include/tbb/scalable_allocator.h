@@ -129,9 +129,9 @@ public:
         typedef scalable_allocator<U> other;
     };
 
-    scalable_allocator() throw() {}
-    scalable_allocator( const scalable_allocator& ) throw() {}
-    template<typename U> scalable_allocator(const scalable_allocator<U>&) throw() {}
+    scalable_allocator() noexcept {}
+    scalable_allocator( const scalable_allocator& ) noexcept {}
+    template<typename U> scalable_allocator(const scalable_allocator<U>&) noexcept {}
 
     pointer address(reference x) const {return &x;}
     const_pointer address(const_reference x) const {return &x;}
@@ -147,7 +147,7 @@ public:
     }
 
     //! Largest value for which method allocate might succeed.
-    size_type max_size() const throw() {
+    size_type max_size() const noexcept {
         size_type absolutemax = static_cast<size_type>(-1) / sizeof (value_type);
         return (absolutemax > 0 ? absolutemax : 1);
     }

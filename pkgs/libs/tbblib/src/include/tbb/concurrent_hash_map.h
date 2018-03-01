@@ -238,7 +238,7 @@ namespace interface4 {
         }
 
         //! Get bucket by (masked) hashcode
-        bucket *get_bucket( hashcode_t h ) const throw() { // TODO: add throw() everywhere?
+        bucket *get_bucket( hashcode_t h ) const noexcept { // TODO: add throw() everywhere?
             segment_index_t s = segment_index_of( h );
             h -= segment_base(s);
             segment_ptr_t seg = my_table[s];

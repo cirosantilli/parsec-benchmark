@@ -50,8 +50,8 @@ const size_t N = 500000;
 //! Exception for concurrent_vector
 class Foo_exception : public std::bad_alloc {
 public:
-    virtual const char *what() const throw() { return "out of Foo limit"; }
-    virtual ~Foo_exception() throw() {}
+    virtual const char *what() const noexcept { return "out of Foo limit"; }
+    virtual ~Foo_exception() noexcept {}
 };
 
 static const int initial_value_of_bar = 42;

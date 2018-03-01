@@ -24,61 +24,61 @@ namespace threads {
 //General rwlock exception
 class RWLockException: public std::exception {
   public:
-    virtual const char *what() const throw() {return "Unspecified rwlock error";}
+    virtual const char *what() const noexcept {return "Unspecified rwlock error";}
 };
 
 //RWLock initialization error
 class RWLockInitException: public RWLockException {
   public:
-    virtual const char *what() const throw() {return "Unspecified error while initializing rwlock";}
+    virtual const char *what() const noexcept {return "Unspecified error while initializing rwlock";}
 };
 
 //RWLock destruction error
 class RWLockDestroyException: public RWLockException {
   public:
-    virtual const char *what() const throw() {return "Unspecified error while destroying rwlock";}
+    virtual const char *what() const noexcept {return "Unspecified error while destroying rwlock";}
 };
 
 //Resources exhausted
 class RWLockResourceException: public RWLockException {
   public:
-    virtual const char *what() const throw() {return "Insufficient resources";}
+    virtual const char *what() const noexcept {return "Insufficient resources";}
 };
 
 //General locking error
 class RWLockLockingException: public RWLockException {
   public:
-    virtual const char *what() const throw() {return "Unspecified locking error";}
+    virtual const char *what() const noexcept {return "Unspecified locking error";}
 };
 
 //Deadlock detected
 class RWLockDeadlockException: public RWLockLockingException {
   public:
-    virtual const char *what() const throw() {return "Deadlock detected";}
+    virtual const char *what() const noexcept {return "Deadlock detected";}
 };
 
 //Unknown error
 class RWLockUnknownException: public RWLockException {
   public:
-    virtual const char *what() const throw() {return "Unknown error";}
+    virtual const char *what() const noexcept {return "Unknown error";}
 };
 
 //A standard rwlock
 class RWLock: public RWLockType {
   public:
-    RWLock() throw(RWLockException);
-    ~RWLock() throw(RWLockException);
+    RWLock();
+    ~RWLock();
 
     //Enter a critical region for reading
-    void ReadLock() throw(RWLockException);
+    void ReadLock();
     //Try to acquire the lock for reading, return true if successful
-    bool TryReadLock() throw(RWLockException);
+    bool TryReadLock();
     //Enter a critical region for writing
-    void WriteLock() throw(RWLockException);
+    void WriteLock();
     //Try to acquire the lock for writing, return true if successful
-    bool TryWriteLock() throw(RWLockException);
+    bool TryWriteLock();
     //Leave a critical region
-    void Unlock() throw(RWLockException);
+    void Unlock();
 
   private:
     pthread_rwlock_t l;

@@ -57,17 +57,17 @@ inline char* duplicate_string ( const char* src ) {
     return dst;
 }
 
-void captured_exception::set ( const char* name, const char* info ) throw() {
+void captured_exception::set ( const char* name, const char* info ) noexcept {
     my_exception_name = duplicate_string( name );
     my_exception_info = duplicate_string( info );
 }
 
-void captured_exception::clear () throw() {
+void captured_exception::clear () noexcept {
     deallocate_via_handler_v3 (const_cast<char*>(my_exception_name));
     deallocate_via_handler_v3 (const_cast<char*>(my_exception_info));
 }
 
-captured_exception* captured_exception::move () throw() {
+captured_exception* captured_exception::move () noexcept {
     captured_exception *e = (captured_exception*)allocate_via_handler_v3(sizeof(captured_exception));
     if ( e ) {
         ::new (e) captured_exception();
@@ -79,7 +79,7 @@ captured_exception* captured_exception::move () throw() {
     return e;
 }
 
-void captured_exception::destroy () throw() {
+void captured_exception::destroy () noexcept {
     __TBB_ASSERT ( my_dynamic, "Method destroy can be used only on objects created by clone or allocate" );
     if ( my_dynamic ) {
         this->captured_exception::~captured_exception();
@@ -96,11 +96,11 @@ captured_exception* captured_exception::allocate ( const char* name, const char*
     return e;
 }
 
-const char* captured_exception::name() const throw() {
+const char* captured_exception::name() const noexcept {
     return my_exception_name;
 }
 
-const char* captured_exception::what() const throw() {
+const char* captured_exception::what() const noexcept {
     return my_exception_info;
 }
 
@@ -135,7 +135,7 @@ tbb_exception_ptr* tbb_exception_ptr::allocate ( captured_exception& src ) {
     return res;
 }
 
-void tbb_exception_ptr::destroy () throw() {
+void tbb_exception_ptr::destroy () noexcept {
     this->tbb_exception_ptr::~tbb_exception_ptr();
     deallocate_via_handler_v3 (this);
 }

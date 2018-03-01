@@ -19,7 +19,7 @@
 
 namespace threads {
 
-RWLock::RWLock() throw(RWLockException) {
+RWLock::RWLock() {
   int rv;
 
   rv = pthread_rwlock_init(&l, NULL);
@@ -52,7 +52,7 @@ RWLock::RWLock() throw(RWLockException) {
 
 }
 
-RWLock::~RWLock() throw(RWLockException) {
+RWLock::~RWLock() {
   int rv;
 
   rv = pthread_rwlock_destroy(&l);
@@ -77,7 +77,7 @@ RWLock::~RWLock() throw(RWLockException) {
 }
 
 //Enter a critical region for reading
-void RWLock::ReadLock() throw(RWLockException) {
+void RWLock::ReadLock() {
   int rv;
 
   rv = pthread_rwlock_rdlock(&l);
@@ -109,7 +109,7 @@ void RWLock::ReadLock() throw(RWLockException) {
 }
 
 //Try to acquire the lock for reading, return true if successful
-bool RWLock::TryReadLock() throw(RWLockException) {
+bool RWLock::TryReadLock() {
   int rv;
 
   rv = pthread_rwlock_tryrdlock(&l);
@@ -141,7 +141,7 @@ bool RWLock::TryReadLock() throw(RWLockException) {
 }
 
 //Enter a critical region for writing
-void RWLock::WriteLock() throw(RWLockException) {
+void RWLock::WriteLock() {
   int rv;
 
   rv = pthread_rwlock_wrlock(&l);
@@ -172,7 +172,7 @@ void RWLock::WriteLock() throw(RWLockException) {
 }
 
 //Try to acquire the lock for writing, return true if successful
-bool RWLock::TryWriteLock() throw(RWLockException) {
+bool RWLock::TryWriteLock() {
   int rv;
 
   rv = pthread_rwlock_trywrlock(&l);
@@ -203,7 +203,7 @@ bool RWLock::TryWriteLock() throw(RWLockException) {
 }
 
 //Leave a critical region
-void RWLock::Unlock() throw(RWLockException) {
+void RWLock::Unlock() {
   int rv;
 
   rv = pthread_rwlock_unlock(&l);

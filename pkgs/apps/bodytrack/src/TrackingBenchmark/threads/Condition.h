@@ -31,48 +31,48 @@ namespace threads {
 //General condition exception
 class CondException: public std::exception {
   public:
-    virtual const char *what() const throw() {return "Unspecified condition error";}
+    virtual const char *what() const noexcept {return "Unspecified condition error";}
 };
 
 //Condition initialization error
 class CondInitException: public CondException {
   public:
-    virtual const char *what() const throw() {return "Unspecified error while initializing condition";}
+    virtual const char *what() const noexcept {return "Unspecified error while initializing condition";}
 };
 
 //Condition destruction error
 class CondDestroyException: public CondException {
   public:
-    virtual const char *what() const throw() {return "Unspecified error while destroying condition";}
+    virtual const char *what() const noexcept {return "Unspecified error while destroying condition";}
 };
 
 //Resources exhausted
 class CondResourceException: public CondException {
   public:
-    virtual const char *what() const throw() {return "Insufficient resources";}
+    virtual const char *what() const noexcept {return "Insufficient resources";}
 };
 
 //Unknown error
 class CondUnknownException: public CondException {
   public:
-    virtual const char *what() const throw() {return "Unknown error";}
+    virtual const char *what() const noexcept {return "Unknown error";}
 };
 
 
 //A standard condition variable
 class Condition {
   public:
-    Condition(Mutex &) throw(CondException);
-    ~Condition() throw(CondException);
+    Condition(Mutex &);
+    ~Condition();
 
     //Wake up exactly one thread, return number of threads currently waiting (before wakeup)
     //If no more threads are waiting, the notification is lost
-    int NotifyOne() throw(CondException);
+    int NotifyOne();
     //Wake up all threads, return number of threads currently waiting (before wakeup)
-    int NotifyAll() throw(CondException);
+    int NotifyAll();
 
     //Wait until either NotifyOne() or NotifyAll() is executed
-    void Wait() throw(CondException, MutexException);
+    void Wait();
   private:
     //the mutex associated with the condition variable
     Mutex *M;

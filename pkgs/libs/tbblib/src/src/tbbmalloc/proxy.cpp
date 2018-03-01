@@ -173,22 +173,22 @@ void* operator new[](size_t sz) throw (std::bad_alloc) {
 #endif /* TBB_USE_EXCEPTIONS */
     return res;
 }
-void operator delete(void* ptr) throw() {
+void operator delete(void* ptr) noexcept {
     scalable_free(ptr);
 }
-void operator delete[](void* ptr) throw() {
+void operator delete[](void* ptr) noexcept {
     scalable_free(ptr);
 }
-void* operator new(size_t sz, const std::nothrow_t&) throw() {
+void* operator new(size_t sz, const std::nothrow_t&) noexcept {
     return scalable_malloc(sz);
 }
-void* operator new[](std::size_t sz, const std::nothrow_t&) throw() {
+void* operator new[](std::size_t sz, const std::nothrow_t&) noexcept {
     return scalable_malloc(sz);
 }
-void operator delete(void* ptr, const std::nothrow_t&) throw() {
+void operator delete(void* ptr, const std::nothrow_t&) noexcept {
     scalable_free(ptr);
 }
-void operator delete[](void* ptr, const std::nothrow_t&) throw() {
+void operator delete[](void* ptr, const std::nothrow_t&) noexcept {
     scalable_free(ptr);
 }
 
@@ -313,26 +313,26 @@ void* operator_new_arr(size_t sz) throw (std::bad_alloc) {
     if (NULL == res) throw std::bad_alloc();
     return res;
 }
-void operator_delete(void* ptr) throw() {
+void operator_delete(void* ptr) noexcept {
     safer_scalable_free2(ptr);
 }
 #if _MSC_VER && !defined(__INTEL_COMPILER)
 #pragma warning( pop )
 #endif
 
-void operator_delete_arr(void* ptr) throw() {
+void operator_delete_arr(void* ptr) noexcept {
     safer_scalable_free2(ptr);
 }
-void* operator_new_t(size_t sz, const std::nothrow_t&) throw() {
+void* operator_new_t(size_t sz, const std::nothrow_t&) noexcept {
     return scalable_malloc(sz);
 }
-void* operator_new_arr_t(std::size_t sz, const std::nothrow_t&) throw() {
+void* operator_new_arr_t(std::size_t sz, const std::nothrow_t&) noexcept {
     return scalable_malloc(sz);
 }
-void operator_delete_t(void* ptr, const std::nothrow_t&) throw() {
+void operator_delete_t(void* ptr, const std::nothrow_t&) noexcept {
     safer_scalable_free2(ptr);
 }
-void operator_delete_arr_t(void* ptr, const std::nothrow_t&) throw() {
+void operator_delete_arr_t(void* ptr, const std::nothrow_t&) noexcept {
     safer_scalable_free2(ptr);
 }
 
@@ -363,8 +363,8 @@ _expand (by dummy implementation)
 ??_V@YAXPEAX@Z    void * operator new[](unsigned __int64) (intel64)
 ??3@YAXPEAX@Z     operator delete                         (intel64)  
 ??_V@YAXPEAX@Z    operator delete[]                       (intel64)
-??2@YAPAXIABUnothrow_t@std@@@Z      void * operator new (size_t sz, const std::nothrow_t&) throw()  (optional)
-??_U@YAPAXIABUnothrow_t@std@@@Z     void * operator new[] (size_t sz, const std::nothrow_t&) throw() (optional)
+??2@YAPAXIABUnothrow_t@std@@@Z      void * operator new (size_t sz, const std::nothrow_t&) noexcept  (optional)
+??_U@YAPAXIABUnothrow_t@std@@@Z     void * operator new[] (size_t sz, const std::nothrow_t&) noexcept (optional)
 
 and these functions have runtime-specific replacement:
 realloc
