@@ -175,9 +175,9 @@ public:
     };
 
     zero_allocator() throw() { }
-    zero_allocator(const zero_allocator &a) throw() : base_allocator_type( a ) { }
+    zero_allocator(const zero_allocator &a) { }
     template<typename U>
-    zero_allocator(const zero_allocator<U> &a) throw() : base_allocator_type( Allocator<U>( a ) ) { }
+    zero_allocator(const zero_allocator<U> &a) { }
 
     pointer allocate(const size_type n, const void *hint = 0 ) {
         pointer ptr = base_allocator_type::allocate( n, hint );
