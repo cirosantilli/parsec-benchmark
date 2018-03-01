@@ -92,12 +92,12 @@ The following return values can occur:
 
 =over 4
 
-=item 1
+=item C<1>
 
 The shutdown was successfully completed. The "close notify" alert was sent
 and the peer's "close notify" alert was received.
 
-=item 0
+=item C<0>
 
 The shutdown is not yet finished. Call SSL_shutdown() for a second time,
 if a bidirectional shutdown shall be performed.
