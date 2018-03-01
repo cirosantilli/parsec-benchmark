@@ -1,6 +1,8 @@
 *.tar
+*.tar.gz
 *~
 /log
+/parsec-3.0
 /pkgs/libs/gsl/src/doc/gsl-ref.info*
 /pkgs/tools/libtool/src/doc/libtool.info*
 autom4te.cache
@@ -15,3 +17,7 @@ run
 # libtool doc timestap
 /pkgs/tools/libtool/src/doc/stamp-vti
 /pkgs/tools/libtool/src/doc/version.texi
+
+# Unignore leftover present in the tars.
+/toolkit/hpt/loggroup1.old/
+/toolkit/hpt/loggroup2.old/
