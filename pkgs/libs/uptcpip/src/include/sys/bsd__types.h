@@ -97,12 +97,12 @@ typedef	__uint32_t	__fixpt_t;	/* fixed point number */
  * mbstate_t is an opaque object to keep conversion state during multibyte
  * stream conversions.
  */
-#ifndef __mbstate_t_defined
-# define __mbstate_t_defined    1
-typedef union {
-	char		__mbstate8[128];
-	__int64_t	_mbstateL;	/* for alignment */
-} __mbstate_t;
-#endif 
+// #ifndef __mbstate_t_defined
+// # define __mbstate_t_defined    1
+// typedef union {
+// 	char		__mbstate8[128];
+// 	__int64_t	_mbstateL;	/* for alignment */
+// } __mbstate_t;
+// #endif 
 
 #endif /* !_BSD_SYS__TYPES_H_ */
