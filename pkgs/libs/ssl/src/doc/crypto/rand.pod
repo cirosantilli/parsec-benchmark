@@ -74,16 +74,16 @@ First up I will state the things I believe I need for a good RNG.
 
 =over 4
 
-=item 1
+=item C<1>
 
 A good hashing algorithm to mix things up and to convert the RNG 'state'
 to random numbers.
 
-=item 2
+=item C<2>
 
 An initial source of random 'state'.
 
-=item 3
+=item C<3>
 
 The state should be very large.  If the RNG is being used to generate
 4096 bit RSA keys, 2 2048 bit random strings are required (at a minimum).
@@ -93,13 +93,13 @@ carried away on this last point but it does indicate that it may not be
 a bad idea to keep quite a lot of RNG state.  It should be easier to
 break a cipher than guess the RNG seed data.
 
-=item 4
+=item C<4>
 
 Any RNG seed data should influence all subsequent random numbers
 generated.  This implies that any random seed data entered will have
 an influence on all subsequent random numbers generated.
 
-=item 5
+=item C<5>
 
 When using data to seed the RNG state, the data used should not be
 extractable from the RNG state.  I believe this should be a
@@ -108,12 +108,12 @@ data would be a private key or a password.  This data must
 not be disclosed by either subsequent random numbers or a
 'core' dump left by a program crash.
 
-=item 6
+=item C<6>
 
 Given the same initial 'state', 2 systems should deviate in their RNG state
 (and hence the random numbers generated) over time if at all possible.
 
-=item 7
+=item C<7>
 
 Given the random number output stream, it should not be possible to determine
 the RNG state or the next random number.
