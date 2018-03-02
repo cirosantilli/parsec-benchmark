@@ -40,6 +40,23 @@ Run logs are stored under:
 
     ls logs/
 
+## Ubuntu 17.10
+
+gcc 7, x264 build fails with:
+
+    /usr/bin/gcc -o x264 x264.o matroska.o muxers.o libx264.a -L/usr/lib64 -L/usr/lib -L/usr/lib64 -L/usr/lib  -lm -lpthread -s
+    /usr/bin/ld: libx264.a(cabac-a.o): relocation R_X86_64_32 against symbol `x264_cabac_range_lps' can not be used when making a shared object; recompile with -fPIC
+    /usr/bin/ld: libx264.a(dct-a.o): relocation R_X86_64_32 against `.rodata' can not be used when making a shared object; recompile with -fPIC
+    /usr/bin/ld: libx264.a(deblock-a.o): relocation R_X86_64_32 against `.rodata' can not be used when making a shared object; recompile with -fPIC
+    /usr/bin/ld: libx264.a(mc-a.o): relocation R_X86_64_32 against `.rodata' can not be used when making a shared object; recompile with -fPIC
+    /usr/bin/ld: libx264.a(mc-a2.o): relocation R_X86_64_32 against `.rodata' can not be used when making a shared object; recompile with -fPIC
+    /usr/bin/ld: libx264.a(pixel-a.o): relocation R_X86_64_32 against `.rodata' can not be used when making a shared object; recompile with -fPIC
+    /usr/bin/ld: libx264.a(predict-a.o): relocation R_X86_64_32 against `.rodata' can not be used when making a shared object; recompile with -fPIC
+    /usr/bin/ld: libx264.a(quant-a.o): relocation R_X86_64_32 against `.rodata' can not be used when making a shared object; recompile with -fPIC
+    /usr/bin/ld: libx264.a(sad-a.o): relocation R_X86_64_32 against `.rodata' can not be used when making a shared object; recompile with -fPIC
+    /usr/bin/ld: libx264.a(dct-64.o): relocation R_X86_64_32 against `.rodata' can not be used when making a shared object; recompile with -fPIC
+    /usr/bin/ld: final link failed: Nonrepresentable section on output
+
 ## About
 
 This repo was started from version 3.0-beta-20150206:
