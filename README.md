@@ -40,6 +40,12 @@ Run logs are stored under:
 
     ls logs/
 
+One of the most valuable things parsec adds is that it instruments the region of interest of all benchmarks with:
+
+    __parsec_roi_begin
+
+so you will likely want to override that to some simulator magic instruction. TODO link to the GEM5 one.
+
 ## Ubuntu 17.10
 
 gcc 7, x264 build fails with:
@@ -67,6 +73,8 @@ This repo was started from version 3.0-beta-20150206:
 We later learnt about `parsec-3.0-core.tar.gz`, which is in theory cleaner than the full tar, but even that still contains some tars, so it won't make much of a difference.
 
 Why this fork: how can a project exist without Git those days? I need a way to track my patches sanely. And the thing didn't build on latest Ubuntu of course :-)
+
+We try to keep this as close to mainline functionality as possible to be able to compare results, except that it should build and run.
 
 We can't track all the huge input blobs on GitHub or it will blow up the 1Gb max size, so let's try to track everything that is not humongous, and then let users download the missing blobs from Princeton directly.
 
