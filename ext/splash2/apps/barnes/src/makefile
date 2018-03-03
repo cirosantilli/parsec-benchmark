@@ -1,12 +1,11 @@
 TARGET = barnes
 FILES = code.C code_io.C load.C grav.C getparam.C util.C \
 	code.H defs.H stdinc.H vectmath.H
-CS = code.c code_io.c load.c grav.c getparam.c util.c 
+CS = code.c code_io.c load.c grav.c getparam.c util.c
 OBJS = code.o code_io.o load.o grav.o getparam.o util.o
-CFLAGS = -O2 -w 
-LDFLAGS = -lm -lpthread
+LDFLAGS += -lm -lpthread
 MACROS = ../../../null_macros/c.m4.null.pthread
-M4 = m4 -s -Ulen -Uindex
+M4FLAGS = -s -Ulen -Uindex
 
 x = *
 
@@ -18,8 +17,7 @@ ifdef version
 endif
 
 $(TARGET): $(OBJS)
-	gcc $(OBJS) $(CFLAGS) -o $(TARGET) $(LDFLAGS)
-
+	$(CC) $(OBJS) $(CFLAGS) -o $(TARGET) $(LDFLAGS)
 
 install:
 	mkdir -p $(PREFIX)/bin
@@ -33,21 +31,21 @@ clean:
 .SUFFIXES:	.o .c .C .h .H
 
 .H.h:
-	$(M4) ${MACROS} $*.H > $*.h
+	$(M4) $(M4FLAGS) $(MACROS) $*.H > $*.h
 
 .C.c:
-	$(M4) $(MACROS) $*.C > $*.c
+	$(M4) $(M4FLAGS) $(MACROS) $*.C > $*.c
 
 .c.o:
-	gcc -c $(CFLAGS) $*.c
+	$(CC) -c $(CFLAGS) $*.c
 
 .C.o:
-	$(M4) $(MACROS) $*.C > $*.c
-	gcc -c $(CFLAGS) $*.c
+	$(M4) $(M4FLAGS) $(MACROS) $*.C > $*.c
+	$(CC) -c $(CFLAGS) $*.c
 
 code.h: code.H defs.h
 defs.h: defs.H stdinc.h vectmath.h
-stdinc.h: stdinc.H 
+stdinc.h: stdinc.H
 vectmath.h : vectmath.H
 
 code.o: code.C code.h defs.h

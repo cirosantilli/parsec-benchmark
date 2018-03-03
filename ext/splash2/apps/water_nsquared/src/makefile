@@ -1,9 +1,7 @@
 TARGET = water_nsquared
-
 OBJS = water.o mdmain.o syscons.o kineti.o bndry.o cnstnt.o initia.o \
        interf.o intraf.o cshift.o poteng.o predcor.o
-CFLAGS = -O2 -w  
-LDFLAGS = -lm -pthread 
+LDFLAGS += -lm -pthread
 MACROS = ../../../null_macros/c.m4.null.pthread
 
 x = *
@@ -15,22 +13,21 @@ ifdef version
   endif
 endif
 
-
 .SUFFIXES:
 .SUFFIXES: .o .S .s .c .C .U .h .H
 
 .H.h:
-	m4 $(MACROS) $*.H > $*.h
+	$(M4) $(MACROS) $*.H > $*.h
 .C.c:
-	m4 $(MACROS) $*.C > $*.c
+	$(M4) $(MACROS) $*.C > $*.c
 .c.o:
-	gcc -c $(CFLAGS) $*.c
+	$(CC) -c $(CFLAGS) $*.c
 .C.o:
-	m4 $(MACROS) $*.C > $*.c
-	gcc -c $(CFLAGS) $*.c
+	$(M4) $(MACROS) $*.C > $*.c
+	$(CC) -c $(CFLAGS) $*.c
 
 $(TARGET): $(OBJS)
-	gcc $(OBJS) $(CFLAGS) -o $(TARGET) $(LDFLAGS)
+	$(CC) $(OBJS) $(CFLAGS) -o $(TARGET) $(LDFLAGS)
 
 install:
 	mkdir -p $(PREFIX)/bin
@@ -58,4 +55,3 @@ interf.c: interf.C mdvar.h water.h wwpot.h cnst.h global.h split.h \
 cshift.c: cshift.C water.h
 poteng.c: poteng.C global.h split.h mdvar.h frcnst.h water.h wwpot.h \
            parameters.h mddata.h
-

@@ -1,11 +1,10 @@
 TARGET = raytrace
-
 OBJS = bbox.o cr.o env.o fbuf.o geo.o huprn.o husetup.o hutv.o isect.o \
 	main.o matrix.o memory.o poly.o raystack.o shade.o sph.o trace.o \
 	tri.o workpool.o
-LDFLAGS = -lpthread -lm
+LDFLAGS += -lpthread -lm
 MACROS = ../../../null_macros/c.m4.null.pthread
-CFLAGS =  -O2 -w 
+M4FLAGS = -Uindex -Ulen
 
 x = *
 
@@ -17,8 +16,7 @@ ifdef version
 endif
 
 $(TARGET): $(OBJS)
-	gcc $(OBJS) $(CFLAGS) -o $(TARGET) $(LDFLAGS)
-
+	$(CC) $(OBJS) $(CFLAGS) -o $(TARGET) $(LDFLAGS)
 
 install:
 	mkdir -p $(PREFIX)/bin
@@ -28,25 +26,21 @@ install:
 clean:
 	rm -rf *.c *.h *.o $(TARGET)
 
-
-M4 = -m4 -Uindex -Ulen
-RM = -rm -f
-
 .SUFFIXES:
-.SUFFIXES:      .o .c .C .h .H
+.SUFFIXES: .o .c .C .h .H
 
 .H.h:
-	$(M4) ${MACROS} $*.H > $*.h
+	$(M4) $(M4FLAGS) $(MACROS) $*.H > $*.h
 
 .C.c:
 	$(M4) $(MACROS) $*.C > $*.c
 
 .c.o:
-	gcc -c $(CFLAGS) $*.c
+	$(CC) -c $(CFLAGS) $*.c
 
 .C.o:
 	$(M4) $(MACROS) $*.C > $*.c
-	gcc -c $(CFLAGS) $*.c
+	$(CC) -c $(CFLAGS) $*.c
 
 bbox.c: bbox.C rt.h
 cr.c:	cr.C rt.h
@@ -67,4 +61,3 @@ sph.c:	sph.C rt.h
 trace.c: trace.C rt.h
 tri.c:	tri.C rt.h
 workpool.c: workpool.C rt.h
-

@@ -1,9 +1,7 @@
 TARGET = lu_cb
 OBJS = lu.o
-CFLAGS = -O2 -w 
-LDFLAGS = -lpthread -lm
+LDFLAGS += -lpthread -lm
 MACROS = ../../../null_macros/c.m4.null.pthread
-
 
 x = *
 
@@ -15,7 +13,7 @@ ifdef version
 endif
 
 $(TARGET): $(OBJS)
-	gcc $(OBJS) $(CFLAGS) -o $(TARGET) $(LDFLAGS)
+	$(CC) $(OBJS) $(CFLAGS) -o $(TARGET) $(LDFLAGS)
 
 install:
 	mkdir -p $(PREFIX)/bin
@@ -29,15 +27,15 @@ clean:
 .SUFFIXES:	.o .c .C .h .H
 
 .H.h:
-	m4 ${MACROS} $*.H > $*.h
+	$(M4) ${MACROS} $*.H > $*.h
 
 .C.c:
-	m4 $(MACROS) $*.C > $*.c
+	$(M4) $(MACROS) $*.C > $*.c
 
 .c.o:
-	gcc -c $(CFLAGS) $*.c
+	$(CC) -c $(CFLAGS) $*.c
 
 .C.o:
-	m4 $(MACROS) $*.C > $*.c
-	gcc -c $(CFLAGS) $*.c
+	$(M4) $(MACROS) $*.C > $*.c
+	$(CC) -c $(CFLAGS) $*.c
 

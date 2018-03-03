@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+set -e
+sim=true
+verbose=''
+while getopts Sv OPT; do
+  case "$OPT" in
+    S)
+      sim=false
+      ;;
+    v)
+      verbose=-v
+      ;;
+  esac
+done
+shift "$(($OPTIND - 1))"
+download_dir="${1:-.}"
+outdir="${2:-.}"
+url_base=http://parsec.cs.princeton.edu/download/3.0
+basenames=''
+basenames="$basenames parsec-3.0-core.tar.gz"
+if "$sim"; then
+  basenames="$basenames parsec-3.0-input-sim.tar.gz"
+fi
+# Huge. Impractical for simulators, intended for real silicon.
+# parsec-3.0-input-native.tar.gz
+mkdir -p "$outdir"
+for basename in $basenames; do
+  if [ ! -f "${download_dir}/${basename}" ]; then
+    wget -P "$download_dir" $verbose "${url_base}/${basename}"
+  fi
+  tar -xz $verbose -f "${download_dir}/${basename}" -C "$outdir" --skip-old-files --strip-components=1
+done

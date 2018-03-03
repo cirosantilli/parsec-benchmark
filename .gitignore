@@ -18,6 +18,7 @@ run
 /pkgs/tools/libtool/src/doc/stamp-vti
 /pkgs/tools/libtool/src/doc/version.texi
 
-# Unignore leftover present in the tars.
+# Ignore leftover present in the tars.
+/bin/.#parsecmgmt.1.6
 /toolkit/hpt/loggroup1.old/
 /toolkit/hpt/loggroup2.old/

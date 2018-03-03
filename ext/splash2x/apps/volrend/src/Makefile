@@ -1,6 +1,6 @@
 TARGET = volrend
 OBJS = adaptive.o file.o main.o map.o normal.o octree.o opacity.o option.o raytrace.o render.o view.o
-mylibtiff = libtiff.a
+mylibtiff = libtiff/libtiff.a
 
 CFLAGS := $(CFLAGS) -Wall -W -Wmissing-prototypes -Wmissing-declarations -Wredundant-decls -Wdisabled-optimization
 CFLAGS := $(CFLAGS) -Wpadded -Winline -Wpointer-arith -Wsign-compare -Wendif-labels
@@ -21,14 +21,13 @@ endif
 
 .PHONY:	install clean
 
-all: $(mylibtiff) $(TARGET)
-	@echo Done
+all: $(TARGET)
 
 $(mylibtiff):
 	make -C libtiff
 
-$(TARGET): $(OBJS)
-	$(CC) $(OBJS) $(CFLAGS) -o $(TARGET) $(LDFLAGS) $(LIBS)
+$(TARGET): $(OBJS) $(mylibtiff)
+	$(CC) $(OBJS) $(mylibtiff) $(CFLAGS) -o $(TARGET) $(LDFLAGS) $(LIBS)
 
 install:
 	mkdir -p $(PREFIX)/bin

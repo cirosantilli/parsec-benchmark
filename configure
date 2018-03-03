@@ -1,14 +1,3 @@
 #!/usr/bin/env bash
 sudo apt-get install build-essential m4 x11proto-xext-dev libglu1-mesa-dev libxi-dev libxmu-dev libtbb-dev
-
-# Get input data for running:
-wget http://parsec.cs.princeton.edu/download/3.0/parsec-3.0-core.tar.gz
-tar -vxzf parsec-3.0-core.tar.gz
-wget http://parsec.cs.princeton.edu/download/3.0/parsec-3.0-input-sim.tar.gz
-tar -vxzf parsec-3.0-input-sim.tar.gz
-
-# Huge. Impractical for simulators, intended for real silicon.
-#wget http://parsec.cs.princeton.edu/download/3.0/parsec-3.0-input-native.tar.gz
-#tar -vxzf parsec-3.0-input-native.tar.gz
-
-rsync -av --ignore-existing parsec-3.0/ .
+./get-inputs

@@ -1,11 +1,10 @@
 TARGET = volrend
 OBJS = main.o file.o option.o map.o normal.o opacity.o octree.o view.o \
        render.o adaptive.o raytrace.o
-CFLAGS = -O2 -w -DPRESHD $(CDEBUG) -Ilibtiff
-CCOPTS = -S -I -I$(SIMDIR) -I$(IDIR) -I/usr/include -DAUG $(CFLAGS)
-LDFLAGS = -O2 -w -pthread -lm -Ilibtiff -Llibtiff -ltiff
+CFLAGS += -DPRESHD -Ilibtiff
+LDFLAGS += -pthread -lm
 MACROS = ../../../null_macros/c.m4.null.pthread
-mylibtiff = libtiff.a
+mylibtiff = libtiff/libtiff.a
 
 x = *
 
@@ -16,15 +15,13 @@ ifdef version
   endif
 endif
 
-all: $(mylibtiff) $(TARGET)
-	@echo Done
+all: $(TARGET)
+
+$(TARGET): $(OBJS) $(mylibtiff)
+	$(CC) $(OBJS) $(mylibtiff) $(CFLAGS) -o $(TARGET) $(LDFLAGS)
 
 $(mylibtiff):
-	make -C libtiff
-
-$(TARGET): $(OBJS)  
-	gcc $(OBJS) $(CFLAGS) -o $(TARGET) $(LDFLAGS)
-
+	$(MAKE) -C libtiff
 
 install:
 	mkdir -p $(PREFIX)/bin
@@ -33,23 +30,23 @@ install:
 
 clean:
 	rm -rf *.c *.h *.o $(TARGET)
-	make -C libtiff clean
+	$(MAKE) -C libtiff clean
 
 .SUFFIXES:
 .SUFFIXES:	.o .c .C .h .H
 
-.H.h:	
-	m4 ${MACROS} $*.H > $*.h
+.H.h:
+	$(M4) ${MACROS} $*.H > $*.h
 
-.C.c:	
-	m4 $(MACROS) $*.C > $*.c
+.C.c:
+	$(M4) $(MACROS) $*.C > $*.c
 
-.c.o:	
-	gcc -c $(CFLAGS) $*.c
+.c.o:
+	$(CC) -c $(CFLAGS) $*.c
 
-.C.o:	
-	m4 $(MACROS) $*.C > $*.c
-	gcc -c $(CFLAGS) $*.c
+.C.o:
+	$(M4) $(MACROS) $*.C > $*.c
+	$(CC) -c $(CFLAGS) $*.c
 
 main.c:	main.C incl.h anl.h
 file.c:	file.C incl.h

@@ -1,8 +1,7 @@
 TARGET = ocean_ncp
 OBJS = main.o jacobcalc.o laplacalc.o \
 	slave1.o slave2.o multi.o
-CFLAGS = -O2 -w  
-LDFLAGS = -lpthread -lm
+LDFLAGS += -lpthread -lm
 MACROS = ../../../null_macros/c.m4.null.pthread
 
 x = *
@@ -15,7 +14,7 @@ ifdef version
 endif
 
 $(TARGET): $(OBJS)
-	gcc $(OBJS) -o $(TARGET) $(LDFLAGS)
+	$(CC) $(OBJS) -o $(TARGET) $(LDFLAGS)
 
 install:
 	mkdir -p $(PREFIX)/bin
@@ -28,18 +27,18 @@ clean:
 .SUFFIXES:
 .SUFFIXES:	.o .c .C .h .H
 
-.H.h: 
-	m4 ${MACROS} $*.H > $*.h
+.H.h:
+	$(M4) ${MACROS} $*.H > $*.h
 
-.C.c: 
-	m4 $(MACROS) $*.C > $*.c
+.C.c:
+	$(M4) $(MACROS) $*.C > $*.c
 
-.c.o: 
-	gcc -c $(CFLAGS) $*.c
+.c.o:
+	$(CC) -c $(CFLAGS) $*.c
 
-.C.o: 
-	m4 $(MACROS) $*.C > $*.c
-	gcc -c $(CFLAGS) $*.c
+.C.o:
+	$(M4) $(MACROS) $*.C > $*.c
+	$(CC) -c $(CFLAGS) $*.c
 
 decs.h: decs.H
 jacobcalc.c: decs.h
@@ -48,4 +47,3 @@ slave1.c: decs.h
 laplacalc.c: decs.h
 multi.c : decs.h
 slave2.c: decs.h
-

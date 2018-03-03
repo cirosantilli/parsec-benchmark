@@ -3,8 +3,8 @@ TARGET = rltotiff
 TIFF_LIBDIR = ./libtiff
 TIFF_INCDIR = ./libtiff
 OBJS = rltotiff.o tiff_rgba_io.o
-LDFLAGS = -L$(TIFF_LIBDIR) -lc_s -ltiff
-CFLAGS = -I$(TIFF_INCDIR)
+LDFLAGS += -L$(TIFF_LIBDIR) -lc_s -ltiff
+CFLAGS += -I$(TIFF_INCDIR)
 
 x = *
 
@@ -16,15 +16,10 @@ ifdef version
 endif
 
 $(TARGET): $(OBJS)
-	cc $(OBJS) $(CFLAGS) -o $(TARGET) $(LDFLAGS)
-
-
-M4 = -m4 -Uindex -Ulen
-RM = -rm -f
+	$(CC) $(OBJS) $(CFLAGS) -o $(TARGET) $(LDFLAGS)
 
 .SUFFIXES:
-.SUFFIXES:      .o .c
+.SUFFIXES: .o .c
 
 .c.o:
-	cc -c $(CFLAGS) $*.c
-
+	$(CC) -c $(CFLAGS) $*.c

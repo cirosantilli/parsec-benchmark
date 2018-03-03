@@ -1,7 +1,7 @@
 TARGET = radiosity
 
 OBJS = rad_main.o patchman.o elemman.o taskman.o modelman.o smallobj.o\
-         display.o visible.o rad_tools.o room_model.o 
+         display.o visible.o rad_tools.o room_model.o
 HHS = model.H parallel.H patch.H radiosity.H task.H
 HS = model.h parallel.h patch.h radiosity.h task.h
 
@@ -11,10 +11,10 @@ GLIB    = glib.a
 LIBFPE = -lfpe
 
 MACROS = ../../../null_macros/c.m4.null.pthread
-CCOPTS = -I -float -I/usr/include $(CFLAGS)
-LDFLAGS = -g -w -lpthread -lm 
-CFLAGS = $(CINCLUDE) -g 
-CINCLUDE = -I$(GLIBDIR) -I./glibps -I/usr/local/include
+CCOPTS = -I -float $(CFLAGS)
+CINCLUDE = -I$(GLIBDIR) -I./glibps
+LDFLAGS += -g -w -lpthread -lm
+CFLAGS += $(CINCLUDE) -g
 
 LOADLIBES =  $(GLIBDIR)/$(GLIB) glibps/glibps.a
 
@@ -27,10 +27,10 @@ ifdef version
   endif
 endif
 
-$(TARGET): $(OBJS) 
-	make -C glibdumb	
-	make -C glibps	
-	gcc $(CFLAGS) $(OBJS) $(LOADLIBES) -o $(TARGET) $(LDFLAGS) 
+$(TARGET): $(OBJS)
+	$(MAKE) -C glibdumb
+	$(MAKE) -C glibps
+	$(CC) $(CFLAGS) $(OBJS) $(LOADLIBES) -o $(TARGET) $(LDFLAGS)
 
 install:
 	mkdir -p $(PREFIX)/bin
@@ -38,25 +38,25 @@ install:
 	cp -f run.sh $(PREFIX)/bin/run.sh
 
 clean:
-	make -C glibdumb clean	
-	make -C glibps	clean
+	$(MAKE) -C glibdumb clean
+	$(MAKE) -C glibps	clean
 	rm -rf *.c *.h *.o $(TARGET)
 
 .SUFFIXES:
 .SUFFIXES:	.o .c .C .h .H
 
-.H.h:	
-	m4 -Ulen -Uindex ${MACROS} $*.H > $*.h
+.H.h:
+	$(M4) -Ulen -Uindex $(MACROS) $*.H > $*.h
 
-.C.c:	
-	m4 -Ulen -Uindex $(MACROS) $*.C > $*.c
+.C.c:
+	$(M4) -Ulen -Uindex $(MACROS) $*.C > $*.c
 
-.c.o:	
-	gcc -c $(CFLAGS) $*.c
+.c.o:
+	$(CC) -c $(CFLAGS) $*.c
 
-.C.o:	
-	m4 -Ulen -Uindex $(MACROS) $*.C > $*.c
-	gcc -c $(CFLAGS) $*.c
+.C.o:
+	$(M4) -Ulen -Uindex $(MACROS) $*.C > $*.c
+	$(CC) -c $(CFLAGS) $*.c
 
 $(HS): $(HHS)
 

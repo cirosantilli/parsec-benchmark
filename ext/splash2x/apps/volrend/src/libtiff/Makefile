@@ -29,7 +29,7 @@ DESTDIR=/usr/local
 AR=	/usr/bin/ar
 NULL=
 
-IPATH=	-I. -I/usr/include/bsd
+IPATH=	-I.
 #
 # Library-wide configuration defines:
 #    MMAP_SUPPORT	add support for memory mapping read-only files
@@ -146,7 +146,7 @@ tif_compress.o: tif_compress.c Makefile
 tif_fax3.o: tif_fax3.c g3states.h t4.h tif_fax3.h
 
 g3states.h: mkg3states.c t4.h
-	${CC} -o mkg3states ${CFLAGS} mkg3states.c
+	${HOSTCC} -o mkg3states ${CFLAGS} mkg3states.c
 	./mkg3states -c > g3states.h
 
 install: all installh

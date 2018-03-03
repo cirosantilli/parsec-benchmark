@@ -16,7 +16,19 @@
 
 #define INPROCS      1024
 #define MAX_LEVELS     14
-#ifdef SPARC_SOLARIS //32bit
+// 32bit
+//
+// GCC does not allow for 2 ** 31 sized arrays.
+//
+// decs.H:100:11: error: size of array ‘q_multi’ is too large                                               
+//   double q_multi[MAX_LEVELS][IMAX][JMAX];
+//
+// Furthermore, the arrays are of type long and double,
+// so the calculations here are just off and have never been tested?
+//
+// https://stackoverflow.com/questions/42574890/why-is-the-maximum-size-of-an-array-too-large
+//
+#if PTRDIFF_MAX < (1 << 30)
 #define IMAX         2050
 #define JMAX         2050
 #else
