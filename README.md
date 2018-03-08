@@ -4,7 +4,7 @@ PARSEC <http://parsec.cs.princeton.edu/> 3.0-beta-20150206 ported to Ubuntu 16.0
 
 ## Getting started Buildroot cross compilation
 
-See the instructions at: <https://github.com/cirosantilli/linux-kernel-module-cheat#parsec-benchmark> The Buildroot package is in that repo.
+See the instructions at: <https://github.com/cirosantilli/linux-kernel-module-cheat#parsec-benchmark> The Buildroot package is in that repo at: <https://github.com/cirosantilli/linux-kernel-module-cheat/tree/2c12b21b304178a81c9912817b782ead0286d282/parsec-benchmark>
 
 Only SPLASH2 was ported currently, not the other benchmarks.
 
