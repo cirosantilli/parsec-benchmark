@@ -1,6 +1,6 @@
-# Parsec Benchmark
+# PARSEC Benchmark
 
-<http://parsec.cs.princeton.edu/> 3.0-beta-20150206 ported to Ubuntu 16.04 and SPLASH2 ported to Buildroot 2017.08 cross compilation (ARM, MIPS, etc.).
+PARSEC <http://parsec.cs.princeton.edu/> 3.0-beta-20150206 ported to Ubuntu 16.04 and SPLASH2 ported to Buildroot 2017.08 cross compilation (ARM, MIPS, etc.).
 
 ## Getting started Buildroot cross compilation
 
