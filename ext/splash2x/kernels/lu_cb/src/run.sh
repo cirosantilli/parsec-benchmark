@@ -53,7 +53,7 @@ case "${INPUTSIZE}" in
 	exit 1;;
 esac
  
-PROG="${PARSECDIR}/ext/splash2/kernels/${TARGET}/inst/${PARSECPLAT}/bin/${TARGET}"
+PROG="${PARSECDIR}/ext/splash2x/kernels/${TARGET}/inst/${PARSECPLAT}/bin/${TARGET}"
 
 
 #Some tests
