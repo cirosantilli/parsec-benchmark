@@ -121,6 +121,7 @@ Related:
 
 - https://github.com/bamos/parsec-benchmark I would gladly merge with that repo, let's see if the owner is responsive: https://github.com/bamos/parsec-benchmark/issues/3
 - https://yulistic.gitlab.io/2016/05/parsec-3.0-installation-issues/ documents some of the issues that needed to be solved, but I had many many more
+- https://github.com/anthonygego/gem5-parsec3 Apparently focuses on image generation via QEMU native compilation.
 
 TODO: after build some `./configure` and `config.h.in` files are modified. But removing them makes build fail. E.g.:
 
