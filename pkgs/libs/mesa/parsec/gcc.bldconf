@@ -26,5 +26,5 @@ build_env=""
 build_inplace="TRUE"
 
 # Arguments to pass to the configure script, if it exists
-build_conf="--with-driver=xlib --enable-glut --enable-static --disable-shared"
+build_conf="--with-driver=xlib --enable-glut --enable-static --disable-shared --build=${GNU_HOST_NAME} --host=${GNU_TARGET_NAME}"
 

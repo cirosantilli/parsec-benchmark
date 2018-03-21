@@ -27,5 +27,4 @@ build_env="CXXFLAGS=\"${CXXFLAGS} -fexceptions\""
 build_inplace="FALSE"
 
 # Arguments to pass to the configure script, if it exists
-build_conf="--enable-threads --disable-openmp --disable-tbb"
-
+build_conf="--enable-threads --disable-openmp --disable-tbb --build=${GNU_HOST_NAME} --host=${GNU_TARGET_NAME}"

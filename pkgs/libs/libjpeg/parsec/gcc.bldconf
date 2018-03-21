@@ -27,4 +27,4 @@ build_env=""
 build_inplace="FALSE"
 
 # Arguments to pass to the configure script, if it exists
-build_conf="--disable-shared"
+build_conf="--disable-shared --build=${GNU_HOST_NAME} --host=${GNU_TARGET_NAME}"

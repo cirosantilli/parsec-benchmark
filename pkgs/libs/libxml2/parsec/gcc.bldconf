@@ -26,4 +26,4 @@ build_env="CFLAGS=\"-I${PARSECDIR}/pkgs/libs/zlib/inst/${PARSECPLAT}/include ${C
 build_inplace="FALSE"
 
 # Arguments to pass to the configure script, if it exists
-build_conf="--disable-shared --with-threads"
+build_conf="--disable-shared --with-threads --build=${GNU_HOST_NAME} --host=${GNU_TARGET_NAME}"

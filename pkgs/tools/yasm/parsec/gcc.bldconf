@@ -27,4 +27,4 @@ build_env="LIBS=\"${LDFLAGS} ${LIBS}\""
 build_inplace="FALSE"
 
 # Arguments to pass to the configure script, if it exists
-build_conf=""
+build_conf="--build=${GNU_HOST_NAME} --host=${GNU_TARGET_NAME}"

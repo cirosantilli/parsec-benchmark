@@ -34,6 +34,8 @@
 #  include "ia64/atomic.h"
 #elif defined(__alpha__) || defined(__alpha) || defined(alpha) || defined(__ALPHA__)
 #  include "alpha/atomic.h"
+#elif defined(__aarch64__) || defined(__aarch64) || defined(aarch64) || defined(__AARCH64__)
+#  include "aarch64/atomic.h"
 #else
 #  error Architecture not supported by atomic.h
 #endif

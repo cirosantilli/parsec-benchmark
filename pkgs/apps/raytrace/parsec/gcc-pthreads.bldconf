@@ -30,4 +30,4 @@ build_env="version=pthreads CXXFLAGS=\"-I${PARSECDIR}/pkgs/libs/mesa/inst/${PARS
 build_inplace="TRUE"
 
 # Arguments to pass to the configure script, if it exists
-build_conf=""
+build_conf="--build=${GNU_HOST_NAME} --host=${GNU_TARGET_NAME}"

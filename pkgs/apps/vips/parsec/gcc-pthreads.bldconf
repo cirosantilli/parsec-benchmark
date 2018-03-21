@@ -28,4 +28,4 @@ build_inplace="FALSE"
 
 # Arguments to pass to the configure script, if it exists
 vips_basic_conf="--disable-shared --disable-cxx --without-fftw3 --without-magick --without-liboil --without-lcms --without-OpenEXR --without-matio --without-pangoft2 --without-tiff --without-jpeg --without-zip --without-png --without-libexif --without-python --without-x --without-perl --without-v4l --without-cimg"
-build_conf="${vips_basic_conf} --enable-threads"
+build_conf="${vips_basic_conf} --enable-threads --build=${GNU_HOST_NAME} --host=${GNU_TARGET_NAME}"
