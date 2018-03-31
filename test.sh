@@ -4,14 +4,17 @@ set -ex
 
 ncpus="${1:-1}"
 
-## apps
+## parsec
 
-# Worked. Just commented out while we wait for full integration of all
-# non-SPLASH benchmarks on arm and aarch64.
-# ( cd /parsec/pkgs/apps/bodytrack/run && ../inst/arm-linux.gcc/bin/bodytrack sequenceB_1 4 1 5 1 0 1 )
+# TODO aarch64 segfault
+# ( cd pkgs/apps/bodytrack/run && ../inst/aarch64-linux.gcc/bin/bodytrack sequenceB_1 4 1 5 1 0 1 )
+
+## splash2x
+
+### apps
 
 # TODO arm segfault
-# ( cd /parsec/ext/splash2x/apps/barnes/run && ../inst/*/bin/barnes 1 < input_1 )
+# ( cd ext/splash2x/apps/barnes/run && ../inst/*/bin/barnes 1 < input_1 )
 
 # TODO x86_64 host segfault
 #( cd ext/splash2x/apps/fmm/run && ../inst/*/bin/fmm "$ncpus" < input_1 )
@@ -27,7 +30,7 @@ ncpus="${1:-1}"
 ( cd ext/splash2x/apps/water_nsquared/run && ../inst/*/bin/water_nsquared "$ncpus" < input_1 )
 ( cd ext/splash2x/apps/water_spatial/run && ../inst/*/bin/water_spatial "$ncpus" < input_1 )
 
-## kernels
+### kernels
 
 ( cd ext/splash2x/kernels/cholesky/run && ../inst/*/bin/cholesky -p"$ncpus" < tk14.O )
 ( cd ext/splash2x/kernels/cholesky/run && ../inst/*/bin/cholesky "$ncpus" test )
@@ -36,4 +39,4 @@ ncpus="${1:-1}"
 ( cd ext/splash2x/kernels/lu_ncb/run && ../inst/*/bin/lu_ncb -p"$ncpus" -n512 -b16 )
 
 # TODO arm ERROR: Cannot malloc enough memory for global
-# ( cd /parsec/ext/splash2x/kernels/radix/run &&  ../inst/*/bin/radix -p"$ncpus" -r4096 -n262144 -m524288 )
+# ( cd ext/splash2x/kernels/radix/run &&  ../inst/*/bin/radix -p"$ncpus" -r4096 -n262144 -m524288 )

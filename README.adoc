@@ -65,6 +65,7 @@ All builds fail with:
 
 ....
 checking host system type... Invalid configuration `aarch64-buildroot-linux-uclibc': machine `aarch64-buildroot' not recognized
+configure: error: /bin/bash /home/ciro/bak/git/linux-kernel-module-cheat/out/aarch64/buildroot/build/parsec-benchmark-custom/pkgs/apps/bodytrack/src/config.sub aarch64-buildroot-linux-uclibc failed
 ....
 
 TODO why did the analogous ARM work:
@@ -73,27 +74,30 @@ TODO why did the analogous ARM work:
 checking host system type... arm-buildroot-linux-uclibcgnueabi
 ....
 
-I've tried to update all the `config.guess` to: http://git.savannah.gnu.org/gitweb/?p=config.git;a=blob_plain;f=config.guess;h=256083a70d35921d544b15f4f51749af89d18b89;hb=HEAD with;
+I've tried to update all the `config.guess` and `config.sub` via:
 
 ....
-for f in `git ls-files | grep config.guess`; do cp config.guess "$f"; done
+wget -O config.guess 'http://git.savannah.gnu.org/gitweb/?p=config.git;a=blob_plain;f=config.guess;hb=HEAD'
+wget -O config.sub 'http://git.savannah.gnu.org/gitweb/?p=config.git;a=blob_plain;f=config.sub;hb=HEAD'
+for f in `git ls-files | grep config.guess`; do ln -frs config.guess "$f"; done
+for f in `git ls-files | grep config.sub`; do ln -frs config.sub "$f"; done
 ....
 
 as mentioned at: https://stackoverflow.com/questions/25883253/system-androideabi-not-recognized-while-building-libtool-2-2-4 but no change.
 
-I've also tried to force:
+This reveals the next error :-) on `parsec.raytrace`:
 
 ....
-export GNU_TARGET_NAME='aarch64-linux-gnu'
+---------------------------------------------
+CMake 2.6-1, Copyright (c) 2007 Kitware, Inc., Insight Consortium
+---------------------------------------------
+Error when bootstrapping CMake:
+Cannot find appropriate C compiler on this system.
+Please specify one using environment variable CC.
+See cmake_bootstrap.log for compilers attempted.
 ....
 
-which matches what the ARM RSK is doing, but the error message just changed to:
-
-....
-checking host system type... Invalid configuration `aarch64-linux-gnu': machine `aarch64' not recognized
-....
-
-so I wonder if that patch was working at all to start with.
+which depends on cmake. Actually, this is the only cmake dependency, so I'm very tempted to get rid of it.
 
 == Getting started Ubuntu 16.04 native host
 
