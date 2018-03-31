@@ -1,6 +1,5 @@
 include ../Makefile.config
 
-CC = gcc
 CFLAGS = -std=c99 -fPIC -ffreestanding ${GCC_OX} -D_XOPEN_SOURCE -Wall -I../host.support/
 
 OBJS_1 = ../host.support/uptcp_statis.o         ../host.support/host_serv.o         ../host.support/if_host.o
