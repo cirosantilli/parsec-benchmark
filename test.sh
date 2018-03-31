@@ -6,15 +6,19 @@ ncpus="${1:-1}"
 
 ## parsec
 
-# TODO aarch64 segfault
-# ( cd pkgs/apps/bodytrack/run && ../inst/aarch64-linux.gcc/bin/bodytrack sequenceB_1 4 1 5 1 0 1 )
+( cd pkgs/apps/blackscholes/run && ../inst/*/bin/blackscholes 1 in_4.txt prices.txt )
+
+# TODO aarch64 segfault: unhandled level * translation fault
+#( cd pkgs/apps/bodytrack/run && ../inst/*/bin/bodytrack sequenceB_1 4 1 5 1 0 1 )
+#( cd pkgs/apps/facesim/run && ../inst/*/bin/facesim -h )
+#( cd pkgs/apps/ferret/run && ../inst/*/bin/ferret corel lsh queries 5 5 1 output.txt )
 
 ## splash2x
 
 ### apps
 
 # TODO arm segfault
-# ( cd ext/splash2x/apps/barnes/run && ../inst/*/bin/barnes 1 < input_1 )
+#( cd ext/splash2x/apps/barnes/run && ../inst/*/bin/barnes 1 < input_1 )
 
 # TODO x86_64 host segfault
 #( cd ext/splash2x/apps/fmm/run && ../inst/*/bin/fmm "$ncpus" < input_1 )
@@ -22,7 +26,7 @@ ncpus="${1:-1}"
 
 # TODO arm segfault
 # cd /parsec/ext/splash2x/apps/ocean_ncp/run
-# ../inst/*/bin/ocean_ncp -n258 -p"$ncpus" -e1e-07 -r20000 -t28800
+#../inst/*/bin/ocean_ncp -n258 -p"$ncpus" -e1e-07 -r20000 -t28800
 
 ( cd ext/splash2x/apps/radiosity/run && ../inst/*/bin/radiosity -bf 1.5e-1 -batch -room -p "$ncpus" )
 ( cd ext/splash2x/apps/raytrace/run && ../inst/*/bin/raytrace -s -p"$ncpus" -a4 teapot.env )
@@ -39,4 +43,4 @@ ncpus="${1:-1}"
 ( cd ext/splash2x/kernels/lu_ncb/run && ../inst/*/bin/lu_ncb -p"$ncpus" -n512 -b16 )
 
 # TODO arm ERROR: Cannot malloc enough memory for global
-# ( cd ext/splash2x/kernels/radix/run &&  ../inst/*/bin/radix -p"$ncpus" -r4096 -n262144 -m524288 )
+#( cd ext/splash2x/kernels/radix/run &&  ../inst/*/bin/radix -p"$ncpus" -r4096 -n262144 -m524288 )

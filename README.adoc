@@ -13,92 +13,6 @@ PARSEC http://parsec.cs.princeton.edu/ 3.0-beta-20150206 ported to Ubuntu 16.04 
 
 toc::[]
 
-== Getting started Buildroot cross compilation
-
-See the instructions at: https://github.com/cirosantilli/linux-kernel-module-cheat#parsec-benchmark The Buildroot package is in that repo at: https://github.com/cirosantilli/linux-kernel-module-cheat/tree/2c12b21b304178a81c9912817b782ead0286d282/parsec-benchmark
-
-Only SPLASH2 was ported currently, not the other benchmarks.
-
-PARSEC's build was designed for multiple archs, this can be seen at bin/parsecmgmt, but not for cross compilation. Some of the changes we've had to make:
-
-* use `CC` everywhere instead of hardcoded `gcc`
-* use `HOST_CC` for `.c` utilities used during compilation
-* remove absolute paths, e.g. `-I /usr/include`
-
-The following variables are required for cross compilation, with example values:
-
-....
-export GNU_HOST_NAME='x86_64-pc-linux-gnu'
-export HOSTCC='/home/ciro/bak/git/linux-kernel-module-cheat/buildroot/output.arm~/host/bin/ccache /usr/bin/gcc'
-export M4='/home/ciro/bak/git/linux-kernel-module-cheat/buildroot/output.arm~/host/usr/bin/m4'
-export MAKE='/usr/bin/make -j6'
-export OSTYPE=linux
-export TARGET_CROSS='/home/ciro/bak/git/linux-kernel-module-cheat/buildroot/output.arm~/host/bin/arm-buildroot-linux-uclibcgnueabi-'
-export HOSTTYPE='"arm"'
-....
-
-Then just do a normal build.
-
-=== Non SPLASH
-
-We have made a brief attempt to get the other benchmarks working. We have already adapted and merged parts of the patches `static-patch.diff` and `xcompile-patch.diff` present at: https://github.com/arm-university/arm-gem5-rsk/tree/aa3b51b175a0f3b6e75c9c856092ae0c8f2a7cdc/parsec_patches
-
-But it was not enough for successful integration as documented below.
-
-The main point to note is that the non-SPLASH benchmarks all use Automake.
-
-==== Non SPLASH arm
-
-Some of the benchmarks fail to build with:
-
-....
-atomic/atomic.h:38:4: error: #error Architecture not supported by atomic.h
-....
-
-The ARM gem5 RSK patches do seem to fix that for aarch64, but not for arm, we should port them to arm too.
-
-Some benchmarks don't rely on that however, and they do work, e.g. `bodytrack`.
-
-==== Non SPLASH aarch64
-
-All builds fail with:
-
-....
-checking host system type... Invalid configuration `aarch64-buildroot-linux-uclibc': machine `aarch64-buildroot' not recognized
-configure: error: /bin/bash /home/ciro/bak/git/linux-kernel-module-cheat/out/aarch64/buildroot/build/parsec-benchmark-custom/pkgs/apps/bodytrack/src/config.sub aarch64-buildroot-linux-uclibc failed
-....
-
-TODO why did the analogous ARM work:
-
-....
-checking host system type... arm-buildroot-linux-uclibcgnueabi
-....
-
-I've tried to update all the `config.guess` and `config.sub` via:
-
-....
-wget -O config.guess 'http://git.savannah.gnu.org/gitweb/?p=config.git;a=blob_plain;f=config.guess;hb=HEAD'
-wget -O config.sub 'http://git.savannah.gnu.org/gitweb/?p=config.git;a=blob_plain;f=config.sub;hb=HEAD'
-for f in `git ls-files | grep config.guess`; do ln -frs config.guess "$f"; done
-for f in `git ls-files | grep config.sub`; do ln -frs config.sub "$f"; done
-....
-
-as mentioned at: https://stackoverflow.com/questions/25883253/system-androideabi-not-recognized-while-building-libtool-2-2-4 but no change.
-
-This reveals the next error :-) on `parsec.raytrace`:
-
-....
----------------------------------------------
-CMake 2.6-1, Copyright (c) 2007 Kitware, Inc., Insight Consortium
----------------------------------------------
-Error when bootstrapping CMake:
-Cannot find appropriate C compiler on this system.
-Please specify one using environment variable CC.
-See cmake_bootstrap.log for compilers attempted.
-....
-
-which depends on cmake. Actually, this is the only cmake dependency, so I'm very tempted to get rid of it.
-
 == Getting started Ubuntu 16.04 native host
 
 ....
@@ -222,6 +136,125 @@ config/packages/parsec.x264.pkgconf
 === Ubuntu 17.10 splash2x.fmm
 
 Segfaults.
+
+== Getting started Buildroot cross compilation
+
+See the instructions at: https://github.com/cirosantilli/linux-kernel-module-cheat#parsec-benchmark The Buildroot package is in that repo at: https://github.com/cirosantilli/linux-kernel-module-cheat/tree/2c12b21b304178a81c9912817b782ead0286d282/parsec-benchmark
+
+Only SPLASH2 was ported currently, not the other benchmarks.
+
+PARSEC's build was designed for multiple archs, this can be seen at bin/parsecmgmt, but not for cross compilation. Some of the changes we've had to make:
+
+* use `CC` everywhere instead of hardcoded `gcc`
+* use `HOST_CC` for `.c` utilities used during compilation
+* remove absolute paths, e.g. `-I /usr/include`
+
+The following variables are required for cross compilation, with example values:
+
+....
+export GNU_HOST_NAME='x86_64-pc-linux-gnu'
+export HOSTCC='/home/ciro/bak/git/linux-kernel-module-cheat/buildroot/output.arm~/host/bin/ccache /usr/bin/gcc'
+export M4='/home/ciro/bak/git/linux-kernel-module-cheat/buildroot/output.arm~/host/usr/bin/m4'
+export MAKE='/usr/bin/make -j6'
+export OSTYPE=linux
+export TARGET_CROSS='/home/ciro/bak/git/linux-kernel-module-cheat/buildroot/output.arm~/host/bin/arm-buildroot-linux-uclibcgnueabi-'
+export HOSTTYPE='"arm"'
+....
+
+Then just do a normal build.
+
+=== Non SPLASH
+
+We have made a brief attempt to get the other benchmarks working. We have already adapted and merged parts of the patches `static-patch.diff` and `xcompile-patch.diff` present at: https://github.com/arm-university/arm-gem5-rsk/tree/aa3b51b175a0f3b6e75c9c856092ae0c8f2a7cdc/parsec_patches
+
+But it was not enough for successful integration as documented below.
+
+The main point to note is that the non-SPLASH benchmarks all use Automake.
+
+==== Non SPLASH arm
+
+Some of the benchmarks fail to build with:
+
+....
+atomic/atomic.h:38:4: error: #error Architecture not supported by atomic.h
+....
+
+The ARM gem5 RSK patches do seem to fix that for aarch64, but not for arm, we should port them to arm too.
+
+Some benchmarks don't rely on that however, and they do work, e.g. `bodytrack`.
+
+==== Non SPLASH aarch64
+
+Some builds work, but not all.
+
+`parsec.raytrace` depends on `cmake`, which fails with:
+
+....
+---------------------------------------------
+CMake 2.6-1, Copyright (c) 2007 Kitware, Inc., Insight Consortium
+---------------------------------------------
+Error when bootstrapping CMake:
+Cannot find appropriate C compiler on this system.
+Please specify one using environment variable CC.
+See cmake_bootstrap.log for compilers attempted.
+....
+
+which is weird since I am exporting `CC`.
+
+It is the only package that depends on `cmake` and `mesa` as can be found with:
+
+....
+git grep 'deps.*cmake'
+....
+
+cmake we could use host / Buildroot built one, but Mesa, really? For a CPU benchmark? I'm tempted to just get rid of this benchmark.
+
+If we disable `raytrace`, `cmake` and `mesa` by editing `config/packages/parsec.raytrace.pkgconf`, `parsec.cmake.pkgconf` and `parsec.mesa.pkgconf` to contain:
+
+....
+pkg_aliases=""
+....
+
+the next failure is `dedup`, which depends on `ssl`, which fails with:
+
+....
+Operating system: x86_64-whatever-linux2
+Configuring for linux-x86_64
+Usage: Configure.pl [no-<cipher> ...] [enable-<cipher> ...] [experimental-<cipher> ...] [-Dxxx] [-lxxx] [-Lxxx] [-fxxx] [-Kxxx] [no-hw-xxx|no-hw] [[no-]threads] [[no-]shared] [[no-]zlib|zlib-dynamic] [enable-mon
+tasm] [no-asm] [no-dso] [no-krb5] [386] [--prefix=DIR] [--openssldir=OPENSSLDIR] [--with-xxx[=vvv]] [--test-sanity] os/compiler[:flags]
+....
+
+`dedup` and `netdedup` are the only packages that use `ssl`. `ssl` is actually OpenSSL, which Buildroot has.
+
+The next failure is `vips` due to `glib`:
+
+....
+checking for growing stack pointer... configure: error: in `/path/to/linux-kernel-module-cheat/out/aarch64/buildroot/build/parsec-benchmark-custom/pkgs/libs/glib/obj/aarch64-linux.gcc':
+configure: error: cannot run test program while cross compiling
+....
+
+which is weird, I thought those Automake problems were avoided by `--build` and `--host`, which we added in a previous patch.
+
+`glib` is and `libxml` are only used by `vips`. Buildroot has only parts of glib it seems, e.g. `glibmm`, but it does have `libxml2`.
+
+The next failure is `uptcpip` on which all netapps depend:
+
+....
+ar rcs libuptcp.a ../freebsd.kern/*.o ../freebsd.netinet/*.o *.o ../host.support/uptcp_statis.o         ../host.support/host_serv.o         ../host.support/if_host.o                                              
+ar: ../host.support/uptcp_statis.o: No such file or directory
+....
+
+Then I got tired of debugging useless netapps, and the next failure is x264:
+
+....
+Unknown option --build=x86_64-pc-linux-gnu, ignored
+./configure: line 179: ./config.sub: No such file or directory
+Unknown system , edit the configure
+....
+
+I hack in a `pwd` on the configure, and the `CWD` is `pkgs/apps/x264/obj/aarch64-linux.gcc`, so sure, there is no `./config.sub` there...
+
+And the errors are over! :-)
 
 == test.sh unit tests
 
