@@ -20,7 +20,7 @@ pkg_contrib="PARSEC Team"
 pkg_group="libs"
 
 # A list of aliases to which this package belongs, separated by blanks
-pkg_aliases="all libs netapps"
+pkg_aliases=""
 
 # Citations for this package (requires matching citation file)
 pkg_cite=""

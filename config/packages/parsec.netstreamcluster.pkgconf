@@ -20,7 +20,7 @@ pkg_contrib="Princeton University"
 pkg_group="netapps"
 
 # A list of aliases to which this package belongs, separated by blanks
-pkg_aliases="all workload parsec netapps pthreads tbb"
+pkg_aliases=""
 
 # Citations for this package (requires matching citation file)
 pkg_cite="bienia11parsec"

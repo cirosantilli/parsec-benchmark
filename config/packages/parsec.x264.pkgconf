@@ -20,7 +20,7 @@ pkg_contrib="Open source"
 pkg_group="apps"
 
 # A list of aliases to which this package belongs, separated by blanks
-pkg_aliases="all workload parsec apps pthreads"
+pkg_aliases=""
 
 # Citations for this package (requires matching citation file)
 pkg_cite="bienia11parsec"
