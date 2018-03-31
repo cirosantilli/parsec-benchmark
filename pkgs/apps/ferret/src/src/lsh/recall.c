@@ -21,7 +21,6 @@ Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
-#include <fenv.h>
 #include <gsl/gsl_errno.h>
 #include <gsl/gsl_cdf.h>
 #include <gsl/gsl_vector.h>
