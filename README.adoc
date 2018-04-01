@@ -141,6 +141,11 @@ Segfaults.
 
 See the instructions at: https://github.com/cirosantilli/linux-kernel-module-cheat#parsec-benchmark The Buildroot package is in that repo at: https://github.com/cirosantilli/linux-kernel-module-cheat/tree/2c12b21b304178a81c9912817b782ead0286d282/parsec-benchmark
 
+If you have already built for the host previously, you must first in this repo:
+
+* `git clean -xdf`, otherwise the x86 built files will interfere with buildroot
+* run Buildroot on a new shell. Otherwise `. env.sh` adds the `./bin/` of this repo to your `PATH`, and `parsecmgmt` is used from this source, instead of from the copy that Buildroot made
+
 Only SPLASH2 was ported currently, not the other benchmarks.
 
 PARSEC's build was designed for multiple archs, this can be seen at bin/parsecmgmt, but not for cross compilation. Some of the changes we've had to make:
