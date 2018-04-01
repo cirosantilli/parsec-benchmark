@@ -6,7 +6,8 @@ ncpus="${1:-1}"
 
 ## parsec
 
-( cd pkgs/apps/blackscholes/run && ../inst/*/bin/blackscholes 1 in_4.txt prices.txt )
+# Working. Only commented out while we wait to get all non-splash working.
+#( cd pkgs/apps/blackscholes/run && ../inst/*/bin/blackscholes 1 in_4.txt prices.txt )
 
 # TODO aarch64 segfault: unhandled level * translation fault
 #( cd pkgs/apps/bodytrack/run && ../inst/*/bin/bodytrack sequenceB_1 4 1 5 1 0 1 )
