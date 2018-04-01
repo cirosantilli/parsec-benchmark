@@ -26,5 +26,6 @@ build_env="PATH=\"${CC_HOME}/bin:${PATH}\""
 build_inplace="TRUE"
 
 # Arguments to pass to the configure script, if it exists
-build_conf="threads no-zlib no-shared --build=${GNU_HOST_NAME} --host=${GNU_TARGET_NAME}"
+#build_conf="threads no-zlib no-shared linux-${GNU_TARGET_NAME}"
+build_conf="threads no-zlib no-shared"
 
