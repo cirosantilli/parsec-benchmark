@@ -13,6 +13,7 @@ ncpus="${1:-1}"
 #( cd pkgs/apps/bodytrack/run && ../inst/*/bin/bodytrack sequenceB_1 4 1 5 1 0 1 )
 #( cd pkgs/apps/facesim/run && ../inst/*/bin/facesim -h )
 #( cd pkgs/apps/ferret/run && ../inst/*/bin/ferret corel lsh queries 5 5 1 output.txt )
+#( cd pkgs/apps/x264/run && ../inst/*/bin/x264 --quiet --qp 20 --partitions b8x8,i4x4 --ref 5 --direct auto --b-pyramid --weightb --mixed-refs --no-fast-pskip --me umh --subme 7 --analyse b8x8,i4x4 --threads 1 -o eledream.264 eledream_32x18_1.y4m )
 
 ## splash2x
 

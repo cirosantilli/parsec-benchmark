@@ -9,11 +9,11 @@
 :toclevels: 6
 :toc-title:
 
-PARSEC http://parsec.cs.princeton.edu/ 3.0-beta-20150206 ported to Ubuntu 16.04 and SPLASH2 ported to Buildroot 2017.08 cross compilation (ARM, MIPS, etc.).
+PARSEC http://parsec.cs.princeton.edu/ 3.0-beta-20150206 ported to Ubuntu 17.10 and SPLASH2 ported to Buildroot 2017.08 cross compilation (ARM, MIPS, etc.).
 
 toc::[]
 
-== Getting started Ubuntu 16.04 native host
+== Getting started Ubuntu 17.10 native host
 
 ....
 ./configure
@@ -100,40 +100,26 @@ __parsec_roi_begin
 
 so you will likely want to override that to some simulator magic instruction. TODO link to the GEM5 one.
 
-== Ubuntu 17.10 native host
+=== Host x264
 
-=== Ubuntu 17.10 x264
-
-gcc 7, x264 build fails with:
+Fails with:
 
 ....
-/usr/bin/gcc -o x264 x264.o matroska.o muxers.o libx264.a -L/usr/lib64 -L/usr/lib -L/usr/lib64 -L/usr/lib  -lm -lpthread -s
-/usr/bin/ld: libx264.a(cabac-a.o): relocation R_X86_64_32 against symbol `x264_cabac_range_lps' can not be used when making a shared object; recompile with -fPIC
-/usr/bin/ld: libx264.a(dct-a.o): relocation R_X86_64_32 against `.rodata' can not be used when making a shared object; recompile with -fPIC
-/usr/bin/ld: libx264.a(deblock-a.o): relocation R_X86_64_32 against `.rodata' can not be used when making a shared object; recompile with -fPIC
-/usr/bin/ld: libx264.a(mc-a.o): relocation R_X86_64_32 against `.rodata' can not be used when making a shared object; recompile with -fPIC
-/usr/bin/ld: libx264.a(mc-a2.o): relocation R_X86_64_32 against `.rodata' can not be used when making a shared object; recompile with -fPIC
-/usr/bin/ld: libx264.a(pixel-a.o): relocation R_X86_64_32 against `.rodata' can not be used when making a shared object; recompile with -fPIC
-/usr/bin/ld: libx264.a(predict-a.o): relocation R_X86_64_32 against `.rodata' can not be used when making a shared object; recompile with -fPIC
-/usr/bin/ld: libx264.a(quant-a.o): relocation R_X86_64_32 against `.rodata' can not be used when making a shared object; recompile with -fPIC
-/usr/bin/ld: libx264.a(sad-a.o): relocation R_X86_64_32 against `.rodata' can not be used when making a shared object; recompile with -fPIC
-/usr/bin/ld: libx264.a(dct-64.o): relocation R_X86_64_32 against `.rodata' can not be used when making a shared object; recompile with -fPIC
-/usr/bin/ld: final link failed: Nonrepresentable section on output
+[PARSEC] Running 'time /home/ciro/bak/git/linux-kernel-module-cheat/parsec-benchmark/parsec-benchmark/pkgs/apps/x264/inst/amd64-linux.gcc/bin/x264 --quiet --qp 20 --partitions b8x8,i4x4 --ref 5 --direct auto --b-pyramid --weightb --mixed-refs --no-fast-pskip --me umh --subme 7 --analyse b8x8,i4x4 --threads 1 -o eledream.264 eledream_32x18_1.y4m':                                                                          [PARSEC] [---------- Beginning of output ----------]
+PARSEC Benchmark Suite Version 3.0-beta-20150206
+yuv4mpeg: 32x18@25/1fps, 0:0
+*** Error in `/home/ciro/bak/git/linux-kernel-module-cheat/parsec-benchmark/parsec-benchmark/pkgs/apps/x264/inst/amd64-linux.gcc/bin/x264': double free or corruption (!prev): 0x0000000001a88e50 ***
+/home/ciro/bak/git/linux-kernel-module-cheat/parsec-benchmark/parsec-benchmark/bin/parsecmgmt: line 1222: 20944 Aborted                 (core dumped) /home/ciro/bak/git/linux-kernel-module-cheat/parsec-benchmark/parsec-benchmark/pkgs/apps/x264/inst/amd64-linux.gcc/bin/x264 --quiet --qp 20 --partitions b8x8,i4x4 --ref 5 --direct auto --b-pyramid --weightb --mixed-refs --no-fast-pskip --me umh --subme 7 --analyse b8x8,i4x4 --threads 1 -o eledream.264 eledream_32x18_1.y4m
 ....
 
-All other packages built, we have verified that by setting:
+Mentioned on the following unresolved Parsec threads:
 
-....
-pkg_aliases=""
-....
+* https://lists.cs.princeton.edu/pipermail/parsec-users/2014-January/001601.html
+* https://lists.cs.princeton.edu/pipermail/parsec-users/2014-April/001611.html
 
-in:
+The problem does not happen on Ubuntu 17.10's x264 0.148.2795 after removing `b-pyramid` which is not a valid argument anymore it seems., so the easiest fix for this problem is to just take the latest x264 (as a submodule, please!!) and apply parsec `roi` patches to it (`git grep parsec` under `x264/src`).
 
-....
-config/packages/parsec.x264.pkgconf
-....
-
-=== Ubuntu 17.10 splash2x.fmm
+=== Host splash2x.fmm
 
 Segfaults.
 
@@ -245,16 +231,8 @@ which is weird, I thought those Automake problems were avoided by `--build` and 
 The next failure is `uptcpip` on which all netapps depend:
 
 ....
-ar rcs libuptcp.a ../freebsd.kern/*.o ../freebsd.netinet/*.o *.o ../host.support/uptcp_statis.o         ../host.support/host_serv.o         ../host.support/if_host.o                                              
+ar rcs libuptcp.a ../freebsd.kern/*.o ../freebsd.netinet/*.o *.o ../host.support/uptcp_statis.o         ../host.support/host_serv.o         ../host.support/if_host.o
 ar: ../host.support/uptcp_statis.o: No such file or directory
-....
-
-Then I got tired of debugging useless netapps, and the next failure is x264:
-
-....
-Unknown option --build=x86_64-pc-linux-gnu, ignored
-./configure: line 179: ./config.sub: No such file or directory
-Unknown system , edit the configure
 ....
 
 I hack in a `pwd` on the configure, and the `CWD` is `pkgs/apps/x264/obj/aarch64-linux.gcc`, so sure, there is no `./config.sub` there...
