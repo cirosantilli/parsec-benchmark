@@ -200,6 +200,8 @@ git grep 'deps.*cmake'
 
 cmake we could use host / Buildroot built one, but Mesa, really? For a CPU benchmark? I'm tempted to just get rid of this benchmark.
 
+Furthermore, http://gem5.org/PARSEC_benchmarks says that raytrace relies on SSE intrinsics, so maybe it is not trivially portable anyways. 
+
 If we disable `raytrace`, `cmake` and `mesa` by editing `config/packages/parsec.raytrace.pkgconf`, `parsec.cmake.pkgconf` and `parsec.mesa.pkgconf` to contain:
 
 ....
