@@ -281,13 +281,14 @@ All that matters is that this should compile fine: runtime will then fail due to
 
 I feel like libs contains ancient versions of a bunch of well known third party libraries, so we are just re-porting them to newest Ubuntu, which has already been done upstream... and many of the problems are documentation generation related... at some point I want to just use Debian packages or git submodules or Buildroot packages.
 
-Related:
-
-* https://github.com/bamos/parsec-benchmark I would gladly merge with that repo, let's see if the owner is responsive: https://github.com/bamos/parsec-benchmark/issues/3
-* https://yulistic.gitlab.io/2016/05/parsec-3.0-installation-issues/ documents some of the issues that needed to be solved, but I had many many more
-* https://github.com/anthonygego/gem5-parsec3 Apparently focuses on image generation via QEMU native compilation.
-
 TODO: after build some `./configure` and `config.h.in` files are modified. But removing them makes build fail. E.g.:
 
 * `pkgs/apps/bodytrack/src/config.h.in`
 * `pkgs/apps/bodytrack/src/configure`
+
+== Bibliography
+
+* https://github.com/bamos/parsec-benchmark I would gladly merge with that repo, let's see if the owner is responsive: https://github.com/bamos/parsec-benchmark/issues/3
+* https://github.com/arm-university/arm-gem5-rsk contains patches to QEMU native and cross build PARSEC, and also implements the link:https://github.com/arm-university/arm-gem5-rsk/blob/aa3b51b175a0f3b6e75c9c856092ae0c8f2a7cdc/parsec_patches/qemu-patch.diff#L16[ROI callbacks fore gem5]. But I don't think they have all benchmarks working, although that is not clearly documented: we have noted some failures which are simply not fixed in the patches there.
+* https://yulistic.gitlab.io/2016/05/parsec-3.0-installation-issues/ documents some of the issues that needed to be solved, but I had many many more
+* https://github.com/anthonygego/gem5-parsec3 Apparently focuses on image generation via QEMU native compilation.
