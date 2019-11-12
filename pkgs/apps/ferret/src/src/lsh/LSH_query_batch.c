@@ -139,7 +139,7 @@ void LSH_query_batch (const LSH_query_t *query, int N, const float **point, cass
 		}
 		LSH_hash2_noperturb(lsh, tmp, tmp2, L);
 
-		TOPK_INIT(topk[i], dist, K, HUGE);
+		TOPK_INIT(topk[i], dist, K, HUGE_VAL);
 		for (j = 0; j < L; j++)
 		{
 			int k;
@@ -320,9 +320,9 @@ void LSH_query_batch_ca (const LSH_query_t *query, int N, const float **point, c
 	for (i = 0; i < N; i++)
 	{
 		int j;
-		TOPK_INIT(topk[i], dist, K, HUGE);
+		TOPK_INIT(topk[i], dist, K, HUGE_VAL);
 		for (j = 0; j < T; j++)
-			TOPK_INIT(ptopk[i][j], dist, K, HUGE);
+			TOPK_INIT(ptopk[i][j], dist, K, HUGE_VAL);
 	}
 
 	//stimer_tuck(&tmr, "Stage-2");

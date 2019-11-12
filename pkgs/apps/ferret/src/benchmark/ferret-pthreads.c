@@ -387,7 +387,7 @@ void *t_out (void *dummy)
 		ARRAY_BEGIN_FOREACH(rank->result.u.list, cass_list_entry_t p)
 		{
 			char *obj = NULL;
-			if (p.dist == HUGE) continue;
+			if (p.dist == HUGE_VAL) continue;
 			cass_map_id_to_dataobj(query_table->map, p.id, &obj);
 			assert(obj != NULL);
 			fprintf(fout, "\t%s:%g", obj, p.dist);

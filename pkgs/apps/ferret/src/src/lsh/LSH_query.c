@@ -197,7 +197,7 @@ static void LSH_query_local (LSH_query_t *query)
 	sx = sy = sxx = sxy = 0.0;
 	for (j = 0; j < K-1; j++)
 	{
-		if (query->topk[K - j - 2].dist >= HUGE) break;
+		if (query->topk[K - j - 2].dist >= HUGE_VAL) break;
 		lk = log(j+1); 
 		ld = log(query->topk[K - j - 2].dist);
 		sx += lk;
@@ -243,7 +243,7 @@ static void LSH_query_bootstrap (LSH_query_t *query, const float *point)
 	for (i = 0; i < L; i++)
 	{
 		memset(_topk[i], 0xff, sizeof (*_topk[i]) * K);
-		TOPK_INIT(_topk[i], dist, K, HUGE);
+		TOPK_INIT(_topk[i], dist, K, HUGE_VAL);
 		ARRAY_BEGIN_FOREACH(lsh->hash[i].bucket[tmp2[i]], uint32_t id) {
 			if (!bitmap_contain(query->bitmap, id))
 			{
@@ -358,7 +358,7 @@ void LSH_query_merge (LSH_query_t *query)
 	int i, j;
 
 	memset(topk, 0xff, sizeof (*topk) * K);
-	TOPK_INIT(topk, dist, K, HUGE);
+	TOPK_INIT(topk, dist, K, HUGE_VAL);
 
 //	query->CC = 0;
 
