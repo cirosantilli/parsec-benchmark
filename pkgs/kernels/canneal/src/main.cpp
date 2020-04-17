@@ -138,4 +138,5 @@ void* entry_pt(void* data)
 {
 	annealer_thread* ptr = static_cast<annealer_thread*>(data);
 	ptr->Run();
+	return NULL;
 }
