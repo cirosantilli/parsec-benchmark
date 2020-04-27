@@ -72,6 +72,9 @@ CXXFLAGS="$CXXFLAGS -Wall"
 # Never warn about unknown pragmas
 CXXFLAGS="$CXXFLAGS -Wno-unknown-pragmas"
 
+# Always use c++11
+CXXFLAGS="$CXXFLAGS -std=c++11"
+
 # Make sure VPATH is always defined
 #if test "x$VPATH" == "x"; then
 #  VPATH="."
