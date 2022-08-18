@@ -9,7 +9,7 @@
 :toclevels: 6
 :toc-title:
 
-PARSEC http://parsec.cs.princeton.edu/ 3.0-beta-20150206 ported to Ubuntu 17.10 and SPLASH2 ported to Buildroot 2017.08 cross compilation (ARM, MIPS, etc.). This repo intends to support all build types and benchmarks, pull requests will be actively tested and merged.
+PARSEC http://parsec.cs.princeton.edu/ 3.0-beta-20150206 ported to Ubuntu 17.10 and SPLASH2 ported to Buildroot 2017.08 cross compilation (ARM, MIPS, etc.). This repo intends to support all build types and benchmarks.
 
 toc::[]
 
