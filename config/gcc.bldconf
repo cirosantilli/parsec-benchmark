@@ -46,7 +46,7 @@ export CXXCPPFLAGS=""
 export LIBS=""
 export EXTRA_LIBS=""
 export PARMACS_MACRO_FILE="pthreads"
-
+export LDFLAGS=""
 # Add PARSEC version to compiler flags
 if [ -f "${PARSECDIR}/version" ]; then
   CFLAGS="${CFLAGS} -DPARSEC_VERSION=$(${CAT} ${PARSECDIR}/version)"
