@@ -292,6 +292,8 @@ TODO: after build some `./configure` and `config.h.in` files are modified. But r
 * `pkgs/apps/bodytrack/src/config.h.in`
 * `pkgs/apps/bodytrack/src/configure`
 
+Parse is just at another level of software engineering quality.
+
 == Bibliography
 
 Princeton stopped actively supporting PARSEC directly, they don't usually reply on the link:https://lists.cs.princeton.edu/pipermail/parsec-users/[mailing list]. So a few forks / patches / issue trackers have popped up in addition to ours:
