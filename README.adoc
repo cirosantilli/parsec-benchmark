@@ -272,16 +272,16 @@ parsecmgmt -a run -p all
 
 == Overview of the benchmarks
 
-https://parsec.cs.princeton.edu/overview.htm gives an overview of some of them.
+https://parsec.cs.princeton.edu/overview.htm gives an overview of some of them, but it is too short to be understood. TODO: go over all of them with sample input/output analysis! One day.
 
 === apps vs kernels vs netapps
 
 Everything under netapps is a net version of something under app, e.g.
 
-* pkgs/kernels/dedup/
-* pkgs/netapps/netdedup
+* `pkgs/kernels/dedup/`
+* `pkgs/netapps/netdedup`
 
-Does that mean it is a version that can be paralellized over the network?
+Does that mean it is a version that can be parallelized over the network?
 
 === SPLASH2
 
@@ -290,6 +290,47 @@ Was apparently a separate benchmark that got merged in.
 This is suggested e.g. at https://parsec.cs.princeton.edu/overview.htm which compares SPLASH2 as a separate benchmark to parsec, linking to the now dead http://www-flash.stanford.edu/apps/SPLASH/
 
 This is also presumably why splash went in under `ext`.
+
+=== pkg/libs
+
+These appear to be all external libraries, and don't have tests specifically linked to them.
+
+They are then used from other tests, e.g. `pkg/libs/mesa` is used from `pkgs/apps/raytrace`:
+
+....
+pkgs/apps/raytrace/parsec/gcc-pthreads.bldconf:18:build_deps="cmake mesa"
+....
+
+We also note that one lib can depend on another lib, e.g. glib depends on zlib:
+
+....
+pkgs/libs/glib/parsec/gcc.bldconf:17:build_deps="zlib"
+....
+
+so they were essentially building their own distro. They should have used Buildroot poor newbs!
+
+Two deps in particular are special PARSEC things and used widely:
+
+* <<hooks>>
+* <<tbblib>>
+
+....
+git grep 'build_deps="[^"]'
+....
+
+==== hooks
+
+Hooks are instrumentation hooks that get performance metrics out. They have several flavors for different environement, e.g. native vs magic simulator instructions.
+
+The addition of hook points on several meaningful workloads is basically one of PARSEC's most important features.
+
+==== tbblib
+
+Points to: https://github.com/oneapi-src/oneTBB
+
+Presumably it is something to do with being able to use different forms of parallelism transparently?
+
+https://github.com/massivethreads/tp-parsec
 
 == About this repository
 
