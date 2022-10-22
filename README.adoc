@@ -49,7 +49,7 @@ List all benchmarks:
 parsecmgmt -a info
 ....
 
-Run one benchmark with one input size, listed in by increasing size:
+Run one splash2 benchmark with one input size, listed in by increasing size:
 
 ....
 parsecmgmt -a run -p splash2x.barnes -i test
@@ -58,6 +58,12 @@ parsecmgmt -a run -p splash2x.barnes -i simsmall
 parsecmgmt -a run -p splash2x.barnes -i simmedium
 parsecmgmt -a run -p splash2x.barnes -i simlarge
 parsecmgmt -a run -p splash2x.barnes -i native
+....
+
+Non-splash 2:
+
+....
+parsecmgmt -a run -p netdedup
 ....
 
 For some reason, the `splash2` version (without the X) does not have any test data besides `-i test`, making it basically useless. So just use the X version instead. TODO why? Can we just remove it then? When running `splash2`, it says:
@@ -264,7 +270,28 @@ parsecmgmt -a run -p all
 
 `test` size is required since the input names for some benchmarks are different depending on the test sizes.
 
-== About
+== Overview of the benchmarks
+
+https://parsec.cs.princeton.edu/overview.htm gives an overview of some of them.
+
+=== apps vs kernels vs netapps
+
+Everything under netapps is a net version of something under app, e.g.
+
+* pkgs/kernels/dedup/
+* pkgs/netapps/netdedup
+
+Does that mean it is a version that can be paralellized over the network?
+
+=== SPLASH2
+
+Was apparently a separate benchmark that got merged in.
+
+This is suggested e.g. at https://parsec.cs.princeton.edu/overview.htm which compares SPLASH2 as a separate benchmark to parsec, linking to the now dead http://www-flash.stanford.edu/apps/SPLASH/
+
+This is also presumably why splash went in under `ext`.
+
+== About this repository
 
 This repo was started from version 3.0-beta-20150206:
 
