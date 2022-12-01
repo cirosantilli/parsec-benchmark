@@ -55,6 +55,7 @@ void LSH_query_init (LSH_query_t *query, LSH_t *lsh, cass_dataset_t *ds, cass_si
 		ptb_vec_t *scr = gen_score(query->lsh->M);
 		assert(scr != NULL);
 		query->ptb_set = type_calloc(ptb_vec_t, T);
+		if (T != 0) 
 		assert(query->ptb_set != NULL);
 		gen_perturb_set(scr, query->ptb_set, query->lsh->M, T);
 		query->ptb_vec = type_matrix_alloc(ptb_vec_t, L, T);
@@ -197,7 +198,7 @@ static void LSH_query_local (LSH_query_t *query)
 	sx = sy = sxx = sxy = 0.0;
 	for (j = 0; j < K-1; j++)
 	{
-		if (query->topk[K - j - 2].dist >= HUGE_VAL) break;
+		if (query->topk[K - j - 2].dist >= FLT_MAX) break;
 		lk = log(j+1); 
 		ld = log(query->topk[K - j - 2].dist);
 		sx += lk;
@@ -243,7 +244,7 @@ static void LSH_query_bootstrap (LSH_query_t *query, const float *point)
 	for (i = 0; i < L; i++)
 	{
 		memset(_topk[i], 0xff, sizeof (*_topk[i]) * K);
-		TOPK_INIT(_topk[i], dist, K, HUGE_VAL);
+		TOPK_INIT(_topk[i], dist, K, FLT_MAX);
 		ARRAY_BEGIN_FOREACH(lsh->hash[i].bucket[tmp2[i]], uint32_t id) {
 			if (!bitmap_contain(query->bitmap, id))
 			{
@@ -358,7 +359,7 @@ void LSH_query_merge (LSH_query_t *query)
 	int i, j;
 
 	memset(topk, 0xff, sizeof (*topk) * K);
-	TOPK_INIT(topk, dist, K, HUGE_VAL);
+	TOPK_INIT(topk, dist, K, FLT_MAX);
 
 //	query->CC = 0;
 
