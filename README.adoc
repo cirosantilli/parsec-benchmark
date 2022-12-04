@@ -374,7 +374,61 @@ ____
 Content similarity search server
 ____
 
+This presentation by original authors appears to describe the software: https://www.cs.princeton.edu/cass/papers/Ferret_slides.pdf And here's the paper: https://www.cs.princeton.edu/cass/papers/Ferret.pdf so we understand that it is some research software from Princeton.
+
 Unzipping the <<package-directory-structure,inputs>> there are a bunch of images, so we understand that it must be some kind of image similarity, i.e. a computer vision task.
+
+Running with:
+
+....
+parsecmgmt -a run -p ferret -i simsmall
+....
+
+we see the program output as:
+
+....
+(7,1)
+(16,2)
+(16,3)
+(16,4)
+(16,5)
+(16,6)
+(16,7)
+(16,8)
+(16,9)
+(16,10)
+(16,11)
+(16,12)
+(16,13)
+(16,14)
+(16,15)
+(16,16)
+....
+
+TODO understand.
+
+If we unpack the input directory, we can see that there are 16 images some of them grouped by type:
+
+....
+acorn.jpg
+air-fighter.jpg
+airplane-2.jpg
+airplane-takeoff-3.jpg
+alcatraz-island-prison.jpg
+american-flag-3.jpg
+apartment.jpg
+apollo-2.jpg
+apollo-earth.jpg
+apple-11.jpg
+apple-14.jpg
+apple-16.jpg
+apple-7.jpg
+aquarium-fish-25.jpg
+arches-9.jpg
+arches.jpg
+....
+
+so presumably authors would expect the airplaines and apples to be more similar to one another.
 
 === pkg/libs
 
