@@ -9,7 +9,7 @@
 :toclevels: 6
 :toc-title:
 
-PARSEC http://parsec.cs.princeton.edu/ 3.0-beta-20150206 ported to Ubuntu 17.10 and SPLASH2 ported to Buildroot 2017.08 cross compilation (ARM, MIPS, etc.). This repo intends to support all build types and benchmarks.
+PARSEC http://parsec.cs.princeton.edu/ 3.0-beta-20150206 ported to Ubuntu 17.10 and <<splash2>> ported to Buildroot 2017.08 cross compilation (ARM, MIPS, etc.). This repo intends to support all build types and benchmarks.
 
 toc::[]
 
@@ -31,11 +31,23 @@ Build all:
 parsecmgmt -a build -p all
 ....
 
-Build all SPLASH2 benchmarks:
+This is known to be broken on Ubuntu 22.04 because `tbblib` is broken: https://github.com/cirosantilli/parsec-benchmark/issues/13
+
+`-a` means "action", i.e. which action to take for the selected packages.
+
+Build just the ferret benchmark:
+
+....
+parsecmgmt -a build -p ferret
+....
+
+Build all <<splash2>> benchmarks:
 
 ....
 parsecmgmt -a build -p splash2x
 ....
+
+This is known to be broken on Ubuntu 22.04 because `splash2x` is broken: https://github.com/cirosantilli/parsec-benchmark/issues/13
 
 Build just one SPLASH2 benchmark:
 
@@ -59,6 +71,10 @@ parsecmgmt -a run -p splash2x.barnes -i simmedium
 parsecmgmt -a run -p splash2x.barnes -i simlarge
 parsecmgmt -a run -p splash2x.barnes -i native
 ....
+
+* `test` means: just check the code might be working, but don't stress
+* `sim*` are different sizes for running in simulators such as gem5 for example. Simulators are slower than real hardware, so the tests have to be limited in size
+* `native` means suitable for benchmarking real hardware. It is therefore the largest input.
 
 Non-splash 2:
 
@@ -111,6 +127,53 @@ __parsec_roi_begin
 ....
 
 so you will likely want to override that to some simulator magic instruction. TODO link to the GEM5 one.
+
+=== parsecmgmt ferret rebuild after soruce change broken
+
+Some rebuilds after source changes with `-a build` are a bit broken. E.g. a direct:
+
+....
+parsecmgmt -a build -p ferret
+....
+
+doesn't do anything if you have modified sources. Also, trying to clean first still didn't work:
+
+....
+parsecmgmt -a clean -p ferret
+parsecmgmt -a build -p ferret
+....
+
+What worked was a more brutal:
+
+....
+git clean -xdf pkgs/apps/ferret
+./get-inputs
+....
+
+We have to re-run `./get-inputs` again because the `git clen -xdf` removes the unpacked inputs that were placed under `pkgs/apps/ferret/inputs/`.
+
+=== Package directory structure
+
+Most/all packages appears to be organized in the same structure, take `pkgs/apps/ferret` for example:
+
+* `inputs`: inputs unpacked by `./get-inputs` from the larger tars for the different test sizes. These are often still tarred however, e.g. `pkgs/apps/ferret/inputs/input_test.tar`
+* `inst`: installation, notably contains executables and libraries, e.g.:
+** `pkgs/apps/ferret/inst/amd64-linux.gcc/bin/ferret`
+** `pkgs/apps/ferret/inst/amd64-linux.gcc/bin/ferret`
+* `obj`:  `.o` object files, e.g. `pkgs/apps/ferret/obj/amd64-linux.gcc/parsec/obj/cass_add_index.o`
+* `parsec`: parsec build and run configuration in Bash format, e.g.: `pkgs/apps/ferret/obj/amd64-linux.gcc/parsec/native.runconf` contains:
++
+....
+
+#!/bin/bash
+run_exec="bin/ferret"
+run_args="corel lsh queries 50 20 ${NTHREADS} output.txt"
+....
+* `run`:
+** runtime outputs, e.g. `pkgs/apps/ferret/run/benchmark.out` contains a copy of what went to stdout during the last `-a run`
+** an unpacked version of the input, `pkgs/apps/ferret/inputs/input_test.tar` gets unpacked directly there creating folders `queries` `corel`
+* `src`: the source!
+* `version`: a version string, e.g. `2.0`
 
 === Host x264
 
@@ -302,6 +365,16 @@ https://parsec.cs.princeton.edu/parsec3-doc.htm#splash2 documents it as
 ____
 SPLASH-2 benchmark suite includes applications and kernels mostly in the area of high performance computing (HPC). It has been widely used to evaluate multiprocessors and their designs for the past 15 years.
 ____
+
+=== ferret
+
+https://parsec.cs.princeton.edu/overview.htm describes it as:
+
+____
+Content similarity search server
+____
+
+Unzipping the <<package-directory-structure,inputs>> there are a bunch of images, so we understand that it must be some kind of image similarity, i.e. a computer vision task.
 
 === pkg/libs
 

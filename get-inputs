@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -e
+set -eux
 sim=true
 verbose=''
 while getopts Sv OPT; do
@@ -26,7 +26,7 @@ fi
 mkdir -p "$outdir"
 for basename in $basenames; do
   if [ ! -f "${download_dir}/${basename}" ]; then
-    wget -P "$download_dir" $verbose "${url_base}/${basename}"
+    wget -nc -P "$download_dir" $verbose "${url_base}/${basename}"
   fi
   tar -xz $verbose -f "${download_dir}/${basename}" -C "$outdir" --skip-old-files --strip-components=1
 done
