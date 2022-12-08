@@ -157,7 +157,7 @@ extern "C" struct mallinfo mallinfo() __THROW
 
 #include <new>
 
-void * operator new(size_t sz) throw (std::bad_alloc) {
+void * operator new(size_t sz) {
     void *res = scalable_malloc(sz);
 #if TBB_USE_EXCEPTIONS
     if (NULL == res)
@@ -165,7 +165,7 @@ void * operator new(size_t sz) throw (std::bad_alloc) {
 #endif /* TBB_USE_EXCEPTIONS */
     return res;
 }
-void* operator new[](size_t sz) throw (std::bad_alloc) {
+void* operator new[](size_t sz) {
     void *res = scalable_malloc(sz);
 #if TBB_USE_EXCEPTIONS
     if (NULL == res)

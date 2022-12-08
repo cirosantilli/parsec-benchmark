@@ -40,7 +40,7 @@ export STRIP="${TARGET_CROSS}strip"
 
 # Arguments to use
 export CFLAGS=" $CFLAGS"
-export CXXFLAGS="$CXXFLAGS -fpermissive -fno-exceptions"
+export CXXFLAGS="$CXXFLAGS -fpermissive -fno-exceptions -std=c++17"
 export CPPFLAGS=""
 export CXXCPPFLAGS=""
 export LIBS=""
