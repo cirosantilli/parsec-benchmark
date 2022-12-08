@@ -1,6 +1,7 @@
 *.tar
 *.tar.gz
 *~
+*.swp
 /log
 /parsec-3.0
 /pkgs/libs/gsl/src/doc/gsl-ref.info*
