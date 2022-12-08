@@ -18,7 +18,7 @@
 build_deps=""
 
 # Environment to use for configure script and Makefile
-build_env="version=IN_PARSEC "
+build_env="version=IN_PARSEC CFLAGS=-fcommon "
 
 # Whether the build system supports only in-place compilation.
 # If TRUE, then all sources will be copied to the build directory before we
