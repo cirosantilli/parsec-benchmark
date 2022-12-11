@@ -9,7 +9,7 @@
 :toclevels: 6
 :toc-title:
 
-PARSEC http://parsec.cs.princeton.edu/ 3.0-beta-20150206 ported to Ubuntu 17.10 and <<splash2>> ported to Buildroot 2017.08 cross compilation (ARM, MIPS, etc.). This repo intends to support all build types and benchmarks.
+PARSEC http://parsec.cs.princeton.edu/ 3.0-beta-20150206 ported to Ubuntu 22.04 and <<splash2>> ported to Buildroot 2017.08 cross compilation (ARM, MIPS, etc.). This repo intends to support all build types and benchmarks.
 
 toc::[]
 
@@ -31,8 +31,6 @@ Build all:
 parsecmgmt -a build -p all
 ....
 
-This is known to be broken on Ubuntu 22.04 because `tbblib` is broken: https://github.com/cirosantilli/parsec-benchmark/issues/13
-
 `-a` means "action", i.e. which action to take for the selected packages.
 
 Build just the ferret benchmark:
@@ -46,8 +44,6 @@ Build all <<splash2>> benchmarks:
 ....
 parsecmgmt -a build -p splash2x
 ....
-
-This is known to be broken on Ubuntu 22.04 because `splash2x` is broken: https://github.com/cirosantilli/parsec-benchmark/issues/13
 
 Build just one SPLASH2 benchmark:
 
@@ -143,14 +139,23 @@ parsecmgmt -a clean -p ferret
 parsecmgmt -a build -p ferret
 ....
 
-What worked was a more brutal:
+What worked was a more brutal removal of `inst` and `obj`:
+
+....
+pkgs/apps/ferret/inst
+pkgs/apps/ferret/obj
+....
+
+see also: <<package-directory-structure>>.
+
+You could also do:
 
 ....
 git clean -xdf pkgs/apps/ferret
 ./get-inputs
 ....
 
-We have to re-run `./get-inputs` again because the `git clen -xdf` removes the unpacked inputs that were placed under `pkgs/apps/ferret/inputs/`.
+but then you would need to re-rrun `./get-inputs` again because the `git clen -xdf` removes the unpacked inputs that were placed under `pkgs/apps/ferret/inputs/`.
 
 === Package directory structure
 
@@ -378,6 +383,8 @@ This presentation by original authors appears to describe the software: https://
 
 Unzipping the <<package-directory-structure,inputs>> there are a bunch of images, so we understand that it must be some kind of image similarity, i.e. a computer vision task.
 
+Given the incrediable advances in computer vision in the 2010's, these algorithms have likey become completely obsolete compared to deep learning techniques.
+
 Running with:
 
 ....
@@ -405,7 +412,7 @@ we see the program output as:
 (16,16)
 ....
 
-TODO understand.
+TODO understand.One would guess that it shows which image looks the most like each other image? But then that would mean that the algorithm sucks, sine almost everything looks like 16. And `16,16` looks like itself which would have to be excluded.
 
 If we unpack the input directory, we can see that there are 16 images some of them grouped by type:
 
