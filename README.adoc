@@ -98,8 +98,6 @@ Run all packages with the default `test` input size:
 parsecmgmt -a run -p all
 ....
 
-TODO some tests are broken. We will maintain a list.
-
 Not every benchmark has every input size, e.g. `splash2.barnes` only has `test` input inside of `core` and `input-sim`
 
 TODO runs all sizes, or just one default size:
@@ -108,23 +106,20 @@ TODO runs all sizes, or just one default size:
 parsecmgmt -a run -p splash2x
 ....
 
-TODO how to read run output?
+=== `__parsec_roi_begin`
 
-Run logs are stored under:
-
-....
-ls logs/
-....
-
-One of the most valuable things parsec adds is that it instruments the region of interest of all benchmarks with:
+One of the most valuable things parsec offers is that it instruments the region of interest of all benchmarks with:
 
 ....
 __parsec_roi_begin
 ....
 
-so you will likely want to override that to some simulator magic instruction. TODO link to the GEM5 one.
+That can then be overridden for different targets to check time, cache state, etc. on the ROI:
 
-=== parsecmgmt ferret rebuild after soruce change broken
+* on simulators you could use magic instruction TODO link to the GEM5 one.
+* on real systems you could use syscalls, instructions or other system interfaces to get the data
+
+=== parsecmgmt ferret rebuild after source change broken
 
 Some rebuilds after source changes with `-a build` are a bit broken. E.g. a direct:
 
@@ -436,6 +431,64 @@ arches.jpg
 ....
 
 so presumably authors would expect the airplaines and apples to be more similar to one another.
+
+=== raytrace
+
+Well, if this doesn't do raytracing, I would be very surprised!
+
+`pkgs/apps/raytrace/inputs/input_test.tar` contains:
+
+octahedron.obj
+
+....
+####
+#
+# Object octahedron.obj
+#
+# Vertices: 6
+# Faces: 8
+#
+####
+#
+# Octahedron
+# Synthetic model for PARSEC benchmark suite
+# Created by Christian Bienia
+#
+####
+
+v 1.0 0.0 0.0
+v 0.0 1.0 0.0
+v 0.0 0.0 1.0
+v -1.0 0.0 0.0
+v 0.0 -1.0 0.0
+v 0.0 0.0 -1.0
+# 6 vertices, 0 vertices normals
+
+f 1 2 3
+f 4 2 3
+f 1 5 3
+f 1 2 6
+f 4 5 6
+f 1 5 6
+f 4 2 6
+f 4 5 3
+# 8 faces, 0 coords texture
+
+# End of File
+....
+
+so clearly a representation of a 3D object, https://en.wikipedia.org/wiki/Wavefront_.obj_file describes the format.
+
+And `input_simdev.tar` contains a much larger `bunny.obj`, which is a classic 3D model used by computer graphics researchers: https://en.wikipedia.org/wiki/Stanford_bunny
+
+`src/README` documents that output would be in video format, and is turned off, boring!!!
+
+____
+The input for raytrace is a data file describing a scene that is composed of
+a single, complex object. The program automatically rotates the camera around
+the object to simulate movement. The output is a video stream that is displayed
+in a video. For the benchmark version output has been disabled.
+____
 
 === pkg/libs
 
