@@ -2,10 +2,14 @@
 set -eux
 sim=true
 verbose=''
-while getopts Sv OPT; do
+native=false
+while getopts nSv OPT; do
   case "$OPT" in
     S)
       sim=false
+      ;;
+    n)
+      native=true
       ;;
     v)
       verbose=-v
@@ -21,8 +25,10 @@ basenames="$basenames parsec-3.0-core.tar.gz"
 if "$sim"; then
   basenames="$basenames parsec-3.0-input-sim.tar.gz"
 fi
-# Huge. Impractical for simulators, intended for real silicon.
-# parsec-3.0-input-native.tar.gz
+if "$native"; then
+  # Huge. Impractical for simulators, intended for real silicon.
+  basenames="$basenames parsec-3.0-input-native.tar.gz"
+fi
 mkdir -p "$outdir"
 for basename in $basenames; do
   if [ ! -f "${download_dir}/${basename}" ]; then

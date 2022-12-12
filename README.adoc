@@ -57,20 +57,11 @@ List all benchmarks:
 parsecmgmt -a info
 ....
 
-Run one splash2 benchmark with one input size, listed in by increasing size:
+Run one splash2 benchmark with the `test` <<input-size>>:
 
 ....
 parsecmgmt -a run -p splash2x.barnes -i test
-parsecmgmt -a run -p splash2x.barnes -i simdev
-parsecmgmt -a run -p splash2x.barnes -i simsmall
-parsecmgmt -a run -p splash2x.barnes -i simmedium
-parsecmgmt -a run -p splash2x.barnes -i simlarge
-parsecmgmt -a run -p splash2x.barnes -i native
 ....
-
-* `test` means: just check the code might be working, but don't stress
-* `sim*` are different sizes for running in simulators such as gem5 for example. Simulators are slower than real hardware, so the tests have to be limited in size
-* `native` means suitable for benchmarking real hardware. It is therefore the largest input.
 
 Non-splash 2:
 
@@ -86,12 +77,6 @@ NOTE: SPLASH-2 only supports "test" input sets.
 
 so likely not a bug.
 
-The tests are distributed separately as:
-
-* `test` tests come with the smallest possible distribution `core`, and are tiny sanity checks as the name suggests. We have however removed them from this repo, since they are still blobs, and blobs are evil.
-* `sim*` tests require `parsec-3.0-input-sim.tar.gz` which we install by default
-* `native` requires `parsec-3.0-input-native.tar.gz`, which we don't install by default because it is huge. These huge instances are intended for real silicon.
-
 Run all packages with the default `test` input size:
 
 ....
@@ -105,6 +90,44 @@ TODO runs all sizes, or just one default size:
 ....
 parsecmgmt -a run -p splash2x
 ....
+
+=== Input size
+
+Run one splash2 benchmark with one <<input-size>>, listed in by increasing size:
+
+....
+parsecmgmt -a run -p splash2x.barnes -i test
+parsecmgmt -a run -p splash2x.barnes -i simdev
+parsecmgmt -a run -p splash2x.barnes -i simsmall
+parsecmgmt -a run -p splash2x.barnes -i simmedium
+parsecmgmt -a run -p splash2x.barnes -i simlarge
+parsecmgmt -a run -p splash2x.barnes -i native
+....
+
+* `test` means: just check the code might be working, but don't stress. Inputs come with the smallest possible distribution file `parsec-3.0-core.tar.gz` (112 MB zipped, also contains sources), and are tiny sanity checks as the name suggests. We have however removed them from this repo, since they are still blobs, and blobs are evil.
+* `sim*` are different sizes for running in simulators such as gem5 for example. Simulators are slower than real hardware, so the tests have to be limited in size.
++
+Inputs are present in the separate `parsec-3.0-input-sim.tar.gz` file (468 MB zipped), which we download by default on `./configure`.
+* `native` means suitable for benchmarking real hardware. It is therefore the largest input. We do not download the native inputs by default on `./configure` because it takes several minutes. To download native inputs, run:
++
+....
+./get-inputs -n
+....
++
+which also downloads `parsec-3.0-input-native.tar.gz` (2.3 GB zipped, 3.1 GiB unzipped, apparent size: 5.5 GiB), https://unix.stackexchange.com/questions/173947/du-s-apparent-size-vs-du-s/510476#510476[indicating that there are some massively sparse files present]. It appears that most `.tar` are highly sparse for some reason.
+
+The original link:README[] explains how input sizes were originally dosaged:
+
+____
+All inputs except 'test' and 'simdev' can be used for performance analysis. As a rough guideline, on a Pentium 4 processor with 3.0 GHz you can expect approximately the following execution times:
+
+* `test`: almost instantaneous
+* `simdev`: almost instantaneous
+* `simsmall`: 1s
+* `simsmall`: 3 - 5s
+* `simlarge`: 12 - 20s
+* `native`: 10 - 30min
+____
 
 === `__parsec_roi_begin`
 
@@ -407,7 +430,7 @@ we see the program output as:
 (16,16)
 ....
 
-TODO understand.One would guess that it shows which image looks the most like each other image? But then that would mean that the algorithm sucks, sine almost everything looks like 16. And `16,16` looks like itself which would have to be excluded.
+TODO understand.One would guess that it shows which image looks the most like each other image? But then that would mean that the algorithm sucks, since almost everything looks like 16. And `16,16` looks like itself which would have to be excluded.
 
 If we unpack the input directory, we can see that there are 16 images some of them grouped by type:
 
@@ -431,6 +454,204 @@ arches.jpg
 ....
 
 so presumably authors would expect the airplaines and apples to be more similar to one another.
+
+=== freqmine
+
+....
+[PARSEC] parsec.freqmine [1] (data mining)
+[PARSEC] Mine a transaction database for frequent itemsets
+[PARSEC]   Package Group: apps
+[PARSEC]   Contributor:   Intel Corp.
+[PARSEC]   Aliases:       all parsec apps openmp
+....
+
+link:pkgs/apps/freqmine/src/README[] reads:
+
+____
+Frequent Itemsets Mining (FIM) is the basis of Association Rule
+Mining (ARM). Association Rule Mining is the process of analyzing
+a set of transactions to extract association rules. ARM is a very
+common used and well-studied data mining problem. The mining is
+applicable to any sequential and time series data via discretization.
+Example domains are protein sequences, market data, web logs, text,
+music, stock market, etc.
+
+To mine ARMs is converted to mine the frequent itemsets Lk, which
+contains the frequent itemsets of length k. Many FIMI (FIM
+Implementation) algorithms have been proposed in the literature,
+including FP-growth and Apriori based approaches. Researches showed
+that the FP-growth can get much faster than some old algorithms like
+the Apriori based approaches except in some cases the FP-tree can be
+too large to be stored in memory when the database size is so large
+or the database is too sparse.
+____
+
+Googling "Frequent Itemsets Mining" leads e.g. to
+* https://www.geeksforgeeks.org/frequent-item-set-in-data-set-association-rule-mining/[], so we understand that a key use case is:
+* https://www.dbs.ifi.lmu.de/Lehre/KDD/SS16/skript/3_FrequentItemsetMining.pdf
+
+____
+Based on the items of your shopping basket, suggest other items people often buy together.
+____
+
+E.g. https://www.geeksforgeeks.org/frequent-item-set-in-data-set-association-rule-mining/ mentions:
+
+____
+For example, if a dataset contains 100 transactions and the item set {milk, bread} appears in 20 of those transactions, the support count for {milk, bread} is 20.
+____
+
+Running:
+
+....
+parsecmgmt -a run -p freqmine -i test
+....
+
+produces output:
+
+....
+transaction number is 3
+32
+192
+736
+2100
+4676
+8246
+11568
+12916
+11450
+8009
+4368
+1820
+560
+120
+16
+1
+the data preparation cost 0.003300 seconds, the FPgrowth cost 0.002152 seconds
+....
+
+A manual run can be done with:
+
+....
+cd pkgs/apps/freqmine
+./inst/amd64-linux.gcc/bin/freqmine inputs/T10I4D100K_3.dat 1
+....
+
+where the parameters are:
+
+* `inputs/T10I4D100K_3.dat`: input data
+* minimum support
+
+both described below.
+
+link:pkgs/apps/freqmine/parsec/test.runconf[] contains contains:
+
+....
+run_args="T10I4D100K_3.dat 1"
+....
+
+`pkgs/apps/freqmine/inputs/input_test.tar` contains `T10I4D100K_3.dat` which contains the following plaintext file:
+
+....
+25 52 164 240 274 328 368 448 538 561 630 687 730 775 825 834 
+39 120 124 205 401 581 704 814 825 834 
+35 249 674 712 733 759 854 950
+....
+
+So we see that it contains 3 transactions, and the `_3` in the filename means the number of transactions, and it also gets output by the program:
+
+....
+transaction number is 3
+....
+
+The README describes the input output incomprehensibly as:
+
+____
+For the input, a date-set file containing the test transactions is provided.
+
+There is another parameter that indicates "minimum-support". When it is a integer, it means the minimum counts; when it is a floating point number between 0 and 1, it means the percentage to the total transaction number.
+
+The program output all (different length) frequent itemsets with fixed minimum support.
+____
+
+Let's hack the "test" input to something actually minimal:
+
+...
+1 2 3
+1 2 4
+2 3
+...
+
+Now the output for parameter `1` is:
+
+....
+4
+5
+2
+....
+
+and for parameter `2` is:
+
+....
+3
+2
+....
+
+I think what it means is, take input parameter `1`. `1` means the minimal support we are couning. The output:
+
+....
+4
+5
+2
+....
+
+means actually means:
+
+____
+How many sets are there with a given size and support at least `1`:
+____
+
+....
+set_size    number_of_sets
+1        -> 4
+2        -> 5
+3        -> 2
+....
+
+For example, for `set_size` 1 there are 4 possible sets (4 pick 1, as we have 4 distinct numbers):
+
+* `{1}`: appears in `1 2 3` and `1 2 4`, so support is 2, and therefore at least 1
+* `{2}`: appears in `1 2 3`, `1 2 4` and `2 3`, so support is 3, and therefore at least 1
+* `{3}`: appears in `1 2 3`, `1 2 4` and `2 3`, so support is 3, and therefore at least 1
+* `{4}`: appears in `1 2 4`, so support is 1, and therefore at least 1
+
+so we have 4 sets with support at least one, so the output for that line is 4.
+
+For `set_size` 2, there are 6 possible sets (4 pick 2):
+
+* `{1, 2}`: appears in `1 2 3`, `1 2 4`, so support is 2
+* `{1, 3}`: appears in `1 2 3`, so support is 1
+* `{1, 4}`: appears in `1 2 4`, so support is 1
+* `{2, 3}`: appears in `1 2 3` and `2 3`, so support is 2
+* `{2, 4}`: appears in `1 2 4`, so support is 1
+* `{3, 4}`: does not appear in any line, so support is 0
+
+Therefore, we had 5 sets with support at least 1: `{1, 2}`, `{1, 3}`, `{1, 4}`, `{2, 3}`, `{2, 4}`, so the output for the line is 5.
+
+For `set_size` 3, there are 4 possible sets (4 pick 3):
+
+* `{1, 2, 3}`: appears in `1 2 3`, so support is 1
+* `{1, 2, 4}`: appears in `1 2 4`, so support is 1
+* `{1, 3, 4}`: does not appear in any line, su support is 0
+* `{2, 3, 4}`: does not appear in any line, su support is 0
+
+Therefore, we had 2 sets with support at least 1: `{1, 2}`, `{1, 3}`, `{1, 4}`, `{2, 3}`, `{2, 4}`, so the output for the line is 2.
+
+If we take the input parameter `2` instead, we can reuse the above full calculations to retrieve the values:
+
+* `set_size` 1: 3 sets have support at least 2: `{1}`, `{2}` and `{3}`
+* `set_size` 2: 2 sets have support at least 2: `{1, 2}` and `{2, 3}`
+
+Presumably therefore, there is some way to calculate these outputs without having to do the full explicit set enumeration, so you can get counts for larger support sizes but not necessarily be able to get those for the smaller ones.
 
 === raytrace
 
