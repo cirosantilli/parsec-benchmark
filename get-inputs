@@ -19,15 +19,11 @@ done
 shift "$(($OPTIND - 1))"
 download_dir="${1:-.}"
 outdir="${2:-.}"
-url_base=http://parsec.cs.princeton.edu/download/3.0
+url_base=https://github.com/cirosantilli/parsec-benchmark/releases/download/3.0
 basenames=''
 basenames="$basenames parsec-3.0-core.tar.gz"
 if "$sim"; then
   basenames="$basenames parsec-3.0-input-sim.tar.gz"
-fi
-if "$native"; then
-  # Huge. Impractical for simulators, intended for real silicon.
-  basenames="$basenames parsec-3.0-input-native.tar.gz"
 fi
 mkdir -p "$outdir"
 for basename in $basenames; do
@@ -36,3 +32,17 @@ for basename in $basenames; do
   fi
   tar -xz $verbose -f "${download_dir}/${basename}" -C "$outdir" --skip-old-files --strip-components=1
 done
+if "$native"; then
+  basename="parsec-3.0-input-native.tar.gz"
+  native_out="$download_dir/$basename"
+  if [ ! -f "$native_out" ]; then
+    # Huge. Impractical for simulators, intended for real silicon.
+    rm -f "$native_out"
+    i=0
+    while [ "$i" -lt 5 ]; do
+      wget -O- -nc -P "$download_dir" $verbose "${url_base}/${basename}.$i" >> "$native_out" 
+      i="$((i + 1))"
+    done
+  fi
+  tar -xz $verbose -f "$native_out" -C "$outdir" --skip-old-files --strip-components=1
+fi

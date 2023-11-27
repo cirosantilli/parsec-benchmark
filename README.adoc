@@ -11,6 +11,8 @@
 
 PARSEC http://parsec.cs.princeton.edu/ 3.0-beta-20150206 ported to Ubuntu 22.04 and <<splash2>> ported to Buildroot 2017.08 cross compilation (ARM, MIPS, etc.). This repo intends to support all build types and benchmarks.
 
+As of November 2023, the official Princeton website was down. The https://web.archive.org/web/20230922200507/https://parsec.cs.princeton.edu/[last working archive was from September 22, 2023]. It is unclear if they retired it or if it a bug. If they retired it, OMG. For this reason, we re-uploaded their original test data to: https://github.com/cirosantilli/parsec-benchmark/releases/tag/3.0 The scripts in this repository automatically download and use those blobs.
+
 toc::[]
 
 == Getting started Ubuntu 17.10 native host
@@ -786,9 +788,11 @@ Parse is just at another level of software engineering quality.
 
 Princeton stopped actively supporting PARSEC directly, they don't usually reply on the link:https://lists.cs.princeton.edu/pipermail/parsec-users/[mailing list]. So a few forks / patches / issue trackers have popped up in addition to ours:
 
-* https://github.com/bamos/parsec-benchmark I would gladly merge with that repo, but last commit is old, and owner does not seem responsive: https://github.com/bamos/parsec-benchmark/issues/3
-* https://github.com/csail-csg/parsec "This repo is a fork of the original PARSEC 3.0 benchmark suite at http://parsec.cs.princeton.edu/parsec3-doc.htm. The major change is to cross compile several PARSEC benchmarks to RISC-V.". CSAIL is an MIT computer architecture group.
-* https://github.com/Mic92/parsec-benchmark NixOS version
-* https://github.com/arm-university/arm-gem5-rsk contains patches to QEMU native and cross build PARSEC, and also implements the link:https://github.com/arm-university/arm-gem5-rsk/blob/aa3b51b175a0f3b6e75c9c856092ae0c8f2a7cdc/parsec_patches/qemu-patch.diff#L16[ROI callbacks fore gem5]. But I don't think they have all benchmarks working, although that is not clearly documented: we have noted some failures which are simply not fixed in the patches there. Furthermore, they have issues disabled on that repo, and you would have to patch `.patch` files on your patches, so I does not feel like a very nice place to contribute.
+* GitHub forks
+** https://github.com/bamos/parsec-benchmark I would gladly merge with that repo, but last commit is old, and owner does not seem responsive: https://github.com/bamos/parsec-benchmark/issues/3
+** https://github.com/csail-csg/parsec "This repo is a fork of the original PARSEC 3.0 benchmark suite at http://parsec.cs.princeton.edu/parsec3-doc.htm. The major change is to cross compile several PARSEC benchmarks to RISC-V.". CSAIL is an MIT computer architecture group.
+** https://github.com/Mic92/parsec-benchmark NixOS version
+** https://github.com/arm-university/arm-gem5-rsk contains patches to QEMU native and cross build PARSEC, and also implements the link:https://github.com/arm-university/arm-gem5-rsk/blob/aa3b51b175a0f3b6e75c9c856092ae0c8f2a7cdc/parsec_patches/qemu-patch.diff#L16[ROI callbacks fore gem5]. But I don't think they have all benchmarks working, although that is not clearly documented: we have noted some failures which are simply not fixed in the patches there. Furthermore, they have issues disabled on that repo, and you would have to patch `.patch` files on your patches, so I does not feel like a very nice place to contribute.
+** https://github.com/darchr/parsec-benchmark fork of this repo by UC Davis Computer Architecture Research Group, fork reason unspecified. Possibly for their gem5 work.
 * https://yulistic.gitlab.io/2016/05/parsec-3.0-installation-issues/ documents some of the issues that needed to be solved, but I had many many more
 * https://github.com/anthonygego/gem5-parsec3 Apparently focuses on image generation via QEMU native compilation.
