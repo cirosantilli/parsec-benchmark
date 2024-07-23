@@ -11,7 +11,7 @@
 
 PARSEC http://parsec.cs.princeton.edu/ 3.0-beta-20150206 ported to Ubuntu 22.04 and <<splash2>> ported to Buildroot 2017.08 cross compilation (ARM, MIPS, etc.). This repo intends to support all build types and benchmarks.
 
-As of November 2023, the official Princeton website was down. The https://web.archive.org/web/20230922200507/https://parsec.cs.princeton.edu/[last working archive was from September 22, 2023]. It is unclear if they retired it or if it a bug. If they retired it, OMG. For this reason, we re-uploaded their original test data to: https://github.com/cirosantilli/parsec-benchmark/releases/tag/3.0 The scripts in this repository automatically download and use those blobs.
+As of November 2023, the official Princeton website was down. The https://web.archive.org/web/20230922200507/https://parsec.cs.princeton.edu/[last working archive was from September 22, 2023]. It is unclear if they retired it or if it is a bug. If they retired it, OMG. For this reason, we re-uploaded their original test data to: https://github.com/cirosantilli/parsec-benchmark/releases/tag/3.0 The scripts in this repository automatically download and use those blobs.
 
 toc::[]
 
