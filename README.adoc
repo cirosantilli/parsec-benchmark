@@ -489,6 +489,7 @@ or the database is too sparse.
 ____
 
 Googling "Frequent Itemsets Mining" leads e.g. to
+
 * https://www.geeksforgeeks.org/frequent-item-set-in-data-set-association-rule-mining/[], so we understand that a key use case is:
 * https://www.dbs.ifi.lmu.de/Lehre/KDD/SS16/skript/3_FrequentItemsetMining.pdf
 
@@ -577,11 +578,11 @@ ____
 
 Let's hack the "test" input to something actually minimal:
 
-...
+....
 1 2 3
 1 2 4
 2 3
-...
+....
 
 Now the output for parameter `1` is:
 
