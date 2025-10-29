@@ -15,7 +15,7 @@ As of November 2023, the official Princeton website was down. The https://web.ar
 
 toc::[]
 
-== Getting started Ubuntu 17.10 native host
+== Getting started Ubuntu native host
 
 ....
 ./configure
