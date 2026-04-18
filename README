@@ -50,6 +50,7 @@ atomic instructions. Many workloads support more than one parallelization. Each
 parallelization has its own requirements that have to be fulfilled in order to
 be able to build and run workloads that use it. By default only support for
 pthreads and OpenMP are needed. Gcc supports OpenMP since version 4.2.0.
+NOTE that compiling with latest versions of GCC may cause some builds to fail.
 
 PARSEC has been successfully tested on the following systems:
 
