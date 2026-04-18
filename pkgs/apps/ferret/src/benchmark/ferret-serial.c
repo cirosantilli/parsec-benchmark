@@ -304,11 +304,11 @@ int main (int argc, char *argv[])
 	stimer_tick(&tmr);
 
 #ifdef ENABLE_PARSEC_HOOKS
-	__parsec_roi_begins();
+	__parsec_roi_begin();
 #endif
 	scan();
 #ifdef ENABLE_PARSEC_HOOKS
-	__parsec_roi_ends();
+	__parsec_roi_end();
 #endif
 
 	stimer_tuck(&tmr, "QUERY TIME");
