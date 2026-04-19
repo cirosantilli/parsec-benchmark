@@ -155,7 +155,7 @@ int im__progress = 0;
  * parameters here.
  */
 typedef struct {
-	int (*save_fn)();	/* Save function */
+	int (*save_fn)( IMAGE *, const char * );	/* Save function */
 	IMAGE *im;		/* Image to save */
 	char *filename;		/* Save args */
 } SaveBlock;
@@ -174,7 +174,7 @@ invoke_sb( SaveBlock *sb )
 /* Attach a SaveBlock to an image.
  */
 static int
-attach_sb( IMAGE *out, int (*save_fn)(), const char *filename )
+attach_sb( IMAGE *out, int (*save_fn)( IMAGE *, const char * ), const char *filename )
 {
 	SaveBlock *sb = IM_NEW( out, SaveBlock );
 
