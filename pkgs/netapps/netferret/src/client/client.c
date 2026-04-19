@@ -222,6 +222,7 @@ void send_end_tag()
 void *t_process (void *dummy)
 {
 	struct load_data *load;
+	void *item;
 	struct packet    *pkt_ptr;
 	char		 *buf_ptr;
 	int		 fd;
@@ -237,8 +238,9 @@ void *t_process (void *dummy)
 	
 	while(1){
 		/* 1. dequeue */
-		if(dequeue(&q_load_process, &load) < 0)
+		if(dequeue(&q_load_process, &item) < 0)
 			break;
+		load = item;
 
 		assert(load != NULL);
 
