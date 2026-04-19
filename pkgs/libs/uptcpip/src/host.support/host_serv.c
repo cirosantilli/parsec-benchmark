@@ -46,6 +46,7 @@
 
 #include <sys/socket.h>
 #include <sys/types.h>
+#include <arpa/inet.h>
 #include <linux/types.h>
 #include <linux/in.h>
 #include <linux/if_ether.h>
