@@ -46,7 +46,8 @@ int im_insertplace( IMAGE *main, IMAGE *sub, int x, int y );
 int im_fastline( IMAGE *im, int x1, int y1, int x2, int y2, PEL *pel );
 int im_fastlineuser( IMAGE *im, 
 	int x1, int y1, int x2, int y2, 
-	int (*fn)(), void *client1, void *client2, void *client3 );
+	int (*fn)( IMAGE *, int, int, void *, void *, void * ),
+	void *client1, void *client2, void *client3 );
 int im_readpoint( IMAGE *im, int x, int y, PEL *pel );
 
 int im_flood( IMAGE *im, int x, int y, PEL *ink, Rect *dout );

@@ -261,7 +261,8 @@ im_fastline( IMAGE *im, int x1, int y1, int x2, int y2, PEL *pel )
 int 
 im_fastlineuser( IMAGE *im, 
 	int x1, int y1, int x2, int y2, 
-	int (*fn)(), void *client1, void *client2, void *client3 )
+	int (*fn)( IMAGE *, int, int, void *, void *, void * ),
+	void *client1, void *client2, void *client3 )
 {	
 	int x, y, dx, dy;
 	int err;
@@ -401,6 +402,13 @@ im_fastlineuser( IMAGE *im,
 	return( 0 );
 }
 
+static int
+plotmask_lineuser( IMAGE *im, int ix, int iy,
+	void *ink, void *mask, void *r )
+{
+	return( im_plotmask( im, ix, iy, ink, mask, r ) );
+}
+
 /* Draw a set of lines with an ink and a mask. A non-inplace operation, handy
  * for nip2.
  */
@@ -445,7 +453,7 @@ im_lineset( IMAGE *in, IMAGE *out, IMAGE *mask, IMAGE *ink,
 
 	for( i = 0; i < n; i++ ) {
 		if( im_fastlineuser( out, x1v[i], y1v[i], x2v[i], y2v[i], 
-			im_plotmask, ink->data, mask->data, &mask_rect ) )
+			plotmask_lineuser, ink->data, mask->data, &mask_rect ) )
 			return( -1 );
 	}
 
