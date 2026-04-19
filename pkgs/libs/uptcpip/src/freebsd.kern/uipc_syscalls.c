@@ -1624,7 +1624,7 @@ bsd_syscall_shutdown(int sockfd, int how)
 		tcb = (struct tcpcb*)inp->inp_ppcb;
 
 		while(tcb != NULL && tcb->snd_una < tcb->snd_max)
-			usleep(1000);
+			host_usleep(1000);
 	}
 	error = soshutdown(so, how);
 
