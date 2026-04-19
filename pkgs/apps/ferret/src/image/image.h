@@ -28,7 +28,7 @@ int image_write_rgb (const char *filename, int width, int height, unsigned char 
 int image_extract_helper (unsigned char *HSV, unsigned char *mask, int width, int height, int nrgn, cass_dataset_t *ds);
 //int image_extract (const char *filename, cass_dataset_t *dataset);
 
-int image_segment (void **output, int *num_ccs, void *pixels, int width, int height);
+int image_segment (unsigned char **output, int *num_ccs, unsigned char *pixels, int width, int height);
 /* for feature extraction */
 
 void add_edge(unsigned char *rgb, int nx, int ny, unsigned char *rmap);

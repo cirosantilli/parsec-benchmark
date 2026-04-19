@@ -243,7 +243,7 @@ extern double Q_value;
 extern double size_factor;
 
 int
-image_segment ( void **output, int *num_ccs, uchar *in_data_1d, int num_cols, int num_rows)
+image_segment (unsigned char **output, int *num_ccs, unsigned char *in_data_1d, int num_cols, int num_rows)
 {
  SET_FUNC_NAME ( "srm" );
  byte *out_data;
