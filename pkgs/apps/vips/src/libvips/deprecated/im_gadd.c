@@ -61,8 +61,8 @@
 #include <dmalloc.h>
 #endif /*WITH_DMALLOC*/
 
-extern int im_gfadd();
-extern int im_gaddim();
+extern int im_gfadd(double a, IMAGE *in1, double b, IMAGE *in2, double c, IMAGE *out);
+extern int im_gaddim(double a, IMAGE *in1, double b, IMAGE *in2, double c, IMAGE *out);
 
 /* This function works on either mmaped files or on images in buffer
  */
