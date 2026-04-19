@@ -60,6 +60,7 @@
 /* for tcpip stack */
 #include <sys/types.h>
 #include <sys/socket.h>
+#include <arpa/inet.h>
 #include <linux/in.h>
 #ifdef ENABLE_PARSEC_UPTCPIP
 #include <uptcp_socket.h>
