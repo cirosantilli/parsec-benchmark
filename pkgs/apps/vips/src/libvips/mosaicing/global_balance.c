@@ -321,9 +321,12 @@ im__build_symtab( IMAGE *out, int sz )
 
 /* Does this node have this file name?
  */
-static JoinNode *
-test_name( JoinNode *node, char *name )
+static void *
+test_name( void *item, void *name_arg, void *unused )
 {
+	JoinNode *node = item;
+	char *name = name_arg;
+
 	if( strcmp( node->name, name ) == 0 )
 		return( node );
 	else
@@ -336,7 +339,7 @@ static JoinNode *
 find_node( SymbolTable *st, char *name ) 
 {
 	return( im_slist_map2( st->table[hash( name )],
-		(VSListMap2Fn) test_name, name, NULL ) );
+		test_name, name, NULL ) );
 }
 
 /* Given a name: return either the existing node for that name, or a new node
@@ -357,14 +360,14 @@ add_node( SymbolTable *st, char *name )
 /* Map a user function over the whole of the symbol table. 
  */
 void *
-im__map_table( SymbolTable *st, void *(*fn)(), void *a, void *b )
+im__map_table( SymbolTable *st, VSListMap2Fn fn, void *a, void *b )
 {
 	int i;
 	void *r;
 	
 	for( i = 0; i < st->sz; i++ )
 		if( (r = im_slist_map2( st->table[i], 
-			(VSListMap2Fn) fn, a, b )) )
+			fn, a, b )) )
 			return( r );
 	
 	return( NULL );
@@ -373,9 +376,11 @@ im__map_table( SymbolTable *st, void *(*fn)(), void *a, void *b )
 /* Set the dirty field on a join.
  */
 static void *
-set_dirty( JoinNode *node, int state )
+set_dirty( void *item, void *state, void *unused )
 {	
-	node->dirty = state;
+	JoinNode *node = item;
+
+	node->dirty = GPOINTER_TO_INT( state );
 
 	return( NULL );
 }
@@ -682,8 +687,10 @@ process_line( SymbolTable *st, const char *text )
 /* Set the dirty flag on any nodes we reference.
  */
 static void *
-set_referenced( JoinNode *node )
+set_referenced( void *item, void *a, void *b )
 {
+	JoinNode *node = item;
+
 	if( node->arg1 )
 		node->arg1->dirty = 1;
 	if( node->arg2 )
@@ -695,8 +702,10 @@ set_referenced( JoinNode *node )
 /* Is this a root node? Should be clean.
  */
 static void *
-is_root( JoinNode *node )
+is_root( void *item, void *a, void *b )
 {
+	JoinNode *node = item;
+
 	if( !node->dirty )
 		return( (void *) node );
 	else
@@ -769,8 +778,10 @@ im__parse_desc( SymbolTable *st, IMAGE *in )
 /* Count and index all leaf images.
  */
 static void *
-count_leaves( JoinNode *node )
+count_leaves( void *item, void *a, void *b )
 {
+	JoinNode *node = item;
+
 	if( node->type == JOIN_LEAF ) {
 		node->index = node->st->nim;
 		node->st->nim++;
@@ -797,8 +808,10 @@ print_node( JoinNode *node )
 /* Print a leaf.
  */
 static void *
-print_leaf( JoinNode *node )
+print_leaf( void *item, void *a, void *b )
 {
+	JoinNode *node = item;
+
 	if( node->type == JOIN_LEAF ) 
 		print_node( node );
 
@@ -809,8 +822,10 @@ print_leaf( JoinNode *node )
 /* Count all join nodes.
  */
 static void *
-count_joins( JoinNode *node )
+count_joins( void *item, void *a, void *b )
 {
+	JoinNode *node = item;
+
 	if( node->type == JOIN_TB ||
 		node->type == JOIN_LR ||
 		node->type == JOIN_LRROTSCALE ||
@@ -899,8 +914,10 @@ print_joins( JoinNode *node, int indent )
 /* Print an overlap.
  */
 static void *
-print_overlap( OverlapInfo *lap )
+print_overlap( void *item, void *a, void *b )
 {
+	OverlapInfo *lap = item;
+
 	printf( "-> %s overlaps with %s; (this, other) = (%.4G, %.4G)\n",
 		im_skip_dir( lap->node->name ),
 		im_skip_dir( lap->other->name ),
@@ -915,12 +932,14 @@ print_overlap( OverlapInfo *lap )
 /* Print the overlaps on a leaf.
  */
 static void *
-print_overlaps( JoinNode *node )
+print_overlaps( void *item, void *a, void *b )
 {
+	JoinNode *node = item;
+
 	if( node->type == JOIN_LEAF && g_slist_length( node->overlaps ) > 0 ) {
 		printf( "overlap of %s with:\n", im_skip_dir( node->name ) );
 		im_slist_map2( node->overlaps, 
-			(VSListMap2Fn) print_overlap, NULL, NULL );
+			print_overlap, NULL, NULL );
 	}
 
 	return( NULL );
@@ -931,8 +950,12 @@ print_overlaps( JoinNode *node )
 /* Print and accumulate the error on an overlap.
  */
 static void *
-print_overlap_error( OverlapInfo *lap, double *fac, double *total )
+print_overlap_error( void *item, void *fac_arg, void *total_arg )
 {
+	OverlapInfo *lap = item;
+	double *fac = fac_arg;
+	double *total = total_arg;
+
 	double na = lap->nstats->coeff[4];
 	double oa = lap->ostats->coeff[4];
 	double err;
@@ -956,13 +979,17 @@ print_overlap_error( OverlapInfo *lap, double *fac, double *total )
 /* Print and accumulate the overlap errors on a leaf.
  */
 static void *
-print_overlap_errors( JoinNode *node, double *fac, double *total )
+print_overlap_errors( void *item, void *fac_arg, void *total_arg )
 {
+	JoinNode *node = item;
+	double *fac = fac_arg;
+	double *total = total_arg;
+
 	if( node->type == JOIN_LEAF && g_slist_length( node->overlaps ) > 0 ) {
 		printf( "overlap of %s (index %d) with:\n", 
 			im_skip_dir( node->name ), node->index );
 		im_slist_map2( node->overlaps, 
-			(VSListMap2Fn) print_overlap_error, fac, total );
+			print_overlap_error, fac, total );
 	}
 
 	return( NULL );
@@ -1102,8 +1129,11 @@ find_overlap_stats( OverlapInfo *lap )
 /* Sub-fn. of below.
  */
 static void *
-overlap_eq( OverlapInfo *this, JoinNode *node )
+overlap_eq( void *item, void *node_arg, void *unused )
 {
+	OverlapInfo *this = item;
+	JoinNode *node = node_arg;
+
 	if( this->other == node )
 		return( this );
 	else
@@ -1113,8 +1143,11 @@ overlap_eq( OverlapInfo *this, JoinNode *node )
 /* Is this an overlapping leaf? If yes, add to overlap list.
  */
 static void *
-test_overlap( JoinNode *other, JoinNode *node )
+test_overlap( void *item, void *node_arg, void *unused )
 {
+	JoinNode *other = item;
+	JoinNode *node = node_arg;
+
 	Rect overlap;
 	OverlapInfo *lap;
 
@@ -1141,7 +1174,7 @@ test_overlap( JoinNode *other, JoinNode *node )
 	 * node on other's overlap list?
 	 */
 	if( im_slist_map2( other->overlaps, 
-		(VSListMap2Fn) overlap_eq, node, NULL ) )
+		overlap_eq, node, NULL ) )
 		return( NULL );
 
 	/* A new overlap - add to overlap list.
@@ -1163,7 +1196,7 @@ test_overlap( JoinNode *other, JoinNode *node )
 		printf( "trivial overlap ... junking\n" );
 		printf( "nstats count = %g, ostats count = %g\n",
 			lap->nstats->coeff[5], lap->ostats->coeff[5] );
-		print_overlap( lap );
+		print_overlap( lap, NULL, NULL );
 #endif /*DEBUG*/
 		overlap_destroy( lap );
 	}
@@ -1176,8 +1209,11 @@ test_overlap( JoinNode *other, JoinNode *node )
  * not.
  */
 static void *
-find_overlaps( JoinNode *node, SymbolTable *st )
+find_overlaps( void *item, void *table_arg, void *unused )
 {
+	JoinNode *node = item;
+	SymbolTable *st = table_arg;
+
 	if( node->type == JOIN_LEAF ) {
 		/* Check for image.
 		 */
@@ -1208,8 +1244,12 @@ typedef struct {
 /* Add a new row for the nominated overlap to the matricies.
  */
 static void *
-add_nominated( OverlapInfo *ovl, MatrixBundle *bun, double *gamma )
+add_nominated( void *item, void *bundle_arg, void *gamma_arg )
 {
+	OverlapInfo *ovl = item;
+	MatrixBundle *bun = bundle_arg;
+	double *gamma = gamma_arg;
+
 	double *Kp = bun->K->coeff + bun->row;
 	double *Mp = bun->M->coeff + bun->row*bun->M->xsize;
 	double ns = pow( ovl->nstats->coeff[4], 1/(*gamma) );
@@ -1226,8 +1266,12 @@ add_nominated( OverlapInfo *ovl, MatrixBundle *bun, double *gamma )
 /* Add a new row for an ordinary overlap to the matricies.
  */
 static void *
-add_other( OverlapInfo *ovl, MatrixBundle *bun, double *gamma )
+add_other( void *item, void *bundle_arg, void *gamma_arg )
 {
+	OverlapInfo *ovl = item;
+	MatrixBundle *bun = bundle_arg;
+	double *gamma = gamma_arg;
+
 	double *Mp = bun->M->coeff + bun->row*bun->M->xsize;
 	double ns = -pow( ovl->nstats->coeff[4], 1/(*gamma) );
 	double os = pow( ovl->ostats->coeff[4], 1/(*gamma) );
@@ -1243,14 +1287,18 @@ add_other( OverlapInfo *ovl, MatrixBundle *bun, double *gamma )
 /* Add stuff for node to matrix.
  */
 static void *
-add_row( JoinNode *node, MatrixBundle *bun, double *gamma )
+add_row( void *item, void *bundle_arg, void *gamma_arg )
 {
+	JoinNode *node = item;
+	MatrixBundle *bun = bundle_arg;
+	double *gamma = gamma_arg;
+
 	if( node == bun->leaf )
 		im_slist_map2( node->overlaps, 
-			(VSListMap2Fn) add_nominated, bun, gamma );
+			add_nominated, bun, gamma );
 	else
 		im_slist_map2( node->overlaps, 
-			(VSListMap2Fn) add_other, bun, gamma );
+			add_other, bun, gamma );
 	
 	return( NULL );
 }
@@ -1276,8 +1324,10 @@ fill_matricies( SymbolTable *st, double gamma, DOUBLEMASK *K, DOUBLEMASK *M )
 /* Used to select the leaf whose coefficient we set to 1.
  */
 static void *
-choose_leaf( JoinNode *node )
+choose_leaf( void *item, void *a, void *b )
 {
+	JoinNode *node = item;
+
 	if( node->type == JOIN_LEAF )
 		return( node );
 	
@@ -1511,8 +1561,11 @@ find_factors( SymbolTable *st, double gamma )
 /* Look for all leaves, make sure we have a transformed version of each.
  */
 static void *
-generate_trn_leaves( JoinNode *node, SymbolTable *st )
+generate_trn_leaves( void *item, void *table_arg, void *unused )
 {
+	JoinNode *node = item;
+	SymbolTable *st = table_arg;
+
 	if( node->type == JOIN_LEAF ) {
 		/* Check for image.
 		 */
