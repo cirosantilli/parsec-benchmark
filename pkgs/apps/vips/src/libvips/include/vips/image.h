@@ -169,9 +169,12 @@ typedef struct _VipsImage {
 	/* Partial image stuff. All private! All these fields are initialised 
 	 * to NULL and ignored unless set by im_generate() or im_partial().
 	 */
-	void *(*start)();	/* user-supplied start function */
-	int (*generate)();	/* user-supplied generate function */
-	int (*stop)();		/* user-supplied stop function */
+	void *(*start)( struct _VipsImage *, void *, void * );
+				/* user-supplied start function */
+	int (*generate)( struct _REGION *, void *, void *, void * );
+				/* user-supplied generate function */
+	int (*stop)( void *, void *, void * );
+				/* user-supplied stop function */
 	void *client1;		/* user arguments */
 	void *client2;
 	GMutex *sslock;		/* start-stop lock */
