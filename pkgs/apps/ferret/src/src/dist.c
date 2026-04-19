@@ -97,9 +97,10 @@ cass_vec_dist_class_t vec_dist_trivial =
 
 DIST_SIMPLE_METHODS(L1_int, vec_dist_L1_int)
 
-cass_dist_t __dist_L1_int32 (cass_size_t D, const int32_t *v1, const int32_t *v2)
+cass_dist_t __dist_L1_int32 (cass_size_t D, void *v1, void *v2, void *param)
 {
-	return (cass_dist_t) dist_L1_int32_t(D, v1, v2);
+	(void)param;
+	return (cass_dist_t) dist_L1_int32_t(D, (const int32_t *)v1, (const int32_t *)v2);
 }
 
 cass_vec_dist_class_t vec_dist_L1_int =
@@ -117,9 +118,10 @@ cass_vec_dist_class_t vec_dist_L1_int =
 
 DIST_SIMPLE_METHODS(L2_int, vec_dist_L2_int)
 
-cass_dist_t __dist_L2_int32 (cass_size_t D, const int32_t *v1, const int32_t *v2)
+cass_dist_t __dist_L2_int32 (cass_size_t D, void *v1, void *v2, void *param)
 {
-	return (cass_dist_t) dist_L2_int32_t(D, v1, v2);
+	(void)param;
+	return (cass_dist_t) dist_L2_int32_t(D, (const int32_t *)v1, (const int32_t *)v2);
 }
 
 cass_vec_dist_class_t vec_dist_L2_int =
@@ -137,12 +139,18 @@ cass_vec_dist_class_t vec_dist_L2_int =
 
 DIST_SIMPLE_METHODS(L1_float, vec_dist_L1_float)
 
+cass_dist_t __dist_L1_float (cass_size_t D, void *v1, void *v2, void *param)
+{
+	(void)param;
+	return (cass_dist_t) dist_L1_float(D, (const float *)v1, (const float *)v2);
+}
+
 cass_vec_dist_class_t vec_dist_L1_float =
 {
 	.name = "L1_float",
 	.vec_type = CASS_VEC_FLOAT,
 	.type = CASS_VEC_DIST_TYPE_L1,
-	.dist = dist_L1_float,
+	.dist = __dist_L1_float,
 	.describe = dist_simple_describe,
 	.construct = dist_L1_float_construct,
 	.checkpoint = dist_simple_checkpoint,
@@ -152,12 +160,18 @@ cass_vec_dist_class_t vec_dist_L1_float =
 
 DIST_SIMPLE_METHODS(L2_float, vec_dist_L2_float)
 
+cass_dist_t __dist_L2_float (cass_size_t D, void *v1, void *v2, void *param)
+{
+	(void)param;
+	return (cass_dist_t) dist_L2_float(D, (const float *)v1, (const float *)v2);
+}
+
 cass_vec_dist_class_t vec_dist_L2_float =
 {
 	.name = "L2_float",
 	.vec_type = CASS_VEC_FLOAT,
 	.type = CASS_VEC_DIST_TYPE_L1,
-	.dist = dist_L2_float,
+	.dist = __dist_L2_float,
 	.describe = dist_simple_describe,
 	.construct = dist_L2_float_construct,
 	.checkpoint = dist_simple_checkpoint,
@@ -167,12 +181,18 @@ cass_vec_dist_class_t vec_dist_L2_float =
 
 DIST_SIMPLE_METHODS(cos_float, vec_dist_cos_float)
 
+cass_dist_t __dist_cos_float (cass_size_t D, void *v1, void *v2, void *param)
+{
+	(void)param;
+	return (cass_dist_t) dist_cos_float(D, (const float *)v1, (const float *)v2);
+}
+
 cass_vec_dist_class_t vec_dist_cos_float =
 {
 	.name = "cosine",
 	.vec_type = CASS_VEC_FLOAT,
 	.type = CASS_VEC_DIST_TYPE_COS,
-	.dist = dist_cos_float,
+	.dist = __dist_cos_float,
 	.describe = dist_simple_describe,
 	.construct = dist_cos_float_construct,
 	.checkpoint = dist_simple_checkpoint,
@@ -182,9 +202,10 @@ cass_vec_dist_class_t vec_dist_cos_float =
 
 DIST_SIMPLE_METHODS(hamming, vec_dist_hamming)
 
-cass_dist_t __dist_hamming (cass_size_t n, const chunk_t *c1, const chunk_t *c2)
+cass_dist_t __dist_hamming (cass_size_t n, void *c1, void *c2, void *param)
 {
-	return (cass_dist_t) dist_hamming(n, c1, c2);
+	(void)param;
+	return (cass_dist_t) dist_hamming(n, (const chunk_t *)c1, (const chunk_t *)c2);
 }
 
 cass_vec_dist_class_t vec_dist_hamming =
