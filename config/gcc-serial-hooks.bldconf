@@ -1,0 +1,7 @@
+#!/bin/bash
+
+# gcc-serial-hooks.bldconf - configuration file for PARSEC
+
+source ${PARSECDIR}/config/gcc-hooks.bldconf
+
+PARMACS_MACRO_FILE="serial"

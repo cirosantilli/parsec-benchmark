@@ -1,0 +1,5 @@
+#!/bin/bash
+
+source ${PARSECDIR}/pkgs/apps/ferret/parsec/gcc-serial.bldconf
+
+build_deps="hooks ${build_deps}"
