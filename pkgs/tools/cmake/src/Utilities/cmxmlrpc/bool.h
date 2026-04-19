@@ -11,7 +11,9 @@
 #ifndef __cplusplus
 #ifndef HAVE_BOOL
 #define HAVE_BOOL
+#if !defined(__STDC_VERSION__) || __STDC_VERSION__ < 202311L
 typedef int bool;
+#endif
 #endif
 #endif
 
