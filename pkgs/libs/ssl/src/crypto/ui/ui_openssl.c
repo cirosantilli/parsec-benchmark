@@ -188,6 +188,13 @@
 # undef  SGTTY
 #endif
 
+#if defined(TERMIO) && defined(__has_include)
+# if !__has_include(<termio.h>) && __has_include(<termios.h>)
+#  undef  TERMIO
+#  define TERMIOS
+# endif
+#endif
+
 #ifdef _LIBC
 # undef  TERMIOS
 # define TERMIO
