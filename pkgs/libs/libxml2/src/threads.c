@@ -63,23 +63,23 @@ extern int pthread_setspecific (pthread_key_t __key,
 extern int pthread_key_create (pthread_key_t *__key,
                                void (*__destr_function) (void *))
 	   __attribute((weak));
-extern int pthread_mutex_init ()
+extern int pthread_mutex_init (pthread_mutex_t *__mutex,
+                               const pthread_mutexattr_t *__mutexattr)
 	   __attribute((weak));
-extern int pthread_mutex_destroy ()
+extern int pthread_mutex_destroy (pthread_mutex_t *__mutex)
 	   __attribute((weak));
-extern int pthread_mutex_lock ()
+extern int pthread_mutex_lock (pthread_mutex_t *__mutex)
 	   __attribute((weak));
-extern int pthread_mutex_unlock ()
+extern int pthread_mutex_unlock (pthread_mutex_t *__mutex)
 	   __attribute((weak));
-extern int pthread_cond_init ()
+extern int pthread_cond_init (pthread_cond_t *__cond,
+                              const pthread_condattr_t *__cond_attr)
 	   __attribute((weak));
-extern int pthread_equal ()
+extern int pthread_equal (pthread_t __thread1, pthread_t __thread2)
 	   __attribute((weak));
-extern pthread_t pthread_self ()
+extern pthread_t pthread_self (void)
 	   __attribute((weak));
-extern int pthread_key_create ()
-	   __attribute((weak));
-extern int pthread_cond_signal ()
+extern int pthread_cond_signal (pthread_cond_t *__cond)
 	   __attribute((weak));
 #endif
 #endif /* linux */
