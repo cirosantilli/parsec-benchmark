@@ -228,11 +228,13 @@ void *t_seg (void *dummy)
 {
 	struct seg_data *seg;
 	struct load_data *load;
+	void *item;
 
 	while(1)
 	{
-		if(dequeue(&q_load_seg, &load) < 0)
+		if(dequeue(&q_load_seg, &item) < 0)
 		    break;
+		load = item;
 		
 		assert(load != NULL);
 		seg = (struct seg_data *)calloc(1, sizeof(struct seg_data));
@@ -259,11 +261,13 @@ void *t_extract (void *dummy)
 {
 	struct seg_data *seg;
 	struct extract_data *extract;
+	void *item;
 
 	while (1)
 	{
-		if(dequeue(&q_seg_extract, &seg) < 0)
+		if(dequeue(&q_seg_extract, &item) < 0)
 		    break;
+		seg = item;
 		
 		assert(seg != NULL);
 		extract = (struct extract_data *)calloc(1, sizeof(struct extract_data));
@@ -288,10 +292,12 @@ void *t_vec (void *dummy)
 	struct extract_data *extract;
 	struct vec_query_data *vec;
 	cass_query_t query;
+	void *item;
 	while(1)
 	{
-		if(dequeue(&q_extract_vec, &extract) < 0)
+		if(dequeue(&q_extract_vec, &item) < 0)
 		    break;
+		extract = item;
 		
 		assert(extract != NULL);
 		vec = (struct vec_query_data *)calloc(1, sizeof(struct vec_query_data));
@@ -330,10 +336,12 @@ void *t_rank (void *dummy)
 	struct rank_data *rank;
 	cass_result_t *candidate;
 	cass_query_t query;
+	void *item;
 	while (1)
 	{
-		if(dequeue(&q_vec_rank, &vec) < 0)
+		if(dequeue(&q_vec_rank, &item) < 0)
 		    break;
+		vec = item;
 		
 		assert(vec != NULL);
 
@@ -375,10 +383,12 @@ void *t_rank (void *dummy)
 void *t_out (void *dummy)
 {
 	struct rank_data *rank;
+	void *item;
 	while (1)
 	{
-		if(dequeue(&q_rank_out, &rank) < 0)
+		if(dequeue(&q_rank_out, &item) < 0)
 		    break;
+		rank = item;
 		
 		assert(rank != NULL);
 
