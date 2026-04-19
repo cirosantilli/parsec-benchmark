@@ -130,8 +130,10 @@
 #endif
 
 #if !defined(__cplusplus) && !defined(__BEOS__) && !defined(__ECOS) && !defined(typedef_bool)
+#  if !defined(__STDC_VERSION__) || __STDC_VERSION__ < 202311L
 typedef unsigned char bool;
-#define typedef_bool
+#  endif
+#  define typedef_bool
 #endif
 
 #ifdef HAVE_LONGLONG
