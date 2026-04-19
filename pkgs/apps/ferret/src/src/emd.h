@@ -50,7 +50,7 @@ struct emd_node2_t {
 struct emd_state_t {
 	int		n1;			/* SIGNATURES SIZES */
 	int		n2;
-	float		**C;//[MAX_SIG_SIZE1][MAX_SIG_SIZE1]; /* THE COST MATRIX */
+	double		**C;//[MAX_SIG_SIZE1][MAX_SIG_SIZE1]; /* THE COST MATRIX */
 	emd_node2_t	X[MAX_SIG_SIZE1*2];	/* THE BASIC VARIABLES VECTOR */
 
 	/* VARIABLES TO HANDLE _X EFFICIENTLY */
