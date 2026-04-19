@@ -355,7 +355,7 @@ int main() { return 0; }
 #ifdef __cplusplus
 extern "C" void (*signal (int, void (*)(int)))(int);
 #else
-void (*signal ()) ();
+void (*signal (int, void (*)(int)))(int);
 #endif
 
 int
