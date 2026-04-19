@@ -26,11 +26,7 @@
 #include <gsl/gsl_machine.h>
 
 #if HAVE_VPRINTF
-#ifdef STDC_HEADERS
 #include <stdarg.h>
-#else
-#include <varargs.h>
-#endif
 #endif
 
 #include <gsl/gsl_test.h>
@@ -89,11 +85,7 @@ gsl_test (int status, const char *test_description,...)
 #if HAVE_VPRINTF
       {
         va_list ap;
-#ifdef STDC_HEADERS
         va_start (ap, test_description);
-#else
-        va_start (ap);
-#endif
         vprintf (test_description, ap);
         va_end (ap);
       }
@@ -149,11 +141,7 @@ gsl_test_rel (double result, double expected, double relative_error,
 #if HAVE_VPRINTF
       {
         va_list ap;
-#ifdef STDC_HEADERS
         va_start (ap, test_description);
-#else
-        va_start (ap);
-#endif
         vprintf (test_description, ap);
         va_end (ap);
       }
@@ -225,12 +213,8 @@ gsl_test_abs (double result, double expected, double absolute_error,
 #if HAVE_VPRINTF
       {
         va_list ap;
-        
-#ifdef STDC_HEADERS
+
         va_start (ap, test_description);
-#else
-        va_start (ap);
-#endif
         vprintf (test_description, ap);
         va_end (ap);
       }
@@ -302,12 +286,8 @@ gsl_test_factor (double result, double expected, double factor,
 #if HAVE_VPRINTF
       {
         va_list ap;
-        
-#ifdef STDC_HEADERS
+
         va_start (ap, test_description);
-#else
-        va_start (ap);
-#endif
         vprintf (test_description, ap);
         va_end (ap);
       }
@@ -357,12 +337,8 @@ gsl_test_int (int result, int expected, const char *test_description,...)
 #if HAVE_VPRINTF
       {
         va_list ap;
-        
-#ifdef STDC_HEADERS
+
         va_start (ap, test_description);
-#else
-        va_start (ap);
-#endif
         vprintf (test_description, ap);
         va_end (ap);
       }
@@ -401,12 +377,8 @@ gsl_test_str (const char * result, const char * expected,
 #if HAVE_VPRINTF
       {
         va_list ap;
-        
-#ifdef STDC_HEADERS
+
         va_start (ap, test_description);
-#else
-        va_start (ap);
-#endif
         vprintf (test_description, ap);
         va_end (ap);
       }
