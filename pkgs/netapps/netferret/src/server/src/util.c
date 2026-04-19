@@ -218,7 +218,7 @@ int cass_result_free (cass_result_t *result)
 	}
 	else if (result->flags & CASS_RESULT_BITMAPS)
 	{
-		ARRAY_BEGIN_FOREACH_P(result->u.bitmaps, cass_map_t *map)
+		ARRAY_BEGIN_FOREACH_P(result->u.bitmaps, bitmap_t *map)
 		{
 			bitmap_free_vec(map); 
 		} ARRAY_END_FOREACH_P;
