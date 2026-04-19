@@ -22,6 +22,12 @@ Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 #define MEM_OVERHEAD	3/2
 
+static int cass_dataset_memcpy_map(void *dest, void *src, void *param)
+{
+	memcpy(dest, src, *(const size_t *)param);
+	return 0;
+}
+
 static inline int cass_read_vecset (cass_vecset_t *vecset, size_t nmemb, CASS_FILE *in) {
     int n = fread(vecset, sizeof(cass_vecset_t), nmemb, in);
     if (!isLittleEndian()) {
@@ -95,6 +101,7 @@ int cass_dataset_merge (cass_dataset_t *ds, const cass_dataset_t *src, cass_vecs
 	int i;
 	cass_vec_id_t start_vec, num_vec;
 	int parent_delta = 0;
+	size_t map_size = 0;
 
 	start_vec = num_vec = 0;
 
@@ -155,8 +162,9 @@ int cass_dataset_merge (cass_dataset_t *ds, const cass_dataset_t *src, cass_vecs
 
 		if (map == NULL)
 		{
-			map = memcpy;
-			map_param = (void *)ds->vec_size;
+			map = cass_dataset_memcpy_map;
+			map_size = ds->vec_size;
+			map_param = &map_size;
 		}
 
 		for (i = 0; i < num_vec; i++)
