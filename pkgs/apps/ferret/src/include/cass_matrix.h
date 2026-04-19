@@ -51,16 +51,16 @@ int matrix_unmap_file (void **matrix);
 		void **___p;	\
 		matrix_load_stream(fin,&___size,row,col, &___p); \
 		assert(___size == sizeof(type)); \
-		*matrix = ___p;	\
+		*matrix = (type **)___p;	\
 	} while (0)
 
 #define type_matrix_load_stream_x(type,fin,row,col,matrix,cnt) \
 	do { \
 		cass_size_t ___size; \
 		void **___p;	\
-		matrix_load_stream_x(fin,&___size,row,col,&___P,cnt); \
+		matrix_load_stream_x(fin,&___size,row,col,&___p,cnt); \
 		assert(___size == sizeof(type)); \
-		*matrix = ___p;	\
+		*matrix = (type **)___p;	\
 	} while (0)
 
 #define type_matrix_dump_stream(type,fout,row,col,matrix) \
@@ -72,7 +72,7 @@ int matrix_unmap_file (void **matrix);
 		void **___p;	\
 		matrix_load_file(fin,&___size,row,col, &___p); \
 		assert(___size == sizeof(type)); \
-		*matrix = ___p;	\
+		*matrix = (type **)___p;	\
 	} while (0)
 
 #define type_matrix_map_file(type,fin,row,col,matrix) \
@@ -81,7 +81,7 @@ int matrix_unmap_file (void **matrix);
 		void **___p;	\
 		matrix_map_file(fin,&___size,row,col,&___p); \
 		assert(___size == sizeof(type)); \
-		*matrix = ___p;	\
+		*matrix = (type **)___p;	\
 	} while (0)
 
 #define type_matrix_dump_file(type,fout,row,col,matrix) \
