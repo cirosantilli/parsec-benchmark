@@ -36,6 +36,8 @@
  */
 #define BLEND_SCALE (4096)
 
+typedef struct _MergeInfo MergeInfo;
+
 /* Keep state for each call in one of these.
  */
 typedef struct _Overlapping {
@@ -69,7 +71,7 @@ typedef struct _Overlapping {
 
 	/* Blend function.
 	 */
-	int (*blend)();
+	int (*blend)( REGION *, MergeInfo *, struct _Overlapping *, Rect * );
 } Overlapping;
 
 /* Keep per-thread state here.
