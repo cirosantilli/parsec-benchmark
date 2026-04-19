@@ -63,16 +63,13 @@
 #include <locale.h>
 
 #include <vips/vips.h>
+#include <vips/internal.h>
 
 #define NUM_FILES 1000
 #define MAXPOINTS 60
 int xoverlap;
 int yoverlap;
 
-extern int im_lrmerge();
-extern int im_merge_analysis();
-extern int im__find_lroverlap();
-extern int im__find_tboverlap();
 static int file_ptr = 0;
 static IMAGE *in[ NUM_FILES ];
 
