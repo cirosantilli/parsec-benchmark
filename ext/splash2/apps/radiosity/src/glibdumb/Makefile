@@ -1,6 +1,6 @@
 OBJS   = glib.o
 TARGET = glib.a
-CFLAGS = $(CCOPT) $(CCDEFS) $(INCLUDE_DIRS)
+CFLAGS := $(CFLAGS) $(CCOPT) $(CCDEFS) $(INCLUDE_DIRS)
 LDFLAGS += -lgl -lpanel -lm
 
 all: $(TARGET)

@@ -3,5 +3,5 @@
 source ${PARSECDIR}/ext/splash2/kernels/fft/parsec/gcc.bldconf
 
 # Override build environment
-build_env="version=IN_PARSEC"
+build_env="version=IN_PARSEC CFLAGS=\"-std=gnu89 ${CFLAGS}\""
 
