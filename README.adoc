@@ -9,13 +9,15 @@
 :toclevels: 6
 :toc-title:
 
-PARSEC http://parsec.cs.princeton.edu/ 3.0-beta-20150206 ported to Ubuntu 22.04 and <<splash2>> ported to Buildroot 2017.08 cross compilation (ARM, MIPS, etc.). This repo intends to support all build types and benchmarks.
+PARSEC http://parsec.cs.princeton.edu/ 3.0-beta-20150206 ported to Ubuntu 25.10 and <<splash2>> ported to Buildroot 2017.08 cross compilation (ARM, MIPS, etc.). This repo intends to support all build types and benchmarks.
 
 As of November 2023, the official Princeton website was down. The https://web.archive.org/web/20230922200507/https://parsec.cs.princeton.edu/[last working archive was from September 22, 2023]. It is unclear if they retired it or if it is a bug. If they retired it, OMG. For this reason, we re-uploaded their original test data to: https://github.com/cirosantilli/parsec-benchmark/releases/tag/3.0 The scripts in this repository automatically download and use those blobs.
 
 toc::[]
 
 == Getting started Ubuntu native host
+
+Install Ubuntu dependencies with apt-get and download the test data:
 
 ....
 ./configure
@@ -27,7 +29,7 @@ Before doing anything else, you must get the `parecmgmt` command with:
 . env.sh
 ....
 
-Build all:
+Build all, 16m17.534s on P14s:
 
 ....
 parsecmgmt -a build -p all
@@ -47,7 +49,7 @@ Build all <<splash2>> benchmarks:
 parsecmgmt -a build -p splash2x
 ....
 
-Build just one SPLASH2 benchmark:
+Build just one SPLASH2 benchmark, `splash2x.barnes`, which does a https://en.wikipedia.org/wiki/Barnes%E2%80%93Hut_simulation[Barnes-Hut N-body gravity hierarchical simulation]:
 
 ....
 parsecmgmt -a build -p splash2x.barnes
@@ -65,7 +67,50 @@ Run one splash2 benchmark with the `test` <<input-size>>:
 parsecmgmt -a run -p splash2x.barnes -i test
 ....
 
-Non-splash 2:
+Sample output:
+
+....
+[PARSEC] Benchmarks to run:  splash2x.barnes
+
+[PARSEC] [========== Running benchmark splash2x.barnes [1] ==========]
+[PARSEC] Deleting old run directory.
+[PARSEC] Setting up run directory.
+[PARSEC] Unpacking benchmark input 'test'.
+input.template
+[PARSEC] Running 'time /home/ciro/bak/git/parsec-benchmark/ext/splash2x/apps/barnes/inst/amd64-linux.gcc/bin/run.sh 1 test':
+[PARSEC] [---------- Beginning of output ----------]
+Generating input file input_1...
+Running /home/ciro/bak/git/parsec-benchmark/ext/splash2x/apps/barnes/inst/amd64-linux.gcc/bin/barnes 1 < input_1:
+
+                Hack code: Plummer model
+
+     nbody     dtime       eps       tol     dtout     tstop    fcells     NPROC
+     65536   0.02500    0.0500      1.00     0.250     0.075      2.00         1
+
+COMPUTESTART  = 1776666743854108
+COMPUTEEND    = 1776666746784692
+COMPUTETIME   =      2930584
+TRACKTIME     =      1380332
+PARTITIONTIME =         4064     0.00
+TREEBUILDTIME =        38866     0.03
+FORCECALCTIME =      1325106     0.96
+RESTTIME      =        12296     0.01
+
+real    0m2.964s
+user    0m2.939s
+sys     0m0.023s
+[PARSEC] [----------    End of output    ----------]
+[PARSEC]
+[PARSEC] BIBLIOGRAPHY
+[PARSEC]
+[PARSEC] [1] Woo et al. The SPLASH-2 Programs: Characterization and Methodological Considerations. ISCA, 1995.
+[PARSEC]
+[PARSEC] Done.
+....
+
+In this case for example, 65536 is the number of simulated bodies of the N-body simulation.
+
+Run a non-splash 2 benchmark:
 
 ....
 parsecmgmt -a run -p netdedup
