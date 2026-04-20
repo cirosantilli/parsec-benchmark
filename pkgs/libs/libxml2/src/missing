@@ -276,10 +276,15 @@ WARNING: \`$1' is missing on your system.  You should only need it if
          the \`GNU make' package.  Grab either from any GNU archive site."
     file=`echo "$*" | sed -n 's/.*-o \([^ ]*\).*/\1/p'`
     if test -z "$file"; then
-      file=`echo "$*" | sed 's/.* \([^ ]*\) *$/\1/'`
-      file=`sed -n '/^@setfilename/ { s/.* \([^ ]*\) *$/\1/; p; q; }' $file`
+      infile=`echo "$*" | sed 's/.* \([^ ]*\) *$/\1/'`
+      case "$infile" in
+      -*) exit 1 ;;
+      esac
+      file=`sed -n '/^@setfilename/ { s/.* \([^ ]*\) *$/\1/; p; q; }' "$infile"`
+      test -z "$file" && file=`echo "$infile" | sed 's,.*/,,;s,.[^.]*$,,'`.info
     fi
-    touch $file
+    test -f "$file" || exit 1
+    touch "$file"
     ;;
 
   tar)
