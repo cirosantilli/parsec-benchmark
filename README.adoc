@@ -138,6 +138,12 @@ TODO runs all sizes, or just one default size:
 parsecmgmt -a run -p splash2x
 ....
 
+Clean all builds without nuking the downloaded test input data with link:clean-build.sh[]:
+
+....
+./clean-build.sh
+....
+
 === Input size
 
 Run one splash2 benchmark with one <<input-size>>, listed in by increasing size:
