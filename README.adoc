@@ -226,7 +226,7 @@ git clean -xdf pkgs/apps/ferret
 ./get-inputs
 ....
 
-but then you would need to re-rrun `./get-inputs` again because the `git clen -xdf` removes the unpacked inputs that were placed under `pkgs/apps/ferret/inputs/`.
+but then you would need to re-run `./get-inputs` again because the `git clen -xdf` removes the unpacked inputs that were placed under `pkgs/apps/ferret/inputs/`.
 
 === Package directory structure
 
