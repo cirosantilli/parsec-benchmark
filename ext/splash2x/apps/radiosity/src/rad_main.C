@@ -336,10 +336,12 @@ int main(int argc, char *argv[])
             g_start( expose_callback,
                     N_SLIDERS, sliders, N_CHOICES, choices ) ;
         }
-    MAIN_END;
+
 #ifdef ENABLE_PARSEC_HOOKS
 	__parsec_bench_end();
 #endif
+
+    MAIN_END;
     exit(0) ;
 }
 

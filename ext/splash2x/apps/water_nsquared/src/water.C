@@ -273,10 +273,11 @@ int main(int argc, char **argv)
 
     printf("\nExited Happily with XTT = %g (note: XTT value is garbage if NPRINT > NSTEP)\n", XTT);
 
-    MAIN_END;
 #ifdef ENABLE_PARSEC_HOOKS
 	__parsec_bench_end();
 #endif
+
+    MAIN_END;
 } /* main.c */
 
 void WorkStart() /* routine that each created process starts at;

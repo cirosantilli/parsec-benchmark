@@ -160,10 +160,12 @@ int main (int argc, char *argv[])
    if (do_output) {
      PrintAllParticles();
    }
-   MAIN_END;
+
 #ifdef ENABLE_PARSEC_HOOKS
 	__parsec_bench_end();
 #endif
+
+   MAIN_END;
 }
 
 

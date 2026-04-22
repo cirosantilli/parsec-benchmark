@@ -546,10 +546,11 @@ int main(int argc, char *argv[])
    printf("    (excludes first timestep)\n");
    printf("\n");
 
-   MAIN_END
 #ifdef ENABLE_PARSEC_HOOKS
 	__parsec_bench_end();
 #endif
+
+   MAIN_END;
 }
 
 long log_2(long number)
