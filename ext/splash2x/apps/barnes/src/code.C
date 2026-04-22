@@ -305,11 +305,12 @@ int main (int argc, string argv[])
 	  ((float)(Global->tracktime-Global->partitiontime-
 		   Global->treebuildtime-Global->forcecalctime))/
 	  Global->tracktime);
-   MAIN_END;
 
 #ifdef ENABLE_PARSEC_HOOKS
-	__parsec_bench_end();
+   __parsec_bench_end();
 #endif
+
+   MAIN_END;
 }
 
 /*
