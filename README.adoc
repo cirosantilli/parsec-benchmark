@@ -195,38 +195,22 @@ That can then be overridden for different targets to check time, cache state, et
 * on simulators you could use magic instruction TODO link to the GEM5 one.
 * on real systems you could use syscalls, instructions or other system interfaces to get the data
 
-=== parsecmgmt ferret rebuild after source change broken
+=== parsecmgmt rebuilds after source changes
 
-Some rebuilds after source changes with `-a build` are a bit broken. E.g. a direct:
+`parsecmgmt -a build` uses each package installation's `build-info` marker to decide whether that package is already available. We have modified the original build system so that the build step also checks whether package sources or PARSEC build configuration files are newer than that marker, and whether the package build directory still exists.
+
+This means a direct rebuild after source edits works:
 
 ....
 parsecmgmt -a build -p ferret
 ....
 
-doesn't do anything if you have modified sources. Also, trying to clean first still didn't work:
+Cleaning the package first also forces a rebuild because `clean` removes the build directory:
 
 ....
 parsecmgmt -a clean -p ferret
 parsecmgmt -a build -p ferret
 ....
-
-What worked was a more brutal removal of `inst` and `obj`:
-
-....
-pkgs/apps/ferret/inst
-pkgs/apps/ferret/obj
-....
-
-see also: <<package-directory-structure>>.
-
-You could also do:
-
-....
-git clean -xdf pkgs/apps/ferret
-./get-inputs
-....
-
-but then you would need to re-run `./get-inputs` again because the `git clen -xdf` removes the unpacked inputs that were placed under `pkgs/apps/ferret/inputs/`.
 
 === Package directory structure
 

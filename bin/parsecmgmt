@@ -904,10 +904,28 @@ function build_package {
   local pkginstdir=${pkgdir}/inst/${PARSECPLAT}
   local pkgparsecdir=${pkgdir}/parsec
 
-  # Check whether package has already been built
-  if [ -f "${pkginstdir}/build-info" ]; then
-    echo "${oprefix} Package ${pkg} already exists, proceeding." 2>&1 | ${TEE} ${log}
-    return 0
+  # Check whether package has already been built. A package needs to be rebuilt
+  # if its build directory was removed by `clean` or if package sources/configs
+  # changed after the installed build-info marker was written.
+  local buildinfo="${pkginstdir}/build-info"
+  if [ -f "${buildinfo}" ]; then
+    local rebuild_reason=""
+    if [ ! -d "${pkgobjdir}" ]; then
+      rebuild_reason="build directory is missing"
+    else
+      local newer_build_input
+      newer_build_input=$(find "${pkgsrcdir}" "${pkgparsecdir}" -type f -newer "${buildinfo}" 2>/dev/null | head -n 1)
+      if [ ! -z "${newer_build_input}" ]; then
+        rebuild_reason="'${newer_build_input}' is newer than build-info"
+      fi
+    fi
+
+    if [ -z "${rebuild_reason}" ]; then
+      echo "${oprefix} Package ${pkg} already exists, proceeding." 2>&1 | ${TEE} ${log}
+      return 0
+    else
+      echo "${oprefix} Package ${pkg} already exists, but ${rebuild_reason}; rebuilding." 2>&1 | ${TEE} ${log}
+    fi
   fi
 
   # Source local build configuration to get dependencies
