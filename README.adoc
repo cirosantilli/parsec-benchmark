@@ -820,6 +820,10 @@ TODO: after build some `./configure` and `config.h.in` files are modified. But r
 
 Parse is just at another level of software engineering quality.
 
+=== Backlinks
+
+* 2026-07-14: https://arxiv.org/html/2605.15222v2 PerfCodeBench: Benchmarking LLMs for System-Level High-Performance Code Optimization
+
 == Bibliography
 
 Princeton stopped actively supporting PARSEC directly, they don't usually reply on the link:https://lists.cs.princeton.edu/pipermail/parsec-users/[mailing list]. So a few forks / patches / issue trackers have popped up in addition to ours:
